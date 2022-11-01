@@ -1,5 +1,5 @@
 
-Awesomely Very, Very, Amazingly Helpful Links:
+Somewhat Helpful Links:
 
 [specs]({{ site.baseurl }}/specs.html)
 
