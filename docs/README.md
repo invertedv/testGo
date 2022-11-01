@@ -1,6 +1,6 @@
 
-Links:
+Helpful Links:
 
-[specs]Test data]({{ site.baseurl }}/specs.html)
+[specs]({{ site.baseurl }}/specs.html)
 
-[data]Test data]({{ site.baseurl }}/data.html)
+[data]({{ site.baseurl }}/data.html)
