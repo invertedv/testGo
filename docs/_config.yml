@@ -5,6 +5,7 @@ relative_links:
   collections: true
 include:
   - README.md
+  - data.md
 
 # Jekyll 3 now only supports Kramdown for Markdown
 kramdown:
