@@ -1,5 +1,7 @@
 
-Somewhat Helpful Links:
+![InvertedV]({{ site.baseurl }}/images/vee1c.png)
+
+Moderately Helpful Links:
 
 [specs]({{ site.baseurl }}/specs.html)
 
