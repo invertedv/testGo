@@ -1,3 +1,8 @@
+---
+layout: page
+title: About
+permalink: /about/
+---
 
 ![InvertedV]({{ site.baseurl }}/images/vee1c.png)
 
