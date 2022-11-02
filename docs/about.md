@@ -3,7 +3,6 @@ layout: page
 title: About
 permalink: /about/
 ---
-![InvertedV]( {{ base.url}}/images/vee1c.png)
 
 Some information about you!
 
