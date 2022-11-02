@@ -1,18 +1,15 @@
----
-layout: page
-title: About
-permalink: /about/
----
+## goMortgage
 
-Some information about you!  Me?
+goMortgage is an app that is geared to building mortgage forecasting models.  As noted, goMortgage can both 
+build the modeling data set and the model. 
 
-### More Information
 
-A place to include any other types of information that you'd like to include about yourself.
 
-### Contact me
+Since it is open source, it can be modified to suit your needs. What follows in this document describes the
+software as it is.  goMortgage is
+1. the ClickHouse database.  
+2. Loan-level tables structured as those created by these projects: [fannie](), [freddie]().  These projects create
+a single table which has one loan per row.  The monthly data for each loan is a stored in this table as
+nested arrays.
 
-[email@domain.com](mailto:email@domain.com)
-HELLO 3
-[Click]({{ site.baseurl }}/data.html)
-goodbye
+
