@@ -1,6 +1,7 @@
 
-<div style="text-align: center;">
+<div style="text-align: left;">
   <img src="{{ site.baseurl }}/images/vee1c.png" width="50" height="50" />
+Inverted V
 </div>
 
 ## goMortgage
