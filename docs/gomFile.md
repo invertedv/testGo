@@ -57,6 +57,8 @@ The required keys are:
 
 - target: {field name}<br>
 is the field that is the target (dependent variable).
+- targetType: {cat}/{cts}<br>
+is the type of the target feature.
 - cat: {field list}<br>
 is a comma-separated list of categorical (one-hot) features.
 - cts: {field list}<br>
