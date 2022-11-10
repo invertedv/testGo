@@ -37,7 +37,7 @@ we'd like a good representation across time periods. With goMortgage, it's possi
 Simiarly, on the second stage sample one can specify both forecast month and 'month' (calendar month corresponding to
 the forecast month).
 
-Further, goMortage can stratify along other dimensions.
+Further, goMortgage can stratify along other dimensions.
 For instance, to avoid building a model dominated by loans in California, one can stratify on state.
 Or, you could build a California-only model using the WHERE1 key in the specs file.  Stratifying along
 loan age and forecast month alone may produce a sample that is concentrated on certain vintages or performance
@@ -57,7 +57,18 @@ is joined by geo (e.g. zip3, state, zip) at four time periods:
 The utility of the first 3 is self-evident.  Why January 2020? So that we have a baseline to normalize
 values so that the model isn't confused by trends in (say) house prices.
 
-### Specs File Entries
+In short, this is the goMortgage process:
+
+     1. Sample the loan-level data along a set of user-specified dimensions to produce a sample stratified
+     along your choice of fields.  This dataset consists of loans and as-of dates.
+
+     2. Sample the table above along a set of user-specified dimensions. The universe of available data is
+     each loan in the sampled data at any date after the as-of date.
+
+     3. Join the table in 2 to the economic data.
+
+
+### .gom File Entries
 
 These keys specify the data source and fields to use.
 

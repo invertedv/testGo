@@ -3,8 +3,7 @@
   <img src="{{ site.baseurl }}/images/vee1c.png" width="50" height="50" />
 </div>
 
-## goMortgage
-### A Self-Service Program to Build Mortgage Models
+## A Self-Service Program to Build Mortgage Models
 
 goMortgage is an app that is geared to building mortgage forecasting models.  goMortgage can both
 build the modeling data set and the model.
@@ -32,4 +31,7 @@ The topics below provide details on getting up and running.
 - Building the [modeling]({{ site.baseurl }}/modeling.html)
 - The specification [.gom]({{ site.baseurl }}/gomFile.html) file
 - Dependencies on other [projects]({{ site.baseurl }}/dependencies.html)
+- [Tutorial]({{ site.baseurl }}/tutorial.html)
+
+
 
