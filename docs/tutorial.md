@@ -218,5 +218,7 @@ Finally, there are a couple of general settings:
 
 If 'show' is set to 'yes', then each graph will also be displayed in your browser.  This is usually
 a lot of graphs!  'plotHeight' and 'plotWidth' specify the plot dimensions, in pixels. The graphs
-are also written to files. The directory structure is [here](https://invertedv.github.io/goTest/directoryStructure.html).
+are also written to files. The directory structure is [here]({{ site.baseurl }}/directoryStructure.html)
+
+### Output
 

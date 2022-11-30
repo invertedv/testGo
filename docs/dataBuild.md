@@ -1,38 +1,39 @@
-### Data
+### Data Build
 
-#### Sampling
+goMortgage is designed to be very flexible in building modeling data. However, there *is* a structure to the approach.
+goMortgage will pull stratified and simple random samples from the source loan-level database.
 
-In sampling data for this kind of model, there are two key points in time.
+In its current version, it is set up to work with the Fannie Mae data as built by this [app]().
+The goal has been to make it modifiable to other data sources.
 
-- The as-of age.  This is the loan age from which we are forecasting.  We know the status of the loan at this point.
-- The forecast month.  This is number of months into the future we are forecasting the loan's status.
+
+#### Sampling the Loan-level Data
+
+The terminology used here is:
+
+    - as-of date.  The date at which we have actual information and start the forecast from.  Fields that are derived
+      from this date start with 'ao'.
+    - as-of age. The loan age at the as-of date.
+    - forecast month.  The number of months into the future we are forecasting. Fields that refer to this point in
+      time start with 'trg'.
+    - month. The calendar month at the forecast month.
 
 Conceptually, one can imagine the data to be sampled as the set of all pairs of the form
 
        (as-of age, forecast month)
 
 It is not practical to create this table, so another strategy must be employed. goMortgage does the selection in two
-stages: the first stage builds a sample of loans based on as-of age. This table fixes the as-of age but all possible values
-of forecast month are not yet selected. Stage 2 starts with this sample and samples it based on forecast month.
+stages: 
 
-Conceptually, there are at least three ways to choose the as-of age (or forecast month) of a loan.
+1. Pull a sample of loans based on as-of age. This table fixes the as-of age but all possible values
+of forecast month are not yet selected. 
+2. Sample this data set to select the forecast month.
 
-1. Select at most one as-of age and forecast month for each loan.<br>
-The potential advantage here is that a loan will appear with at most once, so we
-needn't think about issues of correlation (as if loans weren't cross-correlated!).  However, care must
-be taken in the sampling to prevent length-biased sampling as would result if one randomly chose an age from the
-loan's history.
-2. Create a table that has one row for each loan for each month it is on the books then randomly sample this table. Then
-create a second table that has all possible forecast months from the age of each sampled loan and sample this table<br>
-This approach avoids length-biased sampling but will result in loans appearing more than once in the data.
-3. Stratify the sample based on loan age and then forecast month.  This approach avoids length-biased sampling.  It also
-evens out the sample on these dimensions which should provide more stable estimates of the effects.
-
-goMortage uses method 3.
-
-There are other considerations.  Stratifying on as-of age alone will likely lead to a sample that is very unevenly
-distributed across the as-of date (the calendar date corresponding to the as-of age).  This is undesirable since
-we'd like a good representation across time periods. With goMortgage, it's possible to stratify on *both* fields.
+There are other potential considerations.  Stratifying on as-of age alone will likely lead to a sample that 
+is very unevenly
+distributed across the as-of date (the calendar date corresponding to the as-of age).  
+This is undesirable if you'd
+like a good representation across time periods. With goMortgage, it's possible to stratify on *both* fields.
 
 Simiarly, on the second stage sample one can specify both forecast month and 'month' (calendar month corresponding to
 the forecast month).
@@ -43,10 +44,7 @@ Or, you could build a California-only model using the WHERE1 key in the specs fi
 loan age and forecast month alone may produce a sample that is concentrated on certain vintages or performance
 periods.
 
-goMortgage does this sampling in two stages. The first stage generates a table of loans sampled to the
-as-of date.  This table is then sampled to pick target dates.
-
-There is a third stage to the data build. This joins the sampled loans to other (economic) data.  The table
+There is a third stage to the data build. This joins the sampled loans to other (*e.g.* economic) data.  The table
 is joined by geo (e.g. zip3, state, zip) at four time periods:
 
 1. The origination date.
@@ -148,5 +146,5 @@ The final table is specified by:
 
 ### Sample Files
 
-There are example specs files (.gom) in the scripts directory on GitHub.  The DQ model forecasts delinquency.
+There are example specs files (.gom) in the [scripts]() directory on GitHub.  The DQ model forecasts delinquency.
 Its data is constructed using the values in the examples above.

@@ -14,29 +14,15 @@ the loan number. Since it is a hash of the loan number, a given loan will always
 same bucket.  Importantly, the hash value is uncorrelated with the other fields in the table.
 The bucket field is used to allocate an observation into one of the 3 data sets. 
 
-As noted in the **Data** section, the data is stratified along a number of dimensions so that we have the
-broadest possible sample and avoid length-biased sampling. Typically, these are:
-
-- state
-- as-of date
-- as-of loan age
-- as-of delinquency
-- forecast month
-- target month (the calendar month)
-
-The terminology used here is:
-
-- as-of date.  The date at which we have actual information and start the forecast from.  Fields that are derived
-  from this date start with 'ao'.
-- forecast month.  The number of months into the future we are forecasting. Fields that refer to this point in
-time start with 'trg'.
-
-
 ### Model Conceit
 
-The types of models fit (with the exception of the net proceeds model) are hazard models.  These forecast the
+goMortgage will fit a model to whatever data it's given.  Generally, though, these will be hazard models.
+Hazard models forecast the
 conditional probability that the loan will be in a given state month-by-month into the future. The condition is
-that the loan still exists and is eligible to be in one of the states.  
+that the loan still exists at the beginning of the forecast month. Other conditions are possible.  The 
+delinquency model is also conditioned on the loan being on the books at the end of the forecast month.
+
+### WHY NOT JUST BUILD ONE HUGE MODEL?
 
 ### Model Type
 
