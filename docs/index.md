@@ -12,21 +12,23 @@ What aspects of mortgage performance can be modeled? Really, anything you can th
 is agnostic about its target and features. Think of it as a flexible framework for model building.
 
 As you might imagine, there are many items that must be specified when building a model.  goMortgage
-takes a file (.gom) which specifies these.
+takes a text file (*.gom) you create which specifies these.
 
 Since goMortgage is open source, goMortgage can be modified to suit your needs.
-Out of the box, it is configured to work with Freddie and Fannie data.
+Out of the box, it is configured to work with Freddie and Fannie data. There are
+instructions to set up your own data sources. 
 
-The topics below provide details on getting up and running.
+The topics below provide details to get up and running.
 
-- Approach to [modeling]({{ site.baseurl }}/approach.html)
-- Loan-level data
-- Building the modeling [data]({{ site.baseurl }}/dataBuild.html)
-- Building the [modeling]({{ site.baseurl }}/modelBuild.html)
+- The goMortgage [approach]({{ site.baseurl }}/approach.html)
+- Building the [modeling data]({{ site.baseurl }}/dataBuild.html)
+- Building the [model]({{ site.baseurl }}/modelBuild.html)
+- [Assessing]({{ site.baseurl }}/assessment.html)
 - The specification [.gom]({{ site.baseurl }}/gomFile.html) file
-- Directory [strucutre]({{ site.baseurl }}/directoryStructure.html)
+- The output [directory]({{ site.baseurl }}/directoryStructure.html) structure
 - Dependencies on other [projects]({{ site.baseurl }}/dependencies.html)
 - [Tutorial]({{ site.baseurl }}/tutorial.html)
+- [Examples]({{ site.baseurl }}/examples.html)
 - [Bring Your Own Data]({{ site.baseurl }}/BYOD.html)
 
 

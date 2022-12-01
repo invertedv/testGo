@@ -1,5 +1,7 @@
-## The Specifications File (.gom)
-The specificaton (.gom) file instructs goMortgage what to do. There are examples in the scripts directory.
+## The Specifications File (*.gom)
+The specificaton (.gom) file instructs goMortgage what to do. 
+There are annotated [examples]({{ site.baseurl }}/examples.html) to make the 
+descriptions below concrete.
 
 The format for entries is:
 
@@ -9,18 +11,19 @@ Comments start with a double forward slash (//).
 
 ### Required keys
 
-There are three basic keys that drive the process.  These are:
+There are only one key that are always required.  These are:
 
 - outDir: \<path\><br>
-Is the full path to the directory to place all the output of the run. If buildData
-or buildModel are "yes", this directory is created or emptied.  If not, the directory
+Is the full path to the directory where goMortgage places all the output of the run. 
+If buildData
+or buildModel are "yes", this directory is created (or emptied).  If not, the directory
 must exist and the output of this run is added to the existing directory. 
-- modelTable: \<ClickHouse table\><br>Is the table that has the model/validate/assess
-data.
 
-There are four keys the set the primary steps conducted.
+There are four keys the set the primary steps performed.
 
-- buildData: \<yes/no\><br>If yes, build the model/validate/assess ClickHouse table.
+- buildData: \<yes/no\><br>If yes, goMortgage builds a table from a loan-level
+and economic data tables. The table produced is intended for one ore more of the 
+model/validation/assess steps.
   The default value is "no" if the key is omitted.
 - buildModel: \<yes/no\><br>If yes, fit the model.
   The default value is "no" if the key is omitted.
@@ -30,7 +33,7 @@ There are four keys the set the primary steps conducted.
 to data that was stratified on the target field.
   The default value is "no" if the key is omitted.
 
-Within each of these, additional key/vals are required. 
+Additional keys specify the details each of these directives requires.
 
 ### buildData Keys
 Building the data is a three-pass process.  See [Data Build]() for more details. 
@@ -69,17 +72,17 @@ is the ClickHouse table that has the economic data.
 - econFields: \<field\><br>
 is the geo field that is the join field between the mortgage data and the economic data (*e.g.* zip).
 <br><br>
-- modelTable: \<ClickHouse table\><br>
+- outputTable: \<ClickHouse table\><br>
 is the name of the ClickHouse table to create with the modeling sample.
 
 ***Notes***<br>
 You can stratify on any field, including the target field. However, not all fields
 are available at the first pass -- essentially only fields that are available at
-the as-of date. If you stratify on the target field in pass2, you should **not** 
+the as-of date are available. If you stratify on the target field in pass2, you should **not** 
 specify any other fields.
 
-Building the data will (re)create the output directory.  A
-nything in the directory will be lost.
+Building the data will (re)create the output directory.  Anything in the directory 
+will be lost.
 
 ### buildModel Keys
 
@@ -87,7 +90,7 @@ The following keys control the model build.
 
 - target: \<field name\><br>
 is the field that is the target (dependent variable).
-- targetType: \<cat\>/\<cts\><br>
+- targetType: \<cat/cts\><br>
 is the type of the target feature.
 - cat: \<field list\><br>
 is a comma-separated list of categorical (one-hot) features.
@@ -99,9 +102,12 @@ pair of the name of the feature
 followed by the embedding dimension (field:dim).
 
 A model need not have all three of cat, cts, and emb, but it must have at least one.
+The models are sequential.  The input layer is not needed.  The *k*th layer has the
+form:
 
-- layer<n> : \<layer specification\><br>
-The model layers are numbered starting with 1.  The specification of the layer follows that used by the
+- layer\<k\> : \<layer specification\><br>
+The model layers are numbered starting with 1.  The specification of the layer 
+follows that used by the
 [seafan](https://pkg.go.dev/github.com/invertedv/seafan) package.  For instance, if the first layer
 after the inputs is a fully connected layer with a RELU activation and 10 outputs is specified by
 
