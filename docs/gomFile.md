@@ -235,11 +235,4 @@ is the plot width, in pixels.
 
 ### Examples
 
-These examples reside in the [scripts]() directory.
-
-- mod.gom. 
-- statusEven.gom
-- statusStrat.gom
-
-The examples assume that you have set up the fannie dataset using 
-[this]() command and the economic data using [this]() command.
+See [here]({{ site.baseurl }}/examples.html) for examples.

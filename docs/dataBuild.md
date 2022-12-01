@@ -149,7 +149,6 @@ The final table is specified by:
 
       modelTable: tmp.modelDq
 
-### Sample Files
+### Examples
 
-There are example specs files (.gom) in the [scripts]() directory on GitHub.  The DQ model forecasts delinquency.
-Its data is constructed using the values in the examples above.
+Examples may be found [here]({{ site.baseurl }}/examples.html).
