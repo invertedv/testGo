@@ -15,6 +15,7 @@ is agnostic about its target.  The example scripts include models to forecast:
 - The loan's delinquency status.
 - Prepay and default.
 - Net recovery on the property at sale.
+- A mortgage score using a fixed, two-year performance window.
 
 The models fit in the first 3 cases are hazard models. 
 
@@ -26,6 +27,7 @@ takes a file (.gom) which specifies these.
 
 The topics below provide details on getting up and running.
 
+- Approach to [modeling]({{ site.baseurl }}/approach.html)
 - Loan-level data
 - Building the modeling [data]({{ site.baseurl }}/dataBuild.html)
 - Building the [modeling]({{ site.baseurl }}/modelBuild.html)

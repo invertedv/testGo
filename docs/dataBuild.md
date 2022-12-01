@@ -1,6 +1,11 @@
 ### Data Build
 
-goMortgage is designed to be very flexible in building modeling data. However, there *is* a structure to the approach.
+
+goMortgage will build the model/validate/assess ClickHouse table(s).  As set up in the examples, these
+all reside in the same table. Disjoint sets of data are pulled for each of the three purposes.
+
+
+goMortgage is designed to be flexible in building modeling data. However, there *is* a structure to the approach.
 goMortgage will pull stratified and simple random samples from the source loan-level database.
 
 In its current version, it is set up to work with the Fannie Mae data as built by this [app]().
