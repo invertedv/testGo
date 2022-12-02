@@ -11,7 +11,7 @@ Comments start with a double forward slash (//).
 
 ### Required key
 
-There are only one key that are always required.  These are:
+There is only one key that is always required:
 
 - outDir: \<path\><br>
 the full path to the directory where goMortgage places all the output of the run. 
