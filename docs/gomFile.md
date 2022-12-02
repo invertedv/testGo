@@ -9,29 +9,26 @@ The format for entries is:
 
 Comments start with a double forward slash (//).
 
-### Required keys
+### Required key
 
 There are only one key that are always required.  These are:
 
 - outDir: \<path\><br>
-Is the full path to the directory where goMortgage places all the output of the run. 
+the full path to the directory where goMortgage places all the output of the run. 
 If buildData
 or buildModel are "yes", this directory is created (or emptied).  If not, the directory
 must exist and the output of this run is added to the existing directory. 
 
-There are four keys the set the primary steps performed.
+There are four keys the set the primary steps performed. If one of these keys is
+omitted, the value is set to "no".
 
 - buildData: \<yes/no\><br>If yes, goMortgage builds a table from a loan-level
 and economic data tables. The table produced is intended for one or more of the 
 model/validation/assess datasets.
-  The default value is "no" if the key is omitted.
 - buildModel: \<yes/no\><br>If yes, fit the model.
-  The default value is "no" if the key is omitted.
 - assessModel: \<yes/no\><br>If yes, assess the model fit.
-  The default value is "no" if the key is omitted.
 - biasCorrect: \<yes/no\><br>If yes, correct the bias in a model that was fit
 to data that was stratified on the target field.
-  The default value is "no" if the key is omitted.
 
 Additional keys specify the details each of these directives requires.
 
@@ -40,8 +37,9 @@ Building the data is a three-pass process.  See [Data Build]() for more details.
 The keys below are required for building data.
 
 - strats1: \<field list\><br>
-the fields to stratify on for the first pass. If you wish to conduct random
-sampling rather than stratified sampling, specify strats1 as "noGroups".
+the fields in the loan-level data to stratify on for the first pass. If you wish 
+to conduct random sampling rather than stratified sampling, specify a single
+field: "noGroups".
 - sampleSize1: \<int\><br>
 the target sample size for pass 1;
 - where1: \<clause\><br>
@@ -52,9 +50,10 @@ the name of ClickHouse table to create with the stratification summary.
 the name of the ClickHouse table to create with the sampled loans.
 <br><br>
 - strats2: \<field list\><br>
-a comma-separated list of the fields to stratify on for the second pass
-  If you wish to conduct random
-  sampling rather than stratified sampling, specify strats2 as "noGroups".
+a comma-separated list of the fields to stratify on for the second pass.
+  If you wish
+  to conduct random sampling rather than stratified sampling, specify a single
+  field: "noGroups".
 - sampleSize2: \<int\><br>
 the target sample size for pass 2;
 - where2: \<clause\><br>
@@ -67,13 +66,15 @@ the name of the ClickHouse table to create with the sampled loans.
 - mtgDb: \<table name\><br>
 the ClickHouse table that has the loan-level detail.
 - mtgFields: \<name\><br>
-The value here is a keyword.  Currently, valid values are "fannie" and "freddie". These refer to values specified
-within goMortgage.  This is how goMortgage knows what fields to expect in the table.
+The value here is a keyword.  Currently, valid values are "fannie" and "freddie".
+This is how goMortgage knows what fields to expect in the table.
 See [Bring Your Own Data]({{ site.baseurl }}/BYOD.html) for details on adding a source.
 - econDb:\<table name\><br>
 the ClickHouse table that has the economic data.
 - econFields: \<field\><br>
-the geo field that is the join field between the mortgage data and the economic data (*e.g.* zip).
+the geo field that is the join field between the mortgage data and the 
+economic data.  Currently, only "zip3" is supported. The join will use a geo
+field *and* a date field. 
 <br><br>
 - outputTable: \<ClickHouse table\><br>
 the name of the ClickHouse table to create with the modeling sample.
@@ -81,44 +82,49 @@ the name of the ClickHouse table to create with the modeling sample.
 ***Notes***<br>
 You can stratify on any field, including the target field. However, not all fields
 are available at the first pass -- essentially only fields that are available at
-the as-of date are available. If you stratify on the target field in pass2, you should **not** 
-specify any other fields.
+the as-of date. If you stratify on the target field in pass2, you should **not** 
+specify any other fields in strat2.
 
 Building the data will (re)create the output directory.  Anything in the directory 
 will be lost.
+
+Summary of the strata counts are also placed in the "strats" subdirectory in the
+ouput directory.
 
 ### buildModel Keys
 
 The following keys control the model build.
 
 - target: \<field name\><br>
-is the field that is the target (dependent variable).
+the field that is the target (dependent variable).
 - targetType: \<cat/cts\><br>
-is the type of the target feature.
+the type of the target feature.
 - cat: \<field list\><br>
-is a comma-separated list of categorical (one-hot) features.
+a comma-separated list of categorical (one-hot) features.
 - cts: \<field list\><br>
-is a comma-separated list of continuous features.
+a comma-separated list of continuous features.
 - emb: \<field list\><br>
-is a comma-separated list of embedding features.  Each entry is also a key/val 
+a comma-separated list of embedding features.  Each entry is also a key/val 
 pair of the name of the feature
 followed by the embedding dimension (field:dim).
 
 A model need not have all three of cat, cts, and emb, but it must have at least one.
-The models are sequential.  The input layer is not needed.  The *k*th layer has the
-form:
+The models are sequential.  The input layer is constructed by goMortgage.  The 
+*k*th layer has the form:
 
 - layer\<k\> : \<layer specification\><br>
 The model layers are numbered starting with 1.  The specification of the layer 
 follows that used by the
-[seafan](https://pkg.go.dev/github.com/invertedv/seafan) package.  For instance, if the first layer
-after the inputs is a fully connected layer with a RELU activation and 10 outputs is specified by
+[seafan](https://pkg.go.dev/github.com/invertedv/seafan) package.  For instance, 
+if the first layer
+after the inputs is a fully connected layer with a RELU activation and 10 outputs 
+is specified by
 
       layer1: FC(10, activation=relu)
 - epochs: \<int\><br>
-the maximum number of epochs to run through.
+the maximum number of epochs in the fit.
 - batchsize: \<int\><br>
-the batch size for the model build optimizer.
+the batch size for the model build.
 - earlyStopping: \<int\><br>
 If the cost function evaluated on the validation data doesn't decline for 'earlyStopping' epochs, the fit is
 terminated.
@@ -129,9 +135,10 @@ the learning rate at \<epochs\>.
 
       The learning rate declines linearly from learningRateStart at epoch 1 to learningRateEnd at epoch 'epochs'.
 - modelQuery: \<query\><br>
-the query to pull the model-build data from 'modelTable'.
+the query to pull the model-build data. This is the data used to fit the
+coefficients.
 - validateQuery: \<query\><br>
-the query to pull the validation data from 'modelTable'.  The validation data is used only for determining
+the query to pull the validation data.  The validation data is used only for determining
 early stopping.
 
       The queries have a place holder "%s" in place of the fields to pull.
@@ -162,9 +169,10 @@ will be lost.
 ### assessModel Keys
 #### Assessment by Feature
 Softmax outputs are coalesced into a binary output for assessment.  The user specifies
-one or more columns of the output to group into the "1" value.
+one or more columns of the output to group into the "1" value. If you have a 
+single-valued continuous target, use column 0 below.
 - assessQuery: \<query\><br>
-  is the query to pull the assessment data from 'modelTable'.  The assessment data is used only for post-model-build
+  is the query to pull the assessment data.  The assessment data is used only for post-model-build
   assessment of the model fit.
 
       The queries have a place holder "%s" in place of the fields to pull.
@@ -185,7 +193,7 @@ If you not wish to segment the analysis on a field, specify the field as "noGrou
 is a comma-separated list of fields.  The assessment is always run on all features in the model. 
 The assessment is also run on the fields in this list.
 
-- Saving the assessment data<br>
+***Saving the assessment data***<br>
   You may save the data used for the assessment along with model outputs back to ClickHouse.
   There are two keys required to do this.
     - saveTable: \<table name\><br>is the ClickHouse table to save the assess data to.
