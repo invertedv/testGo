@@ -20,7 +20,8 @@ or buildModel are "yes", this directory is created (or emptied).  If not, the di
 must exist and the output of this run is added to the existing directory. 
 
 There are four keys the set the primary steps performed. If one of these keys is
-omitted, the value is set to "no".
+omitted, the value is set to "no". A run must include one "yes" value and may include
+all four.
 
 - buildData: \<yes/no\><br>If yes, goMortgage builds a table from a loan-level
 and economic data tables. The table produced is intended for one or more of the 
@@ -34,7 +35,7 @@ Additional keys specify the details each of these directives requires.
 
 ### buildData Keys
 Building the data is a three-pass process.  See [Data Build]() for more details. 
-The keys below are required for building data.
+The keys below are **required** for building a table.
 
 - strats1: \<field list\><br>
 the fields in the loan-level data to stratify on for the first pass. If you wish 
@@ -64,7 +65,7 @@ is the name of ClickHouse table to create with the stratification summary.
 the name of the ClickHouse table to create with the sampled loans.
 <br><br>
 - mtgDb: \<table name\><br>
-the ClickHouse table that has the loan-level detail.
+the ClickHouse table with the loan-level detail.
 - mtgFields: \<name\><br>
 The value here is a keyword.  Currently, valid values are "fannie" and "freddie".
 This is how goMortgage knows what fields to expect in the table.
@@ -73,7 +74,7 @@ See [Bring Your Own Data]({{ site.baseurl }}/BYOD.html) for details on adding a 
 the ClickHouse table that has the economic data.
 - econFields: \<field\><br>
 the geo field that is the join field between the mortgage data and the 
-economic data.  Currently, only "zip3" is supported. The join will use a geo
+economic data.  Currently, only "zip3" is supported. The join will use this geo
 field *and* a date field. 
 <br><br>
 - outputTable: \<ClickHouse table\><br>
@@ -81,7 +82,7 @@ the name of the ClickHouse table to create with the modeling sample.
 
 ***Notes***<br>
 You can stratify on any field, including the target field. However, not all fields
-are available at the first pass -- essentially only fields that are available at
+are available at the first pass -- only fields that are available at
 the as-of date. If you stratify on the target field in pass2, you should **not** 
 specify any other fields in strat2.
 
@@ -93,7 +94,8 @@ ouput directory.
 
 ### buildModel Keys
 
-The following keys control the model build.
+***Required***<br>
+The following keys are required.
 
 - target: \<field name\><br>
 the field that is the target (dependent variable).
@@ -108,8 +110,9 @@ a comma-separated list of embedding features.  Each entry is also a key/val
 pair of the name of the feature
 followed by the embedding dimension (field:dim).
 
-A model need not have all three of cat, cts, and emb, but it must have at least one.
-The models are sequential.  The input layer is constructed by goMortgage.  The 
+Note: a model need not have all three of cat, cts, and emb, but it must have at least one.
+
+The NN models are sequential.  The input layer is constructed by goMortgage.  The 
 *k*th layer has the form:
 
 - layer\<k\> : \<layer specification\><br>
@@ -125,62 +128,75 @@ is specified by
 the maximum number of epochs in the fit.
 - batchsize: \<int\><br>
 the batch size for the model build.
-- earlyStopping: \<int\><br>
-If the cost function evaluated on the validation data doesn't decline for 'earlyStopping' epochs, the fit is
-terminated.
 - learningRateStart: \<float\><br>
 the learning rate for epoch 1.
-- learningRateStart: \<float\><br>
-the learning rate at \<epochs\>. 
 
       The learning rate declines linearly from learningRateStart at epoch 1 to learningRateEnd at epoch 'epochs'.
 - modelQuery: \<query\><br>
 the query to pull the model-build data. This is the data used to fit the
 coefficients.
-- validateQuery: \<query\><br>
-the query to pull the validation data.  The validation data is used only for determining
-early stopping.
 
-      The queries have a place holder "%s" in place of the fields to pull.
+      The query have a place holder "%s" in place of the fields to pull.
       goMortgage constructs the list of fields.
 
-The queries could be the same, but the idea is to pull disjoint sets of data 
-for estimation and early-stopping validation.
+
+***Optional***<br>
+- learningRateEnd: \<float\><br>
+  the learning rate at \<epochs\>.
+- validateQuery: \<query\><br>
+  the query to pull the validation data.  The validation data is used only for determining
+  early stopping. The validate query has the same format as the model query above.
+- earlyStopping: \<int\><br>
+  If the cost function evaluated on the validation data doesn't decline for 'earlyStopping' epochs, the fit is
+  terminated.
+- l2Reg: \<val\><br>
+  the L2 regularization parameter value.
+- startFrom: \<path\><br>
+  startFrom points to a directory containing a model with the same structure being fit.  The fit will start
+  at the parameter values in the existing file.
+- model: \<subdir\><br>Is the subdirectory name within \<outDir\> to place the fitted model.  The value
+  defaults to "model" if the key is not specified.
 
 Input models are models previously created by goMortgage that are features in the 
 model being built in the current run. They are specified using this syntax:
 - inputModel: \<name\>
 - location\<name\>: \<path\><br>Path to the directory containing the model.
 - targets\<name\>: \<name1\>{target list 1}; \<name2\>{target list 2}<br>
-The format is the same as saveTableTargets.
-
-- startFrom: \<path\><br>
-  startFrom points to a directory containing a model with the same structure being fit.  The fit will start
-  at the parameter values in the existing file.
-<br><br>
-Additional keys:
-- model: \<subdir\><br>Is the subdirectory name within \<outDir\> to place the fitted model.  The value
-defaults to "model" if the key is not specified.
+The format is the same as saveTableTargets.<br><br>
 
 ***Notes***<br>
-Building the data will (re)create the output directory.  Anything in the directory 
+Building the model will (re)create the output directory.  Anything in the directory 
 will be lost.
 
 ### assessModel Keys
-#### Assessment by Feature
 Softmax outputs are coalesced into a binary output for assessment.  The user specifies
-one or more columns of the output to group into the "1" value. If you have a 
-single-valued continuous target, use column 0 below.
+one or more columns of the output to group into the "1" value. The native values of the
+target field are sorted when assigned to its one-hot representation.  For instance, if the
+target has values "yes", "no" and "maybe", their columns in the softmax output will be
+2, 1 and 0, respectively.
+
+If you have a single-valued continuous target, it is specified as column 0.
+
+There are five sets of assessments plots:
+
+1. marginal
+2. decile
+3. KS (softmax output only)
+4. segment
+5. curves
+
+Assessments one through five as specified as a group, termed "assessment by feature";
+six is separate process termed "assessment by curve".  At least one of these two sets must
+be specified.  Multiple of each may be specified.
+
+The only required key is assessQuery.  
 - assessQuery: \<query\><br>
   is the query to pull the assessment data.  The assessment data is used only for post-model-build
-  assessment of the model fit.
+  assessment of the model fit. The query has the same format as the model and validation queries.
 
-      The queries have a place holder "%s" in place of the fields to pull.
-      goMortgage constructs the list of fields.
-- graphs: \<sub dir\><br>
-  the optional name of the directory within \<outDir\> to place the graphs,  If you do not specifiy this,
-  "graphs" will be used.
-- Three keys to specify an assessment are required. Any number of assessments may 
+#### Assessment by Feature
+
+Three keys to specify an assessments 1-5 are required. Any number of assessments may 
 be specified.
     - assessName\<name\>: \<title\><br>Is the title that will appear in graphs.
     - assessTarget\<name\>: \<ints\><br>Is a list of the columns of the model output
@@ -190,11 +206,11 @@ be specified.
 If you not wish to segment the analysis on a field, specify the field as "noGroups" in assessTarget.
 <br><br> 
 - assessAddl: \<field list\><br>
-is a comma-separated list of fields.  The assessment is always run on all features in the model. 
+is an optional, comma-separated list of fields.  The assessment is always run on all features in the model. 
 The assessment is also run on the fields in this list.
 
 ***Saving the assessment data***<br>
-  You may save the data used for the assessment along with model outputs back to ClickHouse.
+  You may, optionally, save the data used for the assessment along with model outputs back to ClickHouse.
   There are two keys required to do this.
     - saveTable: \<table name\><br>is the ClickHouse table to save the assess data to.
     - saveTableTargets: \<name1\>{target list 1}; \<name2\>{target list 2}<br>
@@ -208,12 +224,15 @@ The assessment is also run on the fields in this list.
       and another field called "last2" in the output table that is the sum of the probabilities of the target being
       its last 2 values.  If the target is continuous, then only column 0 is available.
 
-Additional assessment keys:
+Additional optional assessment keys:
 
+- graphs: \<sub dir\><br>
+  the name of the directory within \<outDir\> to place the graphs,  If you do not specifiy this,
+  "graphs" will be used.
 - addlKeep: \<field list\><br>
-  is an optional comma-separated list of additional fields to include in the 'saveTable'.  For instance, loan number.
+  a comma-separated list of additional fields to include in the 'saveTable'.  For instance, loan number.
 - addlCats: \<field list\><br>
-  is an optional comma-separated list of fields to treat as categorical. 
+  a comma-separated list of fields to treat as categorical. 
 If you wish to include a field in "addlAssess" as a one-hot feature, include it in
 this statement.
 
@@ -253,4 +272,4 @@ is the plot width, in pixels.
 
 ### Examples
 
-See [here]({{ site.baseurl }}/examples.html) for examples.
+See [here]({{ site.baseurl }}/examples.html) for examples of *.gom files.
