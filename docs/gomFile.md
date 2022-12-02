@@ -22,8 +22,8 @@ must exist and the output of this run is added to the existing directory.
 There are four keys the set the primary steps performed.
 
 - buildData: \<yes/no\><br>If yes, goMortgage builds a table from a loan-level
-and economic data tables. The table produced is intended for one ore more of the 
-model/validation/assess steps.
+and economic data tables. The table produced is intended for one or more of the 
+model/validation/assess datasets.
   The default value is "no" if the key is omitted.
 - buildModel: \<yes/no\><br>If yes, fit the model.
   The default value is "no" if the key is omitted.
@@ -40,40 +40,43 @@ Building the data is a three-pass process.  See [Data Build]() for more details.
 The keys below are required for building data.
 
 - strats1: \<field list\><br>
-These are the fields to stratify on for the first pass (which selects loans and as-of dates).
+the fields to stratify on for the first pass. If you wish to conduct random
+sampling rather than stratified sampling, specify strats1 as "noGroups".
 - sampleSize1: \<int\><br>
-The target sample size for pass 1;
+the target sample size for pass 1;
 - where1: \<clause\><br>
 a "where" clause to restrict the selection.
 - pass1Strat: \<table name\><br>
-is the name of ClickHouse table to create with the stratification summary.
+the name of ClickHouse table to create with the stratification summary.
 - pass1Sample: \<table name\><br>
-is the name of the ClickHouse table to create with the sampled loans.
+the name of the ClickHouse table to create with the sampled loans.
 <br><br>
 - strats2: \<field list\><br>
-is a comma-separated list of the fields to stratify on for the second pass (which selects loans and as-of dates).
+a comma-separated list of the fields to stratify on for the second pass
+  If you wish to conduct random
+  sampling rather than stratified sampling, specify strats2 as "noGroups".
 - sampleSize2: \<int\><br>
-is the target sample size for pass 2;
+the target sample size for pass 2;
 - where2: \<clause\><br>
-is a "where" clause to restrict the selection.
+a "where" clause to restrict the selection.
 - pass2Strat: \<table name\><br>
 is the name of ClickHouse table to create with the stratification summary.
 - pass2Sample: \<table name\><br>
-is the name of the ClickHouse table to create with the sampled loans.
+the name of the ClickHouse table to create with the sampled loans.
 <br><br>
 - mtgDb: \<table name\><br>
-is the ClickHouse table that has the loan-level detail.
+the ClickHouse table that has the loan-level detail.
 - mtgFields: \<name\><br>
 The value here is a keyword.  Currently, valid values are "fannie" and "freddie". These refer to values specified
 within goMortgage.  This is how goMortgage knows what fields to expect in the table.
-See 'Adding Sources' for details on adding a source.
+See [Bring Your Own Data]({{ site.baseurl }}/BYOD.html) for details on adding a source.
 - econDb:\<table name\><br>
-is the ClickHouse table that has the economic data.
+the ClickHouse table that has the economic data.
 - econFields: \<field\><br>
-is the geo field that is the join field between the mortgage data and the economic data (*e.g.* zip).
+the geo field that is the join field between the mortgage data and the economic data (*e.g.* zip).
 <br><br>
 - outputTable: \<ClickHouse table\><br>
-is the name of the ClickHouse table to create with the modeling sample.
+the name of the ClickHouse table to create with the modeling sample.
 
 ***Notes***<br>
 You can stratify on any field, including the target field. However, not all fields
@@ -113,31 +116,32 @@ after the inputs is a fully connected layer with a RELU activation and 10 output
 
       layer1: FC(10, activation=relu)
 - epochs: \<int\><br>
-is the maximum number of epochs to run through.
+the maximum number of epochs to run through.
 - batchsize: \<int\><br>
-is the batch size for the model build optimizer.
+the batch size for the model build optimizer.
 - earlyStopping: \<int\><br>
 If the cost function evaluated on the validation data doesn't decline for 'earlyStopping' epochs, the fit is
 terminated.
 - learningRateStart: \<float\><br>
-is the learning rate for epoch 1.
+the learning rate for epoch 1.
 - learningRateStart: \<float\><br>
-is the learning rate at \<epochs\>. 
+the learning rate at \<epochs\>. 
 
       The learning rate declines linearly from learningRateStart at epoch 1 to learningRateEnd at epoch 'epochs'.
 - modelQuery: \<query\><br>
-is the query to pull the model-build data from 'modelTable'.
+the query to pull the model-build data from 'modelTable'.
 - validateQuery: \<query\><br>
-is the query to pull the validation data from 'modelTable'.  The validation data is used only for determining
+the query to pull the validation data from 'modelTable'.  The validation data is used only for determining
 early stopping.
 
-      The queries have two place holders "%s".  goMortgage replaces the first %s with a list of the needed fields
-      and the second with 'modelTable'.
-The queries could be the same, but the idea is to pull disjoint sets of data for estimating and evaluating the
-model.
+      The queries have a place holder "%s" in place of the fields to pull.
+      goMortgage constructs the list of fields.
 
-Input models are models previously created by goMortgage that are features in the model being built
-in the current run. They are specified using this syntax:
+The queries could be the same, but the idea is to pull disjoint sets of data 
+for estimation and early-stopping validation.
+
+Input models are models previously created by goMortgage that are features in the 
+model being built in the current run. They are specified using this syntax:
 - inputModel: \<name\>
 - location\<name\>: \<path\><br>Path to the directory containing the model.
 - targets\<name\>: \<name1\>{target list 1}; \<name2\>{target list 2}<br>
@@ -152,21 +156,21 @@ Additional keys:
 defaults to "model" if the key is not specified.
 
 ***Notes***<br>
-Building the data will (re)create the output directory.  A
-nything in the directory will be lost.
+Building the data will (re)create the output directory.  Anything in the directory 
+will be lost.
 
 ### assessModel Keys
 #### Assessment by Feature
-Softmax outputs are coalesced into binary outputs for assessment.  The user specifies
+Softmax outputs are coalesced into a binary output for assessment.  The user specifies
 one or more columns of the output to group into the "1" value.
 - assessQuery: \<query\><br>
   is the query to pull the assessment data from 'modelTable'.  The assessment data is used only for post-model-build
   assessment of the model fit.
 
-      The queries have two place holders "%s".  goMortgage replaces the first %s with a list of the needed fields
-      and the second with 'modelTable'.
+      The queries have a place holder "%s" in place of the fields to pull.
+      goMortgage constructs the list of fields.
 - graphs: \<sub dir\><br>
-  Is the optional name of the directory within \<outDir\> to place the graphs,  If you do not specifiy this,
+  the optional name of the directory within \<outDir\> to place the graphs,  If you do not specifiy this,
   "graphs" will be used.
 - Three keys to specify an assessment are required. Any number of assessments may 
 be specified.
@@ -182,7 +186,7 @@ is a comma-separated list of fields.  The assessment is always run on all featur
 The assessment is also run on the fields in this list.
 
 - Saving the assessment data<br>
-  You can, optionally, save the data used for the assessment along with model outputs back to ClickHouse.
+  You may save the data used for the assessment along with model outputs back to ClickHouse.
   There are two keys required to do this.
     - saveTable: \<table name\><br>is the ClickHouse table to save the assess data to.
     - saveTableTargets: \<name1\>{target list 1}; \<name2\>{target list 2}<br>
@@ -196,7 +200,7 @@ The assessment is also run on the fields in this list.
       and another field called "last2" in the output table that is the sum of the probabilities of the target being
       its last 2 values.  If the target is continuous, then only column 0 is available.
 
-Optional assessment keys:
+Additional assessment keys:
 
 - addlKeep: \<field list\><br>
   is an optional comma-separated list of additional fields to include in the 'saveTable'.  For instance, loan number.
