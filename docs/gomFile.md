@@ -19,22 +19,21 @@ If buildData
 or buildModel are "yes", this directory is created (or emptied).  If not, the directory
 must exist and the output of this run is added to the existing directory. 
 
-There are four keys the set the primary steps performed. If one of these keys is
-omitted, the value is set to "no". A run must include one "yes" value and may include
-all four.
+There are four keys that set the primary steps performed. If one of these keys is
+omitted, the value is set to "no". At least one key must be set to "yes".
 
-- buildData: \<yes/no\><br>If yes, goMortgage builds a table from a loan-level
-and economic data tables. The table produced is intended for one or more of the 
+- buildData: \<yes/no\><br>If yes, goMortgage builds the table from a loan-level
+and economic data tables. The table produced is intended for use as one or more of the 
 model/validation/assess datasets.
 - buildModel: \<yes/no\><br>If yes, fit the model.
 - assessModel: \<yes/no\><br>If yes, assess the model fit.
-- biasCorrect: \<yes/no\><br>If yes, correct the bias in a model that was fit
-to data that was stratified on the target field.
+- biasCorrect: \<yes/no\><br>If yes, correct the bias in a model against the
+modeling dataset.
 
-Additional keys specify the details each of these directives requires.
+Additional keys specify the details of each of these directives.
 
 ### buildData Keys
-Building the data is a three-pass process.  See [Data Build]() for more details. 
+Building the data is a three-pass process.  See [Data Build]() for details. 
 The keys below are **required** for building a table.
 
 - strats1: \<field list\><br>
@@ -43,8 +42,6 @@ to conduct random sampling rather than stratified sampling, specify a single
 field: "noGroups".
 - sampleSize1: \<int\><br>
 the target sample size for pass 1;
-- where1: \<clause\><br>
-a "where" clause to restrict the selection.
 - pass1Strat: \<table name\><br>
 the name of ClickHouse table to create with the stratification summary.
 - pass1Sample: \<table name\><br>
@@ -57,8 +54,6 @@ a comma-separated list of the fields to stratify on for the second pass.
   field: "noGroups".
 - sampleSize2: \<int\><br>
 the target sample size for pass 2;
-- where2: \<clause\><br>
-a "where" clause to restrict the selection.
 - pass2Strat: \<table name\><br>
 is the name of ClickHouse table to create with the stratification summary.
 - pass2Sample: \<table name\><br>
@@ -80,6 +75,13 @@ field *and* a date field.
 - outputTable: \<ClickHouse table\><br>
 the name of the ClickHouse table to create with the modeling sample.
 
+These keys are optional:
+- where1: \<clause\><br>
+  a "where" clause to restrict the selection.
+- where2: \<clause\><br>
+  a "where" clause to restrict the selection.
+
+
 ***Notes***<br>
 You can stratify on any field, including the target field. However, not all fields
 are available at the first pass -- only fields that are available at
@@ -98,7 +100,7 @@ ouput directory.
 The following keys are required.
 
 - target: \<field name\><br>
-the field that is the target (dependent variable).
+the field that is the target (dependent variable) of the model.
 - targetType: \<cat/cts\><br>
 the type of the target feature.
 - cat: \<field list\><br>
@@ -128,10 +130,6 @@ is specified by
 the maximum number of epochs in the fit.
 - batchsize: \<int\><br>
 the batch size for the model build.
-- learningRateStart: \<float\><br>
-the learning rate for epoch 1.
-
-      The learning rate declines linearly from learningRateStart at epoch 1 to learningRateEnd at epoch 'epochs'.
 - modelQuery: \<query\><br>
 the query to pull the model-build data. This is the data used to fit the
 coefficients.
@@ -139,10 +137,18 @@ coefficients.
       The query have a place holder "%s" in place of the fields to pull.
       goMortgage constructs the list of fields.
 
-
-***Optional***<br>
+Either learningRate or learingRateStart/learningRateEnd must be specified.
+- learningRate: \<float\><br>
+  the learning rate for the model build.
+- learningRateStart: \<float\><br>
+  the learning rate for epoch 1.
 - learningRateEnd: \<float\><br>
   the learning rate at \<epochs\>.
+
+      The learning rate declines linearly from learningRateStart at epoch 1 to learningRateEnd at epoch 'epochs'.
+
+
+***Optional***<br>
 - validateQuery: \<query\><br>
   the query to pull the validation data.  The validation data is used only for determining
   early stopping. The validate query has the same format as the model query above.
@@ -185,7 +191,7 @@ There are five sets of assessments plots:
 4. segment
 5. curves
 
-Assessments one through five as specified as a group, termed "assessment by feature";
+Assessments one through five are specified as a group, termed "assessment by feature";
 six is separate process termed "assessment by curve".  At least one of these two sets must
 be specified.  Multiple of each may be specified.
 
@@ -196,12 +202,13 @@ The only required key is assessQuery.
 
 #### Assessment by Feature
 
-Three keys to specify an assessments 1-5 are required. Any number of assessments may 
-be specified.
-    - assessName\<name\>: \<title\><br>Is the title that will appear in graphs.
-    - assessTarget\<name\>: \<ints\><br>Is a list of the columns of the model output
+Three keys are required for a single set of assessments by feature. 
+Any number of assessments may be specified.
+
+- assessName\<name\>: \<title\><br>Is the title that will appear in graphs.
+- assessTarget\<name\>: \<ints\><br>Is a list of the columns of the model output
   to coalesce into the assessment target.
-    - assessSlicer\<name\>: \<field\><br>
+- assessSlicer\<name\>: \<field\><br>
 
 If you not wish to segment the analysis on a field, specify the field as "noGroups" in assessTarget.
 <br><br> 
@@ -209,14 +216,27 @@ If you not wish to segment the analysis on a field, specify the field as "noGrou
 is an optional, comma-separated list of fields.  The assessment is always run on all features in the model. 
 The assessment is also run on the fields in this list.
 
+#### Assessment by Curve
+
+- curvesName\<name\>: \<title\><br>Title for graphs.
+- curvesTarget\<name\>: \<ints\>
+- curvesSlicer\<name\>: \<field\>
+
+***Notes***<br>
+You can run the assessment standalone on an existing model. When run in this mode,
+goMortgage will look into the model to determine the features to use in the assessment.
+You could also use this feature to assess the model against a new dataset, perhaps
+from a new source. If you wanted the results in its own directory, you need only create
+this directory and copy over the "model" subdirectory.
+
 ***Saving the assessment data***<br>
-  You may, optionally, save the data used for the assessment along with model outputs back to ClickHouse.
-  There are two keys required to do this.
-    - saveTable: \<table name\><br>is the ClickHouse table to save the assess data to.
-    - saveTableTargets: \<name1\>{target list 1}; \<name2\>{target list 2}<br>
-      The 'name' is the name of the field in the output field.  The target list is a list of comma-separated
-      columns of the model output to sum to create the field.  For instances, if the model is a softmax with
-      5 output columns, then
+You may, optionally, save the data used for the assessment along with model outputs back to ClickHouse.
+There are two keys required to do this.
+- saveTable: \<table name\><br>is the ClickHouse table to save the assess data to.
+- saveTableTargets: \<name1\>{target list 1}; \<name2\>{target list 2}<br>
+The 'name' is the name of the field in the output field.  The target list is a list of comma-separated
+columns of the model output to sum to create the field.  For instances, if the model is a softmax with
+5 output columns, then
 
           first: 0; last2: 3,4
 
@@ -232,22 +252,9 @@ Additional optional assessment keys:
 - addlKeep: \<field list\><br>
   a comma-separated list of additional fields to include in the 'saveTable'.  For instance, loan number.
 - addlCats: \<field list\><br>
-  a comma-separated list of fields to treat as categorical. 
-If you wish to include a field in "addlAssess" as a one-hot feature, include it in
-this statement.
-
-#### Assessment by Curve
-
-- curvesName\<name\>: \<title\><br>Title for graphs.
-- curvesTarget\<name\>: \<ints\>
-- curvesSlicer\<name\>: \<field\>
-
-***Notes***<br>
-You can run the assessment standalone on an existing model. When run in this mode,
-goMortgage will look into the model to determine the features to use in the assessment.
-You could also use this feature to assess the model against a new dataset, perhaps
-from a new source. If you wanted the results in its own directory, you need only create
-this directory and copy over the "model" subdirectory.
+  a comma-separated list of fields to treat as categorical.
+  If you wish to include a field in "addlAssess" as a one-hot feature, include it in
+  this statement.
 
 ### biasCorrect Keys
 
@@ -258,6 +265,7 @@ field.  goMortgage will use this data to refit the bias terms of the output laye
 
 - biasDir: \<sub dir\><br>Is the subdirectory within "outDir" to place the
 bias-corrected model.
+
 
 
 ### Optional
