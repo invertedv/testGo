@@ -204,8 +204,8 @@ The only required key is assessQuery.
 
 Three keys are required for a single set of assessments by feature. 
 Any number of assessments may be specified.
-- assessName\<name\>: \<title\><br>the title that will appear in graphs. \<name\> is an arbitrary
-name to identify this assessment.
+- assessName\<name\>: \<title\><br>the title that will appear in graphs. \<name\> is an arbitrary,
+case-sensitive name to identify this assessment.
 - assessTarget\<name\>: \<ints\><br>
 a list of the columns of the model output to coalesce into the assessment target.
 - assessSlicer\<name\>: \<field\><br>
@@ -218,9 +218,15 @@ The assessment is also run on the fields in this list.
 
 #### Assessment by Curve
 
-- curvesName\<name\>: \<title\><br>Title for graphs.
-- curvesTarget\<name\>: \<ints\>
-- curvesSlicer\<name\>: \<field\>
+- curvesName\<name\>: \<title\><br>
+the title for the graphs.  \<name\> is an arbitrary, case-sensitive
+  name to identify this assessment.
+- curvesTarget\<name\>: \<ints\><br>
+  a list of the columns of the model output to coalesce into the assessment target.
+- curvesSlicer\<name\>: \<field\><br>
+the averages are segmented by the values of this field.
+
+The graph produced is the average model and actual values at each level of the slicer field.
 
 ***Notes***<br>
 You can run the assessment standalone on an existing model. When run in this mode,
@@ -230,11 +236,13 @@ from a new source. If you wanted the results in its own directory, you need only
 this directory and copy over the "model" subdirectory.
 
 ***Saving the assessment data***<br>
-You may, optionally, save the data used for the assessment along with model outputs back to ClickHouse.
-There are two keys required to do this.
-- saveTable: \<table name\><br>is the ClickHouse table to save the assess data to.
+You may, optionally, create a ClickHouse table with the data used for the assessment 
+along with model outputs. There are two keys required to do this.
+- saveTable: \<table name\><br>
+the ClickHouse table to save the assess data to.
 - saveTableTargets: \<name1\>{target list 1}; \<name2\>{target list 2}<br>
-The 'name' is the name of the field in the output field.  The target list is a list of comma-separated
+the 'name' value is the name of the fieldds to create in ClickHouse.  The target list is
+a list of comma-separated
 columns of the model output to sum to create the field.  For instances, if the model is a softmax with
 5 output columns, then
 
@@ -263,20 +271,19 @@ layer will (ironically) be biased.  goMortgage can de-bias this term.  You must
 specify a "modelQuery" that returns data that is **not** stratified on the target
 field.  goMortgage will use this data to refit the bias terms of the output layer.
 
-- biasDir: \<sub dir\><br>Is the subdirectory within "outDir" to place the
+- biasDir: \<sub dir\><br>
+the subdirectory within "outDir" to place the
 bias-corrected model.
-
-
 
 ### Optional
 - title: \<title\><br>
-  is a title for the run, appearing in graphs, etc.
+  a title for the run, appearing in graphs, etc.
 - show: \<yes\>, \<no\>.<br>
 if yes, then all graphs are also sent directly to the browser.
 - plotHeight: \<int\><br>
-is the plot height, in pixels.
+the plot height, in pixels.  The default is 1200.
 - plotWidth: \<int\><br>
-is the plot width, in pixels.
+the plot width, in pixels. The default is 1600.
 
 ### Examples
 
