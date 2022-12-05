@@ -1,5 +1,5 @@
 ## The Specifications File (*.gom)
-The specificaton (.gom) file instructs goMortgage what to do. 
+The specificaton (*.gom) file instructs goMortgage what to do. 
 There are annotated [examples]({{ site.baseurl }}/examples.html) to make the 
 descriptions below concrete.
 
@@ -16,25 +16,25 @@ There is only one key that is always required:
 - outDir: \<path\><br>
 the full path to the directory where goMortgage places all the output of the run. 
 If buildData
-or buildModel are "yes", this directory is created (or emptied).  If not, the directory
+or buildModel are "yes", this directory is created (or emptied).  Otherwise, the directory
 must exist and the output of this run is added to the existing directory. 
 
 There are four keys that set the primary steps performed. If one of these keys is
 omitted, the value is set to "no". At least one key must be set to "yes".
 
-- buildData: \<yes/no\><br>If yes, goMortgage builds the table from a loan-level
+- buildData: \<yes/no\><br>If yes, goMortgage builds a table from a loan-level
 and economic data tables. The table produced is intended for use as one or more of the 
-model/validation/assess datasets.
+modelQuery/validateQuery/assessQuery.
 - buildModel: \<yes/no\><br>If yes, fit the model.
 - assessModel: \<yes/no\><br>If yes, assess the model fit.
 - biasCorrect: \<yes/no\><br>If yes, correct the bias in a model against the
-modeling dataset.
+data from modelQuery.
 
 Additional keys specify the details of each of these directives.
 
 ### buildData Keys
 Building the data is a three-pass process.  See [Data Build]() for details. 
-The keys below are **required** for building a table.
+The keys below are required for building a table.
 
 - strats1: \<field list\><br>
 the fields in the loan-level data to stratify on for the first pass. If you wish 
@@ -66,32 +66,32 @@ The value here is a keyword.  Currently, valid values are "fannie" and "freddie"
 This is how goMortgage knows what fields to expect in the table.
 See [Bring Your Own Data]({{ site.baseurl }}/BYOD.html) for details on adding a source.
 - econDb:\<table name\><br>
-the ClickHouse table that has the economic data.
+the ClickHouse table with the non-loan data.
 - econFields: \<field\><br>
-the geo field that is the join field between the mortgage data and the 
-economic data.  Currently, only "zip3" is supported. The join will use this geo
-field *and* a date field. 
+the geo field that is the join field between the loan data and the 
+non-loan data.  Currently, only "zip3" is supported. The join will use this geo
+field and a date field. 
 <br><br>
 - outputTable: \<ClickHouse table\><br>
 the name of the ClickHouse table to create with the modeling sample.
 
 These keys are optional:
 - where1: \<clause\><br>
-  a "where" clause to restrict the selection.
+  a "where" clause to restrict the selection during pass 1.
 - where2: \<clause\><br>
-  a "where" clause to restrict the selection.
+  a "where" clause to restrict the selection during pass 2.
 
 
 ***Notes***<br>
-You can stratify on any field, including the target field. However, not all fields
-are available at the first pass -- only fields that are available at
-the as-of date. If you stratify on the target field in pass2, you should **not** 
+You can stratify on any field, including the target field. However, during pass 1
+only as-of date and static fields are available.
+If you stratify on the target field in pass 2, you should **not** 
 specify any other fields in strat2.
 
 Building the data will (re)create the output directory.  Anything in the directory 
 will be lost.
 
-Summary of the strata counts are also placed in the "strats" subdirectory in the
+Summary of the strata counts are placed in the "strats" subdirectory in the
 ouput directory.
 
 ### buildModel Keys
@@ -122,7 +122,7 @@ The model layers are numbered starting with 1.  The specification of the layer
 follows that used by the
 [seafan](https://pkg.go.dev/github.com/invertedv/seafan) package.  For instance, 
 if the first layer
-after the inputs is a fully connected layer with a RELU activation and 10 outputs 
+after the inputs is a fully connected layer with a RELU activation and 10 outputs, it 
 is specified by
 
       layer1: FC(10, activation=relu)
@@ -135,40 +135,53 @@ the query to pull the model-build data. This is the data used to fit the
 coefficients.
 
       The query have a place holder "%s" in place of the fields to pull.
-      goMortgage constructs the list of fields.
+      goMortgage constructs the list of fields for you.
 
 Either learningRate or learingRateStart/learningRateEnd must be specified.
 - learningRate: \<float\><br>
-  the learning rate for the model build.
+the learning rate for the model build.
+<br><br>
 - learningRateStart: \<float\><br>
-  the learning rate for epoch 1.
+the learning rate for epoch 1.
 - learningRateEnd: \<float\><br>
-  the learning rate at \<epochs\>.
+the learning rate at \<epochs\>.
 
-      The learning rate declines linearly from learningRateStart at epoch 1 to learningRateEnd at epoch 'epochs'.
-
+Using the latter, the learning rate declines from learningRateStart at epoch 1 to 
+learningRateEnd at epoch 'epochs'.
 
 ***Optional***<br>
 - validateQuery: \<query\><br>
-  the query to pull the validation data.  The validation data is used only for determining
-  early stopping. The validate query has the same format as the model query above.
+the query to pull the validation data.  The validation data is used to determine
+early stopping. The validate query has the same format as the model query above.
 - earlyStopping: \<int\><br>
-  If the cost function evaluated on the validation data doesn't decline for 'earlyStopping' epochs, the fit is
-  terminated.
+If the cost function evaluated on the validation data doesn't decline for 'earlyStopping' epochs, 
+the fit is terminated.
 - l2Reg: \<val\><br>
-  the L2 regularization parameter value.
+the L2 regularization parameter value.
 - startFrom: \<path\><br>
-  startFrom points to a directory containing a model with the same structure being fit.  The fit will start
-  at the parameter values in the existing file.
-- model: \<subdir\><br>Is the subdirectory name within \<outDir\> to place the fitted model.  The value
-  defaults to "model" if the key is not specified.
+startFrom points to a directory containing a model with the same structure being fit.  The fit will start
+at the parameter values in the existing file.
+- model: \<subdir\><br>
+the subdirectory name within \<outDir\> to place the fitted model.  The value
+defaults to "model" if the key is not specified.
 
 Input models are models previously created by goMortgage that are features in the 
 model being built in the current run. They are specified using this syntax:
-- inputModel: \<name\>
-- location\<name\>: \<path\><br>Path to the directory containing the model.
+- inputModel: \<name\><br>
+an arbitrary, case-sensitive name to identify the model.
+- location\<name\>: \<path\><br>
+the path to the directory containing the model.
 - targets\<name\>: \<name1\>{target list 1}; \<name2\>{target list 2}<br>
-The format is the same as saveTableTargets.<br><br>
+  the 'name' value is the name of the fieldds to create in ClickHouse.  The target list is
+  a list of comma-separated
+  columns of the model output to sum to create the field.  For instances, if the model is a softmax with
+  5 output columns, then
+
+          first: 0; last2: 3,4
+
+      will create a field called 'first' in the output table that is the first level of the targe
+      and another field called "last2" in the output table that is the sum of the probabilities of the target being
+      its last 2 values.  If the target is continuous, then only column 0 is available.
 
 ***Notes***<br>
 Building the model will (re)create the output directory.  Anything in the directory 
@@ -191,8 +204,8 @@ There are five sets of assessments plots:
 4. segment
 5. curves
 
-Assessments one through five are specified as a group, termed "assessment by feature";
-six is separate process termed "assessment by curve".  At least one of these two sets must
+Assessments one through four are specified as a group, termed "assessment by feature";
+the fifth is separate process termed "assessment by curve".  At least one of these two sets must
 be specified.  Multiple of each may be specified.
 
 The only required key is assessQuery.  
@@ -209,8 +222,8 @@ case-sensitive name to identify this assessment.
 - assessTarget\<name\>: \<ints\><br>
 a list of the columns of the model output to coalesce into the assessment target.
 - assessSlicer\<name\>: \<field\><br>
-the field name to slice on which to slice the assessment.
-If you not wish to segment the analysis on a field, specify the field as "noGroups" in assessTarget.
+the field on which to slice the assessment.
+If you not wish to segment the analysis on a field, specify the value as "noGroups".
 <br><br> 
 - assessAddl: \<field list\><br>
 an optional, comma-separated list of fields.  The assessment is always run on all features in the model. 
@@ -227,13 +240,6 @@ the title for the graphs.  \<name\> is an arbitrary, case-sensitive
 the averages are segmented by the values of this field.
 
 The graph produced is the average model and actual values at each level of the slicer field.
-
-***Notes***<br>
-You can run the assessment standalone on an existing model. When run in this mode,
-goMortgage will look into the model to determine the features to use in the assessment.
-You could also use this feature to assess the model against a new dataset, perhaps
-from a new source. If you wanted the results in its own directory, you need only create
-this directory and copy over the "model" subdirectory.
 
 ***Saving the assessment data***<br>
 You may, optionally, create a ClickHouse table with the data used for the assessment 
@@ -264,6 +270,13 @@ Additional optional assessment keys:
   If you wish to include a field in "addlAssess" as a one-hot feature, include it in
   this statement.
 
+***Notes***<br>
+You can run the assessment standalone on an existing model. When run in this mode,
+goMortgage will look into the model to determine the features to use in the assessment.
+You could also use this feature to assess the model against a new dataset, perhaps
+from a new source. If you wanted the results in its own directory, you need only create
+this directory and copy over the "model" subdirectory.
+
 ### biasCorrect Keys
 
 If you build a model stratified on the target field, the "bias" term of the output
@@ -278,7 +291,7 @@ bias-corrected model.
 ### Optional
 - title: \<title\><br>
   a title for the run, appearing in graphs, etc.
-- show: \<yes\>, \<no\>.<br>
+- show: \<yes/no\><br>
 if yes, then all graphs are also sent directly to the browser.
 - plotHeight: \<int\><br>
 the plot height, in pixels.  The default is 1200.
