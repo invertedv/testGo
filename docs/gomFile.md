@@ -297,7 +297,3 @@ if yes, then all graphs are also sent directly to the browser.
 the plot height, in pixels.  The default is 1200.
 - plotWidth: \<int\><br>
 the plot width, in pixels. The default is 1600.
-
-### Examples
-
-See [here]({{ site.baseurl }}/examples.html) for examples of *.gom files.
