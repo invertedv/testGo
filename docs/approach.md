@@ -1,18 +1,25 @@
 ## Approach
 
 
-### The App
+### It's an App
 
 goMortgage is an app. You create a text file (*.gom) that instructs goMortgage what to do.  Want to 
 change the model structure? Change the source data? Change the features in the model? Change
 the sampling scheme? These are easy changes to your .gom file. There's no need to hack into your
-code, hoping that the changes won't cause some unintended consequences.
+code, create a bunch of new tests and hope that the changes won't cause some unintended consequences.
 
 The output of a goMortgage run is placed in a 
 directory you specify.  This includes your .gom file, a log file, a summary from the data build,
 the cost curves from the
 model build, and all graphical assessments of the model. Other outputs are saved to ClickHouse tables.
 
+### One-stop Shopping
+
+goMortgage handles the entire process. It will
+
+- build the dataset
+- build the model
+- assess the model
 
 ### Data
 
@@ -31,8 +38,7 @@ The structure of the data determines the type of model that is built.
 goMortgage is very flexible in the construction of the data. Hence, many types
 of models can be built. 
 
-The[examples]({{ site.baseurl }}/examples.html) page includes examples of several of these.
-
+The [examples]({{ site.baseurl }}/examples.html) page includes examples of these.
 
 ### Model
 
@@ -44,13 +50,13 @@ and linearly decreasing learning rates.
 
 ### Assessment
 
-goMortgage produces a variety of assessments, mostly graphical, to provide insight into the model
+goMortgage produces a variety of model assessments, mostly graphical, to provide insight into the model
 performance and relationships of inputs to output.
 
 Given the approach of goMortgage to model building, one can do something that's uber cool.  It is
 straghtforward to build the model on data up to time *t* and assess it on data after time *t*.
 In fact, one can march through time conducting this process to gain insight into how the model
-performs out of sample in a variety of economic environments. One can even perform experiments like
+performs out of time period in a variety of economic environments. One can even perform experiments like
 restricting the assessment to loans, say, in California.
 
 ### Extensible

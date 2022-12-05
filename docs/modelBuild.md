@@ -71,12 +71,20 @@ goMortgage comes configured to use the Fannie and Freddie data as assembled by t
 packages:
 [fannie]() and [freddie]().
 
-
-One feature of the tables created by these packages is an integer field 'bucket', 
+One feature of the tables created by these packages is an integer field "bucket", 
 which takes on values 0,..,19. It is a hash of
 the loan number. Since it is a hash of the loan number, a given loan will always be assigned to the
 same bucket.  Importantly, the hash value is uncorrelated with the other fields in the table.
 The three data sets, model/validate/assess reside in a single table.  The modelQuery, validateQuery
 and assessQuery pull disjoint sets of loans based on the loan bucket.
 
+### Feature Processing
+
+All continuous features are normalized by the sample mean and standard deviation.
+Discrete features are mapped into [0,1,2,...].  The distinct levels are sorted before they are mapped.
+The default value is set to the modal value.
+
+The calculations are based on the modeling dataset and are saved in the file fieldDefs.jsn in the 
+modeling directory.  Any future data must use these relationships before being applied to the model. 
+If a new level of a discrete feature is found, it is mapped to the default value.
 
