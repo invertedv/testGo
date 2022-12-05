@@ -197,23 +197,23 @@ be specified.  Multiple of each may be specified.
 
 The only required key is assessQuery.  
 - assessQuery: \<query\><br>
-  is the query to pull the assessment data.  The assessment data is used only for post-model-build
+  the query to pull the assessment data.  The assessment data is used only for post-model-build
   assessment of the model fit. The query has the same format as the model and validation queries.
 
 #### Assessment by Feature
 
 Three keys are required for a single set of assessments by feature. 
 Any number of assessments may be specified.
-
-- assessName\<name\>: \<title\><br>Is the title that will appear in graphs.
-- assessTarget\<name\>: \<ints\><br>Is a list of the columns of the model output
-  to coalesce into the assessment target.
+- assessName\<name\>: \<title\><br>the title that will appear in graphs. \<name\> is an arbitrary
+name to identify this assessment.
+- assessTarget\<name\>: \<ints\><br>
+a list of the columns of the model output to coalesce into the assessment target.
 - assessSlicer\<name\>: \<field\><br>
-
+the field name to slice on which to slice the assessment.
 If you not wish to segment the analysis on a field, specify the field as "noGroups" in assessTarget.
 <br><br> 
 - assessAddl: \<field list\><br>
-is an optional, comma-separated list of fields.  The assessment is always run on all features in the model. 
+an optional, comma-separated list of fields.  The assessment is always run on all features in the model. 
 The assessment is also run on the fields in this list.
 
 #### Assessment by Curve
