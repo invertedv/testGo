@@ -8,21 +8,18 @@ The modeling approach uses 3 sets of data:
 - The validation data which is used to judge early stopping of the model fit.
 - The assessment data which is used to construct the assessments of model quality.
 
-The [fannie]() and [freddie]() packages provide a unique approach to supplying this data.
-These tables include an integer field 'bucket', which takes on values 0,..,19. It is a hash of
-the loan number. Since it is a hash of the loan number, a given loan will always be assigned to the
-same bucket.  Importantly, the hash value is uncorrelated with the other fields in the table.
-The bucket field is used to allocate an observation into one of the 3 data sets. 
-
 ### Model Conceit
 
-goMortgage will fit a model to whatever data it's given.  Generally, though, these will be hazard models.
-Hazard models forecast the
-conditional probability that the loan will be in a given state month-by-month into the future. The condition is
-that the loan still exists at the beginning of the forecast month. Other conditions are possible.  The 
-delinquency model is also conditioned on the loan being on the books at the end of the forecast month.
+goMortgage will fit a model to whatever data it's given.  In the examples, you'll see these types of
+models:
 
-### WHY NOT JUST BUILD ONE HUGE MODEL?
+- hazard models. Hazard models forecast the
+  conditional probability that the loan will be in a given state month-by-month into the future. The condition is
+  that the loan still exists at the beginning of the forecast month. An example is the [delinquency]() model.
+- regression models. A regression model is fit to a single-valued, continuous target. An example is the
+[net recovery]() model.
+- scoring models. A scoring model is built on a binary target that, within a fixed time window, 
+is 1 if an event occurs and 0 if not. The [mortgage prepay score]() model is an example.
 
 ### Model Type
 
@@ -44,7 +41,7 @@ layer (layer4) reveals that this is a categorical model that has 13 potential st
 
 ### Model Directory
 
-The model directory lies in the user-specified output directory.  There are three files here:
+The model directory lies within the user-specified output directory.  There are three files here:
 
 - modelP.nn and modelS.nn specify the models parameters and structure.
 - fieldDefs.jsn specifies the input features -- their types, levels, means, variances. These are needed
@@ -68,4 +65,18 @@ would create the feature d120 as the sum of columns 4 through 12 of the model ou
 Note that if the input model also takes a model as an input, there will be another inputModels directory.
 
 All the files in the model directory are text files and quite lightweight. 
+
+### Fannie and Freddie Data
+goMortgage comes configured to use the Fannie and Freddie data as assembled by these
+packages:
+[fannie]() and [freddie]().
+
+
+One feature of the tables created by these packages is an integer field 'bucket', 
+which takes on values 0,..,19. It is a hash of
+the loan number. Since it is a hash of the loan number, a given loan will always be assigned to the
+same bucket.  Importantly, the hash value is uncorrelated with the other fields in the table.
+The three data sets, model/validate/assess reside in a single table.  The modelQuery, validateQuery
+and assessQuery pull disjoint sets of loans based on the loan bucket.
+
 
