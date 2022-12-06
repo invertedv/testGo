@@ -1,22 +1,24 @@
 
 ## Output Directory Structure
 
-The non-ClickHouse output of the process is placed under the 'outDir' you specified.  The structure is:
+goMortgage creates the non-ClickHouse output of the process 
+in the directory specified by the outDir: key.
+
+The structure is:
 
 - outDir
-
     - model.gom
     - model.log
-    - model
+    - model (1)
         - fields.jsn 
         - modelS.nn
         - modelP.nn
         - inputModels
             - inputModel1
-                - fields.jsm
+                - fields.jsn
                 - modelS.nn
                 - modelP.nn
-    - graphs
+    - graphs (2)
         - cost
         - strats
         - marginal
@@ -30,3 +32,5 @@ The non-ClickHouse output of the process is placed under the 'outDir' you specif
                 - slice value 2
             - 'slicer 2'
 
+(1) can be renamed using model: key
+(2) can be renamed using graphs: key

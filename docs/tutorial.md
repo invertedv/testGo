@@ -14,8 +14,9 @@ ClickHouse **and** goMortgage is already set up to handle the table.
 Even if your ultimate goal is to use goMortgage on different data, this is the easiest way to test
 drive it.
 
-There is one other table you'll need -- a table of economic data.  The [assemble]() package will
-produce that.
+There is one other table you'll need -- a table of non-loan data.  This table has fields for
+house prices, unemployment, income, labor growth rates over time at a zip/zip3 level.
+The [assemble]() package will produce the table you need.
 
 ### The .gom file
 
