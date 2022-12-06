@@ -9,7 +9,7 @@ the sampling scheme? These are easy changes to your .gom file. There's no need t
 code, create a bunch of new tests and hope that the changes won't cause some unintended consequences.
 
 The output of a goMortgage run is placed in a 
-directory you specify.  This includes your .gom file, a log file, a summary from the data build,
+directory you specify.  This includes your .gom file, a log file,the model, a summary from the data build,
 the cost curves from the
 model build, and all graphical assessments of the model. Other outputs are saved to ClickHouse tables.
 
@@ -30,7 +30,7 @@ The three sets are:
 - validation. The data used to determine early stopping during the fit process.
 - assessment. The data used to build graphical and numeric assessments of the model.
 
-goMortgage will build these tables for you. It requires two source tables: (1) loan data and
+goMortgage will build these tables for you. It requires two source tables to do this: (1) loan data and
 (2) non-loan data.  The non-loan data includes fields such as HPI, interest rates, and
 unemployment rates.
 
@@ -38,11 +38,11 @@ The structure of the data determines the type of model that is built.
 goMortgage is very flexible in the construction of the data. Hence, many types
 of models can be built. 
 
-The [examples]({{ site.baseurl }}/examples.html) page includes examples of these.
+See the [examples]({{ site.baseurl }}/examples.html) page for some types that are possible. 
 
 ### Model
 
-goMortgage fits neural net models. These can have any depth. The target field may be
+goMortgage fits neural net models. The target field may be
 either discrete or continuous.Two types of layers are
 supported: fully connected and dropout. Four activation functions are supported: relu,
 leaky relu, linear and softmax.  There are additional options, such as L2 regularization
@@ -62,7 +62,8 @@ restricting the assessment to loans, say, in California.
 ### Extensible
 
 goMortgage comes configured to work with Fannie and Freddie data but
-can be modified for other data sources.  See the [BYOD]({{ site.baseurl }}/BYOD.html
+can be modified for other data sources.  See the 
+[BYOD]({{ site.baseurl }}/BYOD.html
 guide for details on how to do this. In fact, it would not be difficult to apply goMortgage to other
 asset classes.
 
