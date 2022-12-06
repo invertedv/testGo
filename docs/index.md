@@ -21,9 +21,9 @@ The topics below provide details to get up and running.  These pages describe go
 comes to you.  Since it's open source, you may modify it to suit your needs!
 
 - The goMortgage [approach]({{ site.baseurl }}/approach.html)
-- Building [data sets]({{ site.baseurl }}/dataBuild.html)
-- Building the [model]({{ site.baseurl }}/modelBuild.html)
-- [Assessing]({{ site.baseurl }}/assessment.html) the model
+- Building [data sets]({{ site.baseurl }}/buildData.html)
+- Building the [model]({{ site.baseurl }}/buildModel.html)
+- [Assessing]({{ site.baseurl }}/assessModel.html) the model
 - The [.gom]({{ site.baseurl }}/gomFile.html) specification file
 - The output directory [structure]({{ site.baseurl }}/directoryStructure.html)
 - [Tutorial]({{ site.baseurl }}/tutorial.html)
