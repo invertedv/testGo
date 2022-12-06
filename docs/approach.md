@@ -62,8 +62,8 @@ restricting the assessment to loans, say, in California.
 ### Extensible
 
 goMortgage comes configured to work with Fannie and Freddie data but
-can be modified for other data sources.  See the 
-[BYOD]({{ site.baseurl }}/BYOD.html
+can be modified for other data sources.  See the
+[Bring Your Own Data]({{ site.baseurl }}/BYOD.html)
 guide for details on how to do this. In fact, it would not be difficult to apply goMortgage to other
 asset classes.
 

@@ -17,10 +17,11 @@ Since goMortgage is open source, goMortgage can be modified to suit your needs.
 Out of the box, it is configured to work with Freddie and Fannie data. There are
 instructions to set up your own data sources. 
 
-The topics below provide details to get up and running.
+The topics below provide details to get up and running.  These pages describe goMortgage as it
+comes to you.  Since it's open source, you may modify it to suit your needs!
 
 - The goMortgage [approach]({{ site.baseurl }}/approach.html)
-- Building the [modeling data]({{ site.baseurl }}/dataBuild.html)
+- Building [data sets]({{ site.baseurl }}/dataBuild.html)
 - Building the [model]({{ site.baseurl }}/modelBuild.html)
 - [Assessing]({{ site.baseurl }}/assessment.html) the model
 - The [.gom]({{ site.baseurl }}/gomFile.html) specification file
