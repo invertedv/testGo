@@ -80,6 +80,8 @@ These keys are optional:
   a "where" clause to restrict the selection during pass 1.
 - where2: \<clause\><br>
   a "where" clause to restrict the selection during pass 2.
+- tableKey: \<field\><br>
+the name of the primary key for the outputTable.
 
 
 ***Notes***<br>
@@ -107,10 +109,12 @@ the type of the target feature.
 a comma-separated list of categorical (one-hot) features.
 - cts: \<field list\><br>
 a comma-separated list of continuous features.
-- emb: \<field list\><br>
-a comma-separated list of embedding features.  Each entry is also a key/val 
-pair of the name of the feature
-followed by the embedding dimension (field:dim).
+- emb: \<embFeature1{dim1}; embFeature2{dim2}; ...\><br>
+a semicolon-separated list of embedding features.  The embedding dimension is
+enclosed within braces after the field name.  For example, this snippet declares
+state and propType to be embedded with dimensions 4 and 2, respectively:
+
+       emb: state{4}; propType{2}
 
 Note: a model need not have all three of cat, cts, and emb, but it must have at least one.
 
@@ -281,12 +285,13 @@ this directory and copy over the "model" subdirectory.
 
 If you build a model stratified on the target field, the "bias" term of the output
 layer will (ironically) be biased.  goMortgage can de-bias this term.  You must
-specify a "modelQuery" that returns data that is **not** stratified on the target
+specify a "biasQuery" that returns data that is **not** stratified on the target
 field.  goMortgage will use this data to refit the bias terms of the output layer.
 
 - biasDir: \<sub dir\><br>
-the subdirectory within "outDir" to place the
-bias-corrected model.
+the subdirectory within "outDir" to place the bias-corrected model.
+- biasQuery: \<query\><br>
+the query to pull the bias-correction query.
 
 ### Optional
 - title: \<title\><br>
