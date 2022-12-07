@@ -8,9 +8,10 @@ The structure is:
 
 - outDir
     - model.gom
+    - <date>.gom*
     - model.log
-    - model (1)
-        - fields.jsn 
+    - model**
+        - fieldDefs.jsn 
         - modelS.nn
         - modelP.nn
         - inputModels
@@ -18,9 +19,12 @@ The structure is:
                 - fields.jsn
                 - modelS.nn
                 - modelP.nn
-    - graphs (2)
+    - graphs***
         - cost
         - strats
+        - curves
+            - curve 1
+            - curve 2
         - marginal
             - 'slicer 1'
                 - slice value 1
@@ -32,5 +36,6 @@ The structure is:
                 - slice value 2
             - 'slicer 2'
 
-(1) can be renamed using model: key
-(2) can be renamed using graphs: key
+*subsequent assessModel or biasModel runs save the .gom file names according to the run date & time.<br>
+**can be renamed using model: key<br>
+***can be renamed using graphs: key

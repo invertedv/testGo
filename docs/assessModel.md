@@ -7,6 +7,12 @@ the remainder becoming "0".
 Any number of assessments may be performed varying either the slicer and/or the outcomes
 coalesced into "1".
 
+The goMortgage plots are rendered as html using Plotly. These are "live" plots in the sense that
+Plotly displays information under the cursor, they can be zoomed and saved as jpg's.
+
+If you run the assessModel step separate from the model build,
+goMortgage saves the .gom file named as \<time stamp\>.gom.
+
 There two assessment types: assessment by feature and assessment by curve.
 
 ### Assessment by Feature

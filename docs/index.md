@@ -8,9 +8,9 @@
 goMortgage is an app that builds mortgage forecasting models.
 
 What aspects of mortgage performance can be modeled? Really, anything you can think of.  The software
-is agnostic about its target and features. Think of it as a flexible framework for model building.
+is agnostic about the model target and features. Think of it as a flexible framework for model building.
 
-goMortgage takes a text file (*.gom) you create which specifies all aspects of the modeling process
+goMortgage takes a text file (*.gom) you create to specify all aspects of the modeling process
 from building datasets to model assessment.
 
 Since goMortgage is open source, goMortgage can be modified to suit your needs.
@@ -24,6 +24,7 @@ comes to you.  Since it's open source, you may modify it to suit your needs!
 - Building [data sets]({{ site.baseurl }}/buildData.html)
 - Building the [model]({{ site.baseurl }}/buildModel.html)
 - [Assessing]({{ site.baseurl }}/assessModel.html) the model
+- [Bias Correcting]({{ site.baseurl }}/biasCorrect.html) the model
 - The [.gom]({{ site.baseurl }}/gomFile.html) specification file
 - The output directory [structure]({{ site.baseurl }}/directoryStructure.html)
 - [Tutorial]({{ site.baseurl }}/tutorial.html)
