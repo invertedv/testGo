@@ -1,22 +1,12 @@
 ---
 layout: default
-title: Configuration
+title: Tutorial
 nav_order: 2
 ---
+```yaml
+logo: "/images/vee1c.png"
+```
 
-# Configuration
-{: .no_toc }
-
-Just the Docs has some specific configuration parameters that can be defined in your Jekyll site's \_config.yml file.
-{: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-   {:toc}
-
----
 ## goMortgage Tutorial
 
 ### Preparations
