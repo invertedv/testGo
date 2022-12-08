@@ -3,8 +3,18 @@ layout: default
 title: Tutorial
 nav_order: 2
 ---
+{: .no_toc }
+
+{: .fs-6 .fw-300 }
+
+{: .no_toc .text-delta }
+
+1. TOC
+   {:toc}
+
+---
 ```yaml
-logo: "/images/vee1c.png"
+logo: "/docs/images/vee1c.png"
 ```
 
 ## goMortgage Tutorial
