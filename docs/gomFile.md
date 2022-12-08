@@ -5,6 +5,19 @@ nav_order: 7
 ---
 
 ## The Specifications File (*.gom)
+
+{: .no_toc }
+
+{: .fs-6 .fw-300 }
+### Table of Contents
+{: .no_toc .text-delta }
+
+1. TOC
+   {:toc}
+---
+
+
+### Introduction
 The specificaton (*.gom) file instructs goMortgage what to do. 
 There are annotated [examples]({{ site.baseurl }}/examples.html) to make the 
 descriptions below concrete.

@@ -5,10 +5,20 @@ nav_order: 1
 ---
 
 <div style="text-align: left;">
-  <img src="{{ site.baseurl }}/images/vee1c.png" width="50" height="50" />
+  <img src="{{ site.baseurl }}/images/vee1c.png" width="75" height="75" />
 </div>
 
 ## A Self-Service Program to Build Mortgage Models
+
+### What is a mortgage model?
+
+A mortgage model is a predictive model that forecasts some aspect of a mortgage's performance.
+Common performance metrics are delinquency, default, severity and prepayment.
+
+Such models are built on historical data and may be either at a loan level or pool level.
+goMortgage builds loan-level model.
+
+### About goMortgage
 
 goMortgage is an app that builds mortgage forecasting models.
 
