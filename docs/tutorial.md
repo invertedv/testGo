@@ -30,7 +30,10 @@ is that (a) the loan exists at the beginning of the month and (b) it doesn't pre
 
 Let's review the entries.
 
-The lines:
+The [lines](https://github.com/invertedv/testGo/blob/f99054da29cd76348a70bf3b5a048eacf0cc6609/scripts/dq.gom#L1):
+
+
+[test](https://github.com/invertedv/testGo/blob/f99054da29cd76348a70bf3b5a048eacf0cc6609/scripts/dq.gom#L1-L4)
 
     title: DQ model
     buildData: yes
