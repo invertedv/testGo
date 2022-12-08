@@ -1,84 +1,139 @@
 title: DQ model
 outDir: /home/will/goMortgage/dq
-buildData: no
-buildModel: no
-assessModel: no
+buildData: yes
+buildModel: yes
+assessModel: yes
 
-// data build settings
+// ************* buildData keys *************
+
+// fields to stratify on at pass 1
 strats1: state, aoDt, aoAge
+// target # of rows in output of pass 1
 sampleSize1: 30000000
+
+// fields to stratify on at pass 2
 strats2: fcstMonth, trgDt, aoDqCap6
+// target # of rows in output of pass 2
 sampleSize2: 3000000
+
+// at the as-of date, we restrict to active loans with a max dq of 24 months and balance greater than $10k
 where1: AND aoAge >= 0 AND aoDq >= 0 AND aoDq <= 24 AND aoUpb > 10000 AND mon.zb='00'
+
+// at the target date, we restrict to dates after the as-of date which are active.
 where2:  AND trgZb='00' AND fcstMonth > 0
+
+// fannie mortgage data created by https://pkg.go.dev/github.com/invertedv/fannie
 mtgDb: mtg.fannie
+
+// keyword specifies the source of the data
 mtgFields: fannie
+
+// non-loan data created by https://pkg.go.dev/github.com/invertedv/assemble
 econDb: econGo.final
+
+// the fannie data specifies geo location at a zip3 level
 econFields: zip3
+
+// outputs
 pass1Strat: tmp.stratDq1
 pass1Sample: tmp.sampleDq1
 pass2Strat: tmp.stratDq2
 pass2Sample: tmp.sampleDq2
-outTable: tmp.model
+// final table
+outTable: tmp.DqModel
+// key for final table
 tableKey: lnId
 
-// model settings
+// ************* buildModel keys *************
+
+// targetDq is an int32 field that takes on values 0,..,13.
 target: targetDq
+// We treat targetDq as categorical - which will build a model with a softmax output layer
 targetType: cat
-cat: purpose, propType, occ, amType, standard, nsDoc, nsUw, coBorr, hasSecond, aoPrior30, aoPrior60, aoPrior90p, harp, aoMod, aoBap, channel, covid, fcType, pPen36
-cts: fico, aoAge, term, y20PropVal, units, dti, trgUnempRate, trgEltv, aoMonthsCur, trgPti50, trgRefiIncentive, lbrGrowth, spread, pMod
+
+// one-hot features.  Note, it's fine for this to take up multple lines
+cat: purpose, propType, occ, amType, standard, nsDoc, nsUw, coBorr, hasSecond, aoPrior30, aoPrior60,
+  aoPrior90p, harp, aoMod, aoBap, channel, covid, fcType, pPen36
+
+// Continuous features.  Note, these will automatically be normalized.
+cts: fico, aoAge, term, y20PropVal, units, dti, trgUnempRate, trgEltv, aoMonthsCur, trgPti50,
+  trgRefiIncentive, lbrGrowth, spread
+
+// Embedded features.  The embedding dimension is in the braces.
 emb:  aoDq{5}; state {4}; servMapped{4}; fcstMonth{2}; trgAge{2}
+
+// Features not in the model we wish to keep and treat as categorical.  These can be used in the assessment.
 addlCats: targetAssist, aoMaxDq12, vintage, aoDqCap6, numBorr
-addlKeep: lnId, fcstMonth
+
+// Features to keep, either for assessment or to add to the output table.
+addlKeep: lnId
+
+// this is the model we're fitting.
 layer1: FC(size:40, activation:relu)
 layer2: FC(size:20, activation:relu)
 layer3: FC(size:10, activation:relu)
 layer4: FC(size:13, activation:softmax)
+
+// Other specifications for the model build.
 batchSize: 5000
 epochs: 2000
 earlyStopping: 40
 learningRateStart: .0003
 learningRateEnd: .0001
-modelQuery: WITH d AS (SELECT %s FROM tmp.model WHERE bucket < 10 AND trgZb = '00' limit 100000) SELECT * FROM d
-validateQuery: WITH d AS (SELECT %s FROM tmp.model WHERE bucket in (10,11,12,13,14) AND trgZb = '00' LIMIT 10000) SELECT * FROM d
-assessQuery: SELECT %s FROM tmp.model WHERE bucket in (15,16,17,18,19) AND trgZb = '00'
 
+// This query pulls the data for fitting the coefficients.  The %s will be replaced with the fields we need.
+// The bucket field is a hash of the loan number.
+modelQuery: SELECT %s FROM tmp.DqModel WHERE bucket < 10
 
-// save Assess Data + model output
+// This query pulls the data for determining early stopping.
+validateQuery: SELECT %s FROM tmp.DqModel WHERE bucket in (10,11,12,13,14)
+
+// save Assess Data + model output.
+// The table will consist of all the fields used during the run plus any set of model outputs you specify.
 saveTable: tmp.outDq
-saveTableTargets: d120{4,5,6,7,8,9,10,11,12}; d30{1}; current{0}
 
-// existing models that are inputs
-inputModel: Mod
-locationMod: /home/will/goMortgage/mod/model
-targetsMod: pMod{1}
+// We're saving five fields from the model output.
+saveTableTargets: d120p{4,5,6,7,8,9,10,11,12}; d90{3}; d60{2}; d30{1}; current{0}
 
-// assessment
+
+// ************* assessModel keys *************
+
+// This query pulls the data for the assessments.
+assessQuery: SELECT %s FROM tmp.DqModel WHERE bucket in (15,16,17,18,19)
+
+// Additional fields for the assessment.
 assessAddl: aoIncome50, aoEItb50,  trgPti10, trgPti90, ltv, aoMaxDq12, trgUpbExp, state, aoIncome90, msaLoc,
   aoPropVal, trgPropVal, vintage
 
-assessNameaoDq: D120+
+// Run a by-feature assessment that is sliced by aoDqCap6 on the binary output that coalesces targetDq into two groups
+// of (0,1,2,3) and (4,5,6,7,8,9,10,11,12).  aoDqCap6 is the delinquency status at the as-of date where the
+// delinquency levels are 0 trough 5 and 6+ months.
+assessNameaoDq: DQ 4+ Months
 assessTargetaoDq: 4,5,6,7,8,9,10,11,12
 assessSliceraoDq: aoDqCap6
 
-assessNameOcc: D120+
+// Run another assessment that is sliced by occupancy.
+assessNameOcc: DQ 4+ Months
 assessTargetOcc: 4,5,6,7,8,9,10,11,12
 assessSlicerOcc: occ
 
-// curves
-curvesNameyrQtrD120: Target Quarter, D120+
+// Run a by-curve assessment where the metric on the binary output that coalesces into two groups:
+// 0-3 months DQ and 4+ months DQ. The graph will be two curves: model and average rate of 4+ months DQ
+// where the average is over the distinct levels of trgYrQtr.
+// trgYrQtr is the the Year & Quarter of the target date.
+curvesNameyrQtrD120: Target Quarter, DQ 4+ Months
 curvesTargetyrQtrD120: 4,5,6,7,8,9,10,11,12
 curvesSliceryrQtrD120: trgYrQtr
 
-curvesNamevintageD120: Vintage, D120+
+curvesNamevintageD120: Vintage, DQ 4+ Months
 curvesTargetvintageD120: 4,5,6,7,8,9,10,11,12
 curvesSlicervintageD120: vintage
 
-curvesNamefmD120: Forecast Month, D120+
+curvesNamefmD120: Forecast Month, DQ 4+ Months
 curvesTargetfmD120: 4,5,6,7,8,9,10,11,12
 curvesSlicerfmD120: fcstMonth
 
-curvesNameyrQtrD30: Target Quarter, D30
+curvesNameyrQtrD30: Target Quarter, DQ 1 Month
 curvesTargetyrQtrD30: 1
 curvesSliceryrQtrD30: trgYrQtr
 
