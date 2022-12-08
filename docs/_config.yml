@@ -1,6 +1,7 @@
 title: "goTest"
 description: "Testing Testing"
 
+logo: "/docs/images/vee1c.png"
 
 remote_theme: pmarsceill/just-the-docs # Borrowing the theme from https://github.com/pmarsceill/just-the-docs
 github_repo_url: "https://github.com/invertedv/testGo"
@@ -18,7 +19,7 @@ last_edit_timestamp: true # show or hide edit time - page must have `last_modifi
 last_edit_time_format: "%b %e %Y at %I:%M %p" # uses ruby's time format: https://ruby-doc.org/stdlib-2.7.0/libdoc/time/rdoc/Time.html
 
 aux_links:
-  "Just the Docs on GitHub":
+  "testGo on GitHub":
     - "//github.com/invertedv/testGo"
 
 # A footer with "Edit this page on GitHub" link text

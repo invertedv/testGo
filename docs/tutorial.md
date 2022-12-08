@@ -3,21 +3,20 @@ layout: default
 title: Tutorial
 nav_order: 2
 ---
+
+## goMortgage Tutorial
 {: .no_toc }
 
 {: .fs-6 .fw-300 }
 
+
+### Table of Contents
 {: .no_toc .text-delta }
 
 1. TOC
-   {:toc}
-
+{:toc}
 ---
-```yaml
-logo: "/docs/images/vee1c.png"
-```
 
-## goMortgage Tutorial
 
 ### Preparations
 
