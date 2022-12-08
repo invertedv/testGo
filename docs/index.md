@@ -19,18 +19,3 @@ instructions to set up your own data sources.
 
 The topics below provide details to get up and running.  These pages describe goMortgage as it
 comes to you.  Since it's open source, you may modify it to suit your needs!
-
-- [home]({{ site.baseurl }}/index.html)
-- The goMortgage [approach]({{ site.baseurl }}/approach.html)
-- Building [data sets]({{ site.baseurl }}/buildData.html)
-- Building the [model]({{ site.baseurl }}/buildModel.html)
-- [Assessing]({{ site.baseurl }}/assessModel.html) the model
-- [Bias Correcting]({{ site.baseurl }}/biasCorrect.html) the model
-- The [.gom]({{ site.baseurl }}/gomFile.html) specification file
-- The output directory [structure]({{ site.baseurl }}/directoryStructure.html)
-- [Tutorial]({{ site.baseurl }}/tutorial.html)
-- [Examples]({{ site.baseurl }}/examples.html)
-- [Bring Your Own Data]({{ site.baseurl }}/BYOD.html)
-- Dependencies on other [projects]({{ site.baseurl }}/dependencies.html)
-
-
