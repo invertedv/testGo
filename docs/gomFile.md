@@ -17,7 +17,7 @@ nav_order: 7
 ---
 
 
-### Introduction X
+### Introduction
 The specificaton (*.gom) file instructs goMortgage what to do. 
 There are annotated [examples]({{ site.baseurl }}/examples.html) to make the 
 descriptions below concrete.
@@ -312,7 +312,7 @@ the subdirectory within "outDir" to place the bias-corrected model.
 - biasQuery: \<query\><br>
 the query to pull the bias-correction query.
 
-### Optional
+### Optional Keys
 - title: \<title\><br>
   a title for the run, appearing in graphs, etc.
 - show: \<yes/no\><br>

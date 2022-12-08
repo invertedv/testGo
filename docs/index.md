@@ -16,7 +16,7 @@ A mortgage model is a predictive model that forecasts some aspect of a mortgage'
 Common performance metrics are delinquency, default, severity and prepayment.
 
 Such models are built on historical data and may be either at a loan level or pool level.
-goMortgage builds loan-level model.
+goMortgage builds loan-level models.
 
 ### About goMortgage
 

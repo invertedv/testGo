@@ -48,34 +48,28 @@ is that (a) the loan exists at the beginning of the month and (b) it doesn't pre
 
 Let's review the entries.
 
-The [lines](https://github.com/invertedv/testGo/blob/f99054da29cd76348a70bf3b5a048eacf0cc6609/scripts/dq.gom#L1):
+There is one key required in every run, outDir, which specifies the location of the output of the run.
+All the non-ClickHouse output will be sent to '/home/will/goMortgage/dq'.  
 
+The next three keys tell goMortgage to build the data it needs from source tables, then build and assess
+the model.
 
-[test](https://github.com/invertedv/testGo/blob/f99054da29cd76348a70bf3b5a048eacf0cc6609/scripts/dq.gom#L1-L4)
+```
+title: DQ model
+outDir: /home/will/goMortgage/dq
+buildData: yes
+buildModel: yes
+assessModel: yes
+```
 
-    title: DQ model
-    buildData: yes
-    buildModel: yes
+#### buildData
 
-tell goMortgage to build the modeling dataset and then build the model.
+See [here]({{ site.baseurl }}/gomFile.html#builddata-keys) for details on buildData keys.
 
-The code below specifies the data build.
-
-    // data settings
-    mtgDb: mtg.fannie
-    mtgFields: fannie
-    strats1: state, aoDt, aoAge
-    sampleSize1: 30000000
-    strats2: fcstMonth, month, aoDqCap6
-    sampleSize2: 3000000
-    where1: AND aoAge >= 0 AND aoDq >= 0 AND aoDq <= 24 AND aoUpb > 10000 AND mon.zb='00'
-    where2:  AND trgZb='00' AND fcstMonth > 0
-    econDb: econGo.final
-    econFields: zip3
-
-The first two lines specify the source and type of the loan-level data.  The source is the
-ClickHouse table mtg.fannie. goMortgage internally has a set of fields for each source it knows
-about. 
+The code below specifies the data build. The loan-level data is sampled in two passes
+([data build]({{ site.baseurl }}/buildData.html)).  The two blocks specify the target
+sample size, strata and where clauses for each pass.  The where clauses restrict the
+choice set.
 
 The pass 1 sampling is along the fields state, aoDt (as-of date) and aoAge (loan age at as-of date).
 goMortgage will do its best to stratify along these fields jointly, targeting an output data set of
@@ -92,32 +86,60 @@ restricts the candidate set to dates that are after the as-of date and which are
 
 Note: you can specify the stratification field as 'noGroups' if you want a simple random sample.
 
-Finally, the 'econ' entries specify the ClickHouse table with economic data and the field to join on.
+```
+// fields to stratify on at pass 1
+strats1: state, aoDt, aoAge
+// target # of rows in output of pass 1
+sampleSize1: 30000000
+// at the as-of date, we restrict to active loans with a max dq of 24 months and balance greater than $10k
+where1: AND aoAge >= 0 AND aoDq >= 0 AND aoDq <= 24 AND aoUpb > 10000 AND mon.zb='00'
+
+// fields to stratify on at pass 2
+strats2: fcstMonth, trgDt, aoDqCap6
+// target # of rows in output of pass 2
+sampleSize2: 3000000
+// at the target date, we restrict to dates after the as-of date which are active.
+where2:  AND trgZb='00' AND fcstMonth > 0
+```
+
+These keys specify the source and type of the input data.  
+The 'econ' entries specify the ClickHouse table with economic data and the field to join on.
 The most granular geo field in the Fannie data is the 3-digit zip.
 
-The section below controls the model build.
+```
+// fannie mortgage data created by https://pkg.go.dev/github.com/invertedv/fannie
+mtgDb: mtg.fannie
 
-    // model settings
-    target: targetDq
-    targetType: cat
-    cat: purpose, propType, occ, amType, standard, nsDoc, nsUw, coBorr, hasSecond, aoPrior30, aoPrior60, aoPrior90p, harp, aoMod, aoBap, channel, covid, fcType, pPen36
-    cts: fico, trgAge, term, y20PropVal, units, dti, trgUnempRate, trgEltv, aoMonthsCur, trgPti50, trgRefiIncentive, lbrGrowth, spread, pMod
-    emb:  aoDq: 5, state: 4, servMapped: 4, fcstMonth: 2
-    layer1: FC(size:40, activation:relu)
-    layer2: FC(size:20, activation:relu) 
-    layer3: FC(size:10, activation:relu) 
-    layer4: FC(size:13, activation:softmax) 
-    batchSize: 5000 
-    epochs: 2000 
-    earlyStopping: 40 
-    learningRateStart: .0003 
-    learningRateEnd: .0001 
-    modelQuery: SELECT %s FROM %s WHERE bucket < 10 
-    validateQuery: SELECT %s FROM %s WHERE bucket in (10,11,12,13,14) 
-    assessQuery: SELECT %s FROM %s WHERE bucket in (15,16,17,18,19) 
-    addlCats: targetAssist, aoMaxDq12, vintage, aoDqCap6, numBorr
-    addlKeep: lnId, fcstMonth
+// keyword specifies the source of the data
+mtgFields: fannie
 
+// non-loan data created by https://pkg.go.dev/github.com/invertedv/assemble
+econDb: econGo.final
+
+// the fannie data specifies geo location at a zip3 level
+econFields: zip3
+```
+
+And, finally, these keys specify the location of the output.
+
+```
+// outputs
+pass1Strat: tmp.stratDq1
+pass1Sample: tmp.sampleDq1
+pass2Strat: tmp.stratDq2
+pass2Sample: tmp.sampleDq2
+// final table
+outTable: tmp.DqModel
+// key for final table
+tableKey: lnId
+```
+
+#### buildModel
+
+The sections below controls the model build.
+See [here]({{ site.baseurl }}/gomFile.html#buildmodel-keys) for details on buildModel keys.
+
+This section defines the model.
 The target of the model fit is the field 'targetDq'. This field is not in the fannie table but calculated
 from the delinquency field -- capping that field at 12. The target type is 'cat' since we want to
 estimate the probability of a loan being at each delinquency level.
@@ -130,11 +152,48 @@ The 'layer<n>' entries specify the model.  Layer1 has 40 output nodes and relu a
 Layer4 is the output layer.  Since we're capping delinquency at 12 months, it has 13 nodes and
 the softmax activation.
 
+```
+// targetDq is an int32 field that takes on values 0,..,13.
+target: targetDq
+// We treat targetDq as categorical - which will build a model with a softmax output layer
+targetType: cat
+
+// one-hot features.  Note, it's fine for this to take up multple lines
+cat: purpose, propType, occ, amType, standard, nsDoc, nsUw, coBorr, hasSecond, aoPrior30, aoPrior60,
+  aoPrior90p, harp, aoMod, aoBap, channel, covid, fcType, pPen36
+
+// Continuous features.  Note, these will automatically be normalized.
+cts: fico, aoAge, term, y20PropVal, units, dti, trgUnempRate, trgEltv, aoMonthsCur, trgPti50,
+  trgRefiIncentive, lbrGrowth, spread
+
+// Embedded features.  The embedding dimension is in the braces.
+emb:  aoDq{5}; state {4}; servMapped{4}; fcstMonth{2}; trgAge{2}
+
+
+// this is the model we're fitting.
+layer1: FC(size:40, activation:relu)
+layer2: FC(size:20, activation:relu)
+layer3: FC(size:10, activation:relu)
+layer4: FC(size:13, activation:softmax)
+```
+
+The section below controls the model building process.
 'batchSize' and 'epochs' set what you think they do.  The 'earlyStopping: 40' ends the fit if the
 cross entropy calculated on the validation data fails to decline for 40 epochs.
-The learning rate entries specify the learning rate at the first and last (2000, in this case) 
+The learning rate entries specify the learning rate at the first and last (2000, in this case)
 epoch.  The learning rate declines linearly.
 
+```
+// Other specifications for the model build.
+batchSize: 5000
+epochs: 2000
+earlyStopping: 40
+learningRateStart: .0003
+learningRateEnd: .0001
+
+```
+
+This section pulls the data.
 goMortgage consumes 3 data sets:
 
 - model.  This is the data used to fit the model coefficients.
@@ -147,8 +206,27 @@ A feature of the fannie [app](https://pkg.go.dev/github.com/invertedv/fannie) is
 a field 'bucket' that assigns each loan an integer value 0 through 19. This value is sticky --
 a loan will always get the same value. Further, it is uncorrelated with other fields.
 
-Finally, the queries have two placeholder '%s' fields.  goMortgage replaces the first with the fields
+Finally, the queries have a placeholder '%s' in place of a field list.  goMortgage replaces this with the fields
 needed for the analysis.  The second will be replaced with the table name (output of the data creation).
+
+```
+// This query pulls the data for fitting the coefficients.  The %s will be replaced with the fields we need.
+// The bucket field is a hash of the loan number.
+modelQuery: SELECT %s FROM tmp.DqModel WHERE bucket < 10
+
+// This query pulls the data for determining early stopping.
+validateQuery: SELECT %s FROM tmp.DqModel WHERE bucket in (10,11,12,13,14)
+
+```
+
+#### assessModel
+
+See [here]({{ site.baseurl }}/gomFile.html#assessmodel-keys) for details on assessModel keys.
+In the code below, the assessQuery pulls the data for the assessment.
+
+You can save the assess data, augmented with the model output, back to ClickHouse.  The 'saveTableTargets'
+give the field name followed by the columns of the softmax to sum to create it.  Here, we're saving the
+dq 120+ probability as 'd120' and the probability the loan is current as 'current'.
 
 The last two entries, 'addlCats' and 'addlKeep', keep additional fields that have not yet been specified.
 'addlCats' keep fields are internally created as one-hot fields.  This can be necessary if you
@@ -156,63 +234,54 @@ want to treat the field as categorical for assessment, or if you have an input m
 field as a one-hot field.  The 'addlKeep' fields are kept as-is.  You may wish to keep fields for
 output to the SaveTable.
 
-These statements specify locations:
+```
+assessQuery: SELECT %s FROM tmp.DqModel WHERE bucket in (15,16,17,18,19)
 
-    // output locations
-    outDir: /home/will/goMortgage/dq
-    pass1Strat: tmp.stratDq1
-    pass1Sample: tmp.sampleDq1
-    pass2Strat: tmp.stratDq2
-    pass2Sample: tmp.sampleDq2
-    modelTable: tmp.modelDq
+// save Assess Data + model output.
+// The table will consist of all the fields used during the run plus any set of model outputs you specify.
+saveTable: tmp.outDq
 
-All the non-ClickHouse output will be sent to '/home/will/goMortgage/dq'.  The pass 1 stratifications
-are in the ClickHouse table tmp.stratDq1.  The pass 1 sample is in tmp.sampleDq1.  The final table
-is tmp.modelDq.  The model, validate, assess queries pull from this table.
+// We're saving five fields from the model output.
+saveTableTargets: d120p{4,5,6,7,8,9,10,11,12}; d90{3}; d60{2}; d30{1}; current{0}
 
-    // save Assess Data + model output
-    saveTable: tmp.outDq
-    saveTableTargets: d120:4,5,6,7,8,9,10,11,12; d30:1; current:0
+// Features not in the model we wish to keep and treat as categorical.  These can be used in the assessment.
+addlCats: targetAssist, aoMaxDq12, vintage, aoDqCap6, numBorr
 
-You can save the assess data, augmented with the model output, back to ClickHouse.  The 'saveTableTargets'
-give the field name followed by the columns of the softmax to sum to create it.  Here, we're saving the
-dq 120+ probability as 'd120' and the probability the loan is current as 'current'.
+// Features to keep, either for assessment or to add to the output table.
+addlKeep: lnId
 
-You can use the output of other models as input to this model.  The model below is the probability at
-loan will be modified at the target month.  goMortgage will automatically run this model to produce
-the values for the 3 data sets. The new field will be called 'pMod' in this model build -- note that
-it is listed in the 'cts' entry.  Note, too, that goMortgage actually uses the log odds of this value.
-
-    // existing models that are inputs
-    inputModel: Mod
-    locationMod: /home/will/goMortgage/mod/
-    targetsMod: pMod:1
-
-One wrinkle is that the inputs to this model need to be normalized by the values used when the model was
-built, which are likely not the same as the current data.  When goMortgage builds a model, along with the
-model specification and coefficients, it saves the normalization values (cts features) and known levels
-(cat and emb features). It will use these values when calculating the inputModel values.
-
-    // assessment
-    assessAddl: aoIncome50, aoEItb50,  trgPti10, trgPti90, ltv, aoMaxDq12, trgUpbExp, state, aoIncome90, msaLoc, aoPropVal, trgPropVal, vintage
+```
 
 goMortgage will automatically run the assessment on features in the model.  You may wish to run it on
 additional fields.  These are supplied in the 'assessAddl' key.
 
-The entries below specify an assessment.  The name is 'D120+'. Note that each entry ends in 'aoDq'.
+The entries below specify an assessment.  The name is 'DQ 4+ Months'. Note that each entry ends in 'aoDq'.
 This value is just a key so these specs get grouped together.  The assessment is conducted on the
-sum of the columns 4 through 12 of the softmax output.  The assessment is sliced on the field aoDqCap6.
+sum of the columns 4 through 12 of the softmax output - which corresponds to 4+ months delinquent.
+The assessment is sliced on the field aoDqCap6.
 That is, it will be done separately for each of the aoDqCap6 values (0 through 6).
 
-    assessNameaoDq: D120+
-    assessTargetaoDq: 4,5,6,7,8,9,10,11,12
-    assessSliceraoDq: aoDqCap6
+```
+// Additional fields for the assessment.
+assessAddl: aoIncome50, aoEItb50,  trgPti10, trgPti90, ltv, aoMaxDq12, trgUpbExp, state, aoIncome90, msaLoc,
+  aoPropVal, trgPropVal, vintage
+
+// Run a by-feature assessment that is sliced by aoDqCap6 on the binary output that coalesces targetDq into two groups
+// of (0,1,2,3) and (4,5,6,7,8,9,10,11,12).  aoDqCap6 is the delinquency status at the as-of date where the
+// delinquency levels are 0 trough 5 and 6+ months.
+assessNameaoDq: DQ 4+ Months
+assessTargetaoDq: 4,5,6,7,8,9,10,11,12
+assessSliceraoDq: aoDqCap6
+
+```
 
 Here's another entry that slices by the field occ.
-
-    assessNameOcc: D120+
-    assessTargetOcc: 4,5,6,7,8,9,10,11,12
-    assessSlicerOcc: occ
+```
+// Run another assessment that is sliced by occupancy.
+assessNameOcc: DQ 4+ Months
+assessTargetOcc: 4,5,6,7,8,9,10,11,12
+assessSlicerOcc: occ
+```
 
 Note: specify 'noGroups' as the slicer if you don't want to slice by anything.
 
@@ -225,25 +294,26 @@ Another form of assessment are curves. These will plot the model output and actu
 by the given field.  Below, the D120+ values are averaged over the target year/quarter (trgYrQtr
 is a field in the table created by goMortgage). 
 
-    // curves
-    curvesNameyrQtrD120: Target Quarter, D120+
-    curvesTargetyrQtrD120: 4,5,6,7,8,9,10,11,12
-    curvesSliceryrQtrD120: trgYrQtr
+```
+// Run a by-curve assessment where the metric on the binary output that coalesces into two groups:
+// 0-3 months DQ and 4+ months DQ. The graph will be two curves: model and average rate of 4+ months DQ
+// where the average is over the distinct levels of trgYrQtr.
+// trgYrQtr is the the Year & Quarter of the target date.
+curvesNameyrQtrD120: Target Quarter, DQ 4+ Months
+curvesTargetyrQtrD120: 4,5,6,7,8,9,10,11,12
+curvesSliceryrQtrD120: trgYrQtr
+```
+
 As before, each key has appended a key 'yrQtrD120' so that goMortgage knows these go together.
 Here's another entry:
 
-    curvesNamevintageD120: Vintage, D120+
-    curvesTargetvintageD120: 4,5,6,7,8,9,10,11,12
-    curvesSlicervintageD120: vintage
-
-Which plots the averages by each origination vintage.
-
 Finally, there are a couple of general settings:
-
-    // general
-    show: no
-    plotHeight: 1200
-    plotWidth: 1600
+```
+// general
+show: no
+plotHeight: 1200
+plotWidth: 1600
+```
 
 If 'show' is set to 'yes', then each graph will also be displayed in your browser.  This is usually
 a lot of graphs!  'plotHeight' and 'plotWidth' specify the plot dimensions, in pixels. The graphs
