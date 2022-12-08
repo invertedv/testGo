@@ -1,3 +1,9 @@
+---
+layout: default
+title: Approach
+nav_order: 2
+---
+
 ## Approach
 
 

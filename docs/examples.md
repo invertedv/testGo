@@ -1,3 +1,9 @@
+---
+layout: default
+title: Examples
+nav_order: 10
+---
+
 ## Examples
 
 DOES THIS WORK??

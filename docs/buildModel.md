@@ -1,3 +1,9 @@
+---
+layout: default
+title: buildModel
+nav_order: 4
+---
+
 ## Modeling Approach
 
 ### Data Usage

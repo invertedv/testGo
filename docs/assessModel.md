@@ -1,3 +1,9 @@
+---
+layout: default
+title: assessModel
+nav_order: 5
+---
+
 ## Assessment
 
 For models whose target is categorical, the assessment is based on a binary outcome.  If the

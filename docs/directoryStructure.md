@@ -1,3 +1,8 @@
+---
+layout: default
+title: Directory Structure
+nav_order: 8
+---
 
 ## Output Directory Structure
 

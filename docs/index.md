@@ -1,3 +1,8 @@
+---
+layout: default
+title: Home
+nav_order: 1
+---
 
 <div style="text-align: left;">
   <img src="{{ site.baseurl }}/images/vee1c.png" width="50" height="50" />

@@ -1,3 +1,9 @@
+---
+layout: default
+title: .gom File
+nav_order: 7
+---
+
 ## The Specifications File (*.gom)
 The specificaton (*.gom) file instructs goMortgage what to do. 
 There are annotated [examples]({{ site.baseurl }}/examples.html) to make the 

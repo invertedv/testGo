@@ -1,3 +1,9 @@
+---
+layout: default
+title: biasCorrect
+nav_order: 6
+---
+
 ## Bias Correcting
 
 If you stratify on a categorical target in Pass 2, the results will certainly be off

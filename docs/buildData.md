@@ -1,4 +1,10 @@
-### Data Build
+---
+layout: default
+title: buildData
+nav_order: 3
+---
+
+## Data Build
 
 goMortgage will build the model/validate/assess ClickHouse table(s).  In the 
 [examples]({{ site.baseurl }}/examples.html), these
