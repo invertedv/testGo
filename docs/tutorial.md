@@ -23,33 +23,34 @@ nav_order: 9
 So, you want to build a mortgage model.  Where do you start?  Well, having some loan-level data
 is a necessity.  I suggest you start with the 
 [Fannie Mae](https://apps.pingone.com/4c2b23f9-52b1-4f8f-aa1f-1d477590770c/signon/?flowId=035b3c0e-38ab-4c4b-a81a-45fbde81ebe9)
-data.  It's free and extensive, going back to January 2000.  There are two data sets: their "standard"
-fixed-rate loans and a set of exclusions that includes ARMS and loans with non-standard underwriting.
+data.  It's free and extensive, going back to January 2000.  There are two data sets: their "standard" dataset of
+fixed-rate loans and a dataset of exclusions that includes ARMS and loans with non-standard underwriting.
 
 There's an [app](https://pkg.go.dev/github.com/invertedv/fannie) designed to import this into 
-ClickHouse **and** goMortgage is already set up to handle the table.
+ClickHouse and good news!: goMortgage is already set up to handle the table.
 
 Even if your ultimate goal is to use goMortgage on different data, this is the easiest way to test
 drive it.
 
 There is one other table you'll need -- a table of non-loan data.  This table has fields for
-house prices, unemployment, income, labor growth rates over time at a zip/zip3 level.
+house prices, unemployment, income, labor growth rates and more. The data monthly at a zip/zip3 level.
 The [assemble]() package will produce the table you need.
 
 ### The .gom file
 
-The .gom file controls the data and model building.
-The file [dq.gom](https://github.com/invertedv/testGo/blob/master/scripts/dq.gom) builds 
-a delinquency model.  This is a hazard model, or perhaps better termed, a conditional softmax
+The .gom file directs goMortgage's activities.
+We'll go through
+the file [dq.gom](https://github.com/invertedv/testGo/blob/master/scripts/dq.gom). 
+This .gom file builds a delinquency model.  This is a hazard model, or perhaps better termed, a conditional softmax
 model.  The model estimates the probability the loan is in one of 13 delinquency states each month
 of the forecast period. The forecast period is 180 months. The 13 delinquency states are:
-current, 1 through 11 months delinquent and 12+ months delinquent. The condition of "conditional softmax"
+current, 1 through 11 months delinquent and 12+ months delinquent. The condition of "conditional" softmax
 is that (a) the loan exists at the beginning of the month and (b) it doesn't prepay/default that month.
 
 Let's review the entries.
 
 There is one key required in every run, outDir, which specifies the location of the output of the run.
-All the non-ClickHouse output will be sent to '/home/will/goMortgage/dq'.  
+When goMortgages runs dq.gom, all the non-ClickHouse output will be sent to "/home/will/goMortgage/dq".  
 
 The next three keys tell goMortgage to build the data it needs from source tables, then build and assess
 the model.
@@ -61,8 +62,8 @@ buildData: yes
 buildModel: yes
 assessModel: yes
 ```
-
-#### buildData
+<br><br>
+#### ***buildData***
 
 See [here]({{ site.baseurl }}/gomFile.html#builddata-keys) for details on buildData keys.
 
