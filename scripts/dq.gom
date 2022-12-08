@@ -1,26 +1,33 @@
 title: DQ model
+outDir: /home/will/goMortgage/dq
 buildData: no
-buildModel: yes
-assessModel: yes
+buildModel: no
+assessModel: no
 
 // data build settings
 strats1: state, aoDt, aoAge
 sampleSize1: 30000000
-strats2: fcstMonth, month, aoDqCap6
+strats2: fcstMonth, trgDt, aoDqCap6
 sampleSize2: 3000000
 where1: AND aoAge >= 0 AND aoDq >= 0 AND aoDq <= 24 AND aoUpb > 10000 AND mon.zb='00'
-where2:  AND trgZb='00' AND fcstMonth > 0 
-omtgDb: mtg.fannie
+where2:  AND trgZb='00' AND fcstMonth > 0
+mtgDb: mtg.fannie
 mtgFields: fannie
 econDb: econGo.final
 econFields: zip3
+pass1Strat: tmp.stratDq1
+pass1Sample: tmp.sampleDq1
+pass2Strat: tmp.stratDq2
+pass2Sample: tmp.sampleDq2
+outTable: tmp.model
+tableKey: lnId
 
 // model settings
 target: targetDq
 targetType: cat
 cat: purpose, propType, occ, amType, standard, nsDoc, nsUw, coBorr, hasSecond, aoPrior30, aoPrior60, aoPrior90p, harp, aoMod, aoBap, channel, covid, fcType, pPen36
-cts: fico, trgAge, aoAge, term, y20PropVal, units, dti, trgUnempRate, trgEltv, aoMonthsCur, trgPti50, trgRefiIncentive, lbrGrowth, spread, pMod
-emb:  aoDq: 5, state: 4, servMapped: 4, fcstMonth: 2
+cts: fico, aoAge, term, y20PropVal, units, dti, trgUnempRate, trgEltv, aoMonthsCur, trgPti50, trgRefiIncentive, lbrGrowth, spread, pMod
+emb:  aoDq{5}; state {4}; servMapped{4}; fcstMonth{2}; trgAge{2}
 addlCats: targetAssist, aoMaxDq12, vintage, aoDqCap6, numBorr
 addlKeep: lnId, fcstMonth
 layer1: FC(size:40, activation:relu)
@@ -32,17 +39,10 @@ epochs: 2000
 earlyStopping: 40
 learningRateStart: .0003
 learningRateEnd: .0001
-modelQuery: SELECT %s FROM %s WHERE bucket < 10 AND trgZb = '00'
-validateQuery: SELECT %s FROM %s WHERE bucket in (10,11,12,13,14) AND trgZb = '00'
-assessQuery: SELECT %s FROM %s WHERE bucket in (15,16,17,18,19) AND trgZb = '00'
+modelQuery: WITH d AS (SELECT %s FROM tmp.model WHERE bucket < 10 AND trgZb = '00' limit 100000) SELECT * FROM d
+validateQuery: WITH d AS (SELECT %s FROM tmp.model WHERE bucket in (10,11,12,13,14) AND trgZb = '00' LIMIT 10000) SELECT * FROM d
+assessQuery: SELECT %s FROM tmp.model WHERE bucket in (15,16,17,18,19) AND trgZb = '00'
 
-// output locations
-outDir: /home/will/goMortgage/dq
-pass1Strat: tmp.stratDq1
-pass1Sample: tmp.sampleDq1
-pass2Strat: tmp.stratDq2
-pass2Sample: tmp.sampleDq2
-modelTable: tmp.model
 
 // save Assess Data + model output
 saveTable: tmp.outDq
@@ -50,7 +50,7 @@ saveTableTargets: d120{4,5,6,7,8,9,10,11,12}; d30{1}; current{0}
 
 // existing models that are inputs
 inputModel: Mod
-locationMod: /home/will/goMortgage/mod/
+locationMod: /home/will/goMortgage/mod/model
 targetsMod: pMod{1}
 
 // assessment

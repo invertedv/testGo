@@ -1,8 +1,8 @@
 ## Examples
 
-DOES THIS WORK?
+DOES THIS WORK??
 
 [dq](../scripts/dq.gom)
 
-[dq]({{ site.baseurl }}/scripts/dq.gom)
+[dq](https://github.com/invertedv/testGo/blob/master/scripts/dq.gom)
 
