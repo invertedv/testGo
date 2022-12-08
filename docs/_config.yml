@@ -1,8 +1,6 @@
-title: <goTest Web Page> # EDIT: Fill this in
-description: <Testing Testing> # EDIT: Fill this in
+title: "goTest Web Page" # EDIT: Fill this in
+description: "Testing Testing" # EDIT: Fill this in
 
-# Set a path/url to a logo that will be displayed instead of the title
-logo: "{{ site.baseurl }}/images/vee1c.png"
 
 remote_theme: pmarsceill/just-the-docs # Borrowing the theme from https://github.com/pmarsceill/just-the-docs
 github_repo_url: "https://invertedv.github.io/testGo/" # EDIT: REPLACE WITH THE URL TO YOUR WEBPAGE
