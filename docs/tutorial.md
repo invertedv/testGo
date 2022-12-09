@@ -68,10 +68,9 @@ assessModel: yes
 ```
 <br>
 
-{: .fs-4 .fw-700 }
+{: .fs-3 .fw-700 }
 #### buildData
 
-ELLO
 
 See [here]({{ site.baseurl }}/gomFile.html#builddata-keys) for details on buildData keys.
 
