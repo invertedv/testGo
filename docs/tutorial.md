@@ -24,12 +24,9 @@ is a necessity.  I suggest you start with the
 [Fannie Mae](https://apps.pingone.com/4c2b23f9-52b1-4f8f-aa1f-1d477590770c/signon/?flowId=035b3c0e-38ab-4c4b-a81a-45fbde81ebe9)
 data.  It's free and extensive, going back to January 2000.  There are two data sets: their "standard" dataset of
 fixed-rate loans and a dataset of exclusions that includes ARMS and loans with non-standard underwriting.
-
 I have an [app](https://pkg.go.dev/github.com/invertedv/fannie) to import this into 
-ClickHouse and good news! -- goMortgage is already set up to handle the table.
-
-Even if your ultimate goal is to use goMortgage on different data, this is the easiest way to test
-drive it.
+ClickHouse and good news! -- goMortgage is already set up to handle the table. Even if your ultimate 
+goal is to use goMortgage on different data, this is the easiest way to test drive it.
 
 There is one other table you'll need -- a table of non-loan data.  This table has fields for
 house prices, unemployment, income, labor growth rates and more. The data is monthly at a zip/zip3 level.
@@ -146,6 +143,7 @@ outTable: tmp.DqModel
 tableKey: lnId
 ```
 <br>
+{: .fs-3 .fw-700 }
 #### buildModel
 
 The sections below controls the model build.
@@ -231,6 +229,7 @@ validateQuery: SELECT %s FROM tmp.DqModel WHERE bucket in (10,11,12,13,14)
 
 ```
 <br>
+{: .fs-3 .fw-700 }
 #### assessModel
 
 See [here]({{ site.baseurl }}/gomFile.html#assessmodel-keys) for details on assessModel keys.
