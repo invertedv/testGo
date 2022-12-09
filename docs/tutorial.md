@@ -65,7 +65,7 @@ assessModel: yes
 ```
 <br>
 
-{: .fs-3 .fw-700 }
+{: .fs-2 .fw-700 }
 #### buildData
 
 
@@ -143,7 +143,7 @@ outTable: tmp.DqModel
 tableKey: lnId
 ```
 <br>
-{: .fs-3 .fw-700 }
+{: .fs-2 .fw-700 }
 #### buildModel
 
 The sections below controls the model build.
@@ -229,7 +229,7 @@ validateQuery: SELECT %s FROM tmp.DqModel WHERE bucket in (10,11,12,13,14)
 
 ```
 <br>
-{: .fs-3 .fw-700 }
+{: .fs-2 .fw-700 }
 #### assessModel
 
 See [here]({{ site.baseurl }}/gomFile.html#assessmodel-keys) for details on assessModel keys.

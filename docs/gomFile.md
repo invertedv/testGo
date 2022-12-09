@@ -236,7 +236,7 @@ The only required key is assessQuery.
   the query to pull the assessment data.  The assessment data is used only for post-model-build
   assessment of the model fit. The query has the same format as the model and validation queries.
 
-{: .fs-3 .fw-700 }
+{: .fs-2 .fw-700 }
 #### Assessment by Feature
 
 Three keys are required for a single set of assessments by feature. 
@@ -253,7 +253,7 @@ If you not wish to segment the analysis on a field, specify the value as "noGrou
 an optional, comma-separated list of fields.  The assessment is always run on all features in the model. 
 The assessment is also run on the fields in this list.
 
-{: .fs-3 .fw-700 }
+{: .fs-2 .fw-700 }
 #### Assessment by Curve
 
 - curvesName\<name\>: \<title\><br>
