@@ -7,7 +7,7 @@ nav_order: 9
 ## goMortgage Tutorial
 {: .no_toc }
 
-{: .fs-6 .fw-300 }
+{: .fs-6 .fw-800 }
 
 
 ### Table of Contents
@@ -26,19 +26,21 @@ is a necessity.  I suggest you start with the
 data.  It's free and extensive, going back to January 2000.  There are two data sets: their "standard" dataset of
 fixed-rate loans and a dataset of exclusions that includes ARMS and loans with non-standard underwriting.
 
-There's an [app](https://pkg.go.dev/github.com/invertedv/fannie) designed to import this into 
-ClickHouse and good news!: goMortgage is already set up to handle the table.
+I have an [app](https://pkg.go.dev/github.com/invertedv/fannie) to import this into 
+ClickHouse and good news! -- goMortgage is already set up to handle the table.
 
 Even if your ultimate goal is to use goMortgage on different data, this is the easiest way to test
 drive it.
 
 There is one other table you'll need -- a table of non-loan data.  This table has fields for
-house prices, unemployment, income, labor growth rates and more. The data monthly at a zip/zip3 level.
+house prices, unemployment, income, labor growth rates and more. The data is monthly at a zip/zip3 level.
 The [assemble]() package will produce the table you need.
+
+OK, let's suppose you have these two tables.  What next? All of goMortgage's activity is driven by a
+specification (*.gom) file.  Let's look through one of these.
 
 ### The .gom file
 
-The .gom file directs goMortgage's activities.
 We'll go through
 the file [dq.gom](https://github.com/invertedv/testGo/blob/master/scripts/dq.gom). 
 This .gom file builds a delinquency model.  This is a hazard model, or perhaps better termed, a conditional softmax
@@ -47,11 +49,11 @@ of the forecast period. The forecast period is 180 months. The 13 delinquency st
 current, 1 through 11 months delinquent and 12+ months delinquent. The condition of "conditional" softmax
 is that (a) the loan exists at the beginning of the month and (b) it doesn't prepay/default that month.
 
-Let's review the entries.
-
-There is one key required in every run, outDir, which specifies the location of the output of the run.
-When goMortgages runs dq.gom, all the non-ClickHouse output will be sent to "/home/will/goMortgage/dq".  
-The directory structure is [here]({{ site.baseurl }}/directoryStructure.html).
+Let's review the entries. The first key is the title which will appear on graphs.
+The next entry, "outDir", is the one key that is always required.
+It specifies the location of the output of the run.
+When goMortgages runs dq.gom, all the non-ClickHouse output will be sent to "/home/will/goMortgage/dq". The directory 
+structure is [here]({{ site.baseurl }}/directoryStructure.html).
 
 The next three keys instruct goMortgage to build the data it needs from source tables, then build and assess
 the model.
@@ -64,12 +66,12 @@ buildModel: yes
 assessModel: yes
 ```
 <br>
-#### ***buildData***
+#### buildData
 
 See [here]({{ site.baseurl }}/gomFile.html#builddata-keys) for details on buildData keys.
 
 The code below specifies the data build. The loan-level data is sampled in two passes.
-See ([data build]({{ site.baseurl }}/buildData.html)) for details.  The two blocks specify the target
+See [data build]({{ site.baseurl }}/buildData.html) for details.  The two blocks specify the target
 sample size, strata and where clauses for each pass.  The where clauses restrict the
 choice set.
 
@@ -82,8 +84,9 @@ are considered for the sample. The code essentially restricts the selection to l
 active and less than 25 months delinquent.
 
 The pass 1 sample is a compact representation.  What we're sampling in pass 2 is each loan in pass 1
-at every possible subsequent month (to determine the target date). The code directs the pass 2
-sample to stratify along fcstMonth and trgDt targeting a sample size of 3,000,000. The where2 clause
+at every possible month after aoDt (to determine the target date). The code directs the pass 2
+sample to stratify along fcstMonth and trgDt targeting a sample size of 3,000,000. fcstMonth is the
+number of months since aoDt and trgDt is the target date. The where2 clause
 restricts the candidate set to dates that are after the as-of date and which are still active.
 
 Note: you can specify the stratification field as "noGroups" if you want a simple random sample.
@@ -123,7 +126,7 @@ econDb: econGo.final
 econFields: zip3
 ```
 
-And, finally, these keys specify the location of the output. The "outTable" has the final output of the 
+And, finally, these keys specify the location of the output. The "outTable" is the final output table of the 
 process that goMortgage will use to build and assess the model. The table will be ordered by "lnId"
 (loan ID).
 
@@ -139,23 +142,23 @@ outTable: tmp.DqModel
 tableKey: lnId
 ```
 <br>
-#### **buildModel**
+#### buildModel
 
 The sections below controls the model build.
 See [here]({{ site.baseurl }}/gomFile.html#buildmodel-keys) for details on buildModel keys.
 
 The section below defines the model.
-The target of the model fit is the field 'targetDq'. This field is not in the fannie table but calculated
+The target of the model fit is the field "targetDq". This field is not in the fannie table but calculated
 from the delinquency field -- capping that field at 12. The target type is 'cat' since we want to
 estimate the probability of a loan being at each delinquency level.
 
-The 'cat' entry lists the one-hot features in the model. The 'cts' entry lists the continuous fields.
-Note: goMortgage will normalize the continuous fields.  The 'emb' entry lists the embedded features.
+The "cat" entry lists the one-hot features in the model. The "cts" entry lists the continuous fields.
+Note: goMortgage will normalize the continuous fields.  The "emb" entry lists the embedded features.
 Each feature name is followed by the embedding dimension in braces.
 
-The 'layer<n>' entries specify the model.  Layer1 has 40 output nodes and relu activation.
+The "layer<n>" entries specify the model.  Layer1 has 40 output nodes and relu activation.
 Layer4 is the output layer.  Since we're capping delinquency at 12 months, it has 13 nodes and
-the softmax activation. There's no need to specify the input layer.
+softmax activation. There's no need to specify the input layer.
 
 ```
 // targetDq is an int32 field that takes on values 0,..,13.
@@ -182,7 +185,7 @@ layer4: FC(size:13, activation:softmax)
 ```
 
 The next section controls the model building process.
-'batchSize' and 'epochs' set what you think they do.  The 'earlyStopping: 40' ends the fit if the
+"batchSize" and "epochs" set what you think they do.  The "earlyStopping: 40" ends the fit if the
 cross entropy calculated on the validation data fails to decline for 40 epochs.
 The learning rate entries specify the learning rate at the first and last (2000, in this case)
 epoch.  The learning rate declines linearly.
@@ -208,11 +211,11 @@ The 'modelQuery', 'validateQuery' and 'assessQuery' entries specify the SQL to p
 
 A feature of the fannie [app](https://pkg.go.dev/github.com/invertedv/fannie) is that it creates
 a field "bucket" that assigns each loan an integer value 0 through 19. This value is sticky --
-a loan will always get the same value. Further, it is uncorrelated with other fields. This ensures our
-three datasets consist of disjoint loans.
+a loan will always get the same value. Further, it is uncorrelated with other fields. This enables
+us ensure the three datasets consist of disjoint loans.
 
-Finally, the queries have a placeholder "%s" in place of a field list.  goMortgage replaces this with the fields
-needed for the analysis.
+Finally, the queries have a placeholder "%s" instead of an explicit field list. goMortgage replaces this with the fields
+needed for the run.
 
 ```
 // This query pulls the data for fitting the coefficients.  The %s will be replaced with the fields we need.
@@ -224,7 +227,7 @@ validateQuery: SELECT %s FROM tmp.DqModel WHERE bucket in (10,11,12,13,14)
 
 ```
 <br>
-#### **assessModel**
+#### assessModel
 
 See [here]({{ site.baseurl }}/gomFile.html#assessmodel-keys) for details on assessModel keys.
 In the code below, the assessQuery pulls the data for the assessment.
@@ -258,9 +261,16 @@ addlKeep: lnId, aoDt, trgDt
 ```
 
 goMortgage will automatically run the assessment on the features in the model.  You may wish to run it on
-additional fields.  These are supplied in the "assessAddl" key.
+additional fields.  These are supplied in the "assessAddl" key, below. The name, 
 
-The entries below specify an assessment.  The name, "DQ 4+ Months", will appear on all graphs. 
+
+```
+// Additional fields for the assessment.
+assessAddl: aoIncome50, aoEItb50,  trgPti10, trgPti90, ltv, aoMaxDq12, trgUpbExp, state, aoIncome90, msaLoc,
+  aoPropVal, trgPropVal, vintage
+```
+The entries below specify an assessment.
+"DQ 4+ Months", will appear on all graphs.
 Note that each entry ends in "aoDq".
 This arbitrary value ensures these specs get grouped together.  The assessment is conducted on the
 sum of the columns 4 through 12 of the softmax output - which corresponds to 4+ months delinquent.
@@ -268,9 +278,6 @@ The assessment is sliced on the field aoDqCap6.
 That is, it will be done separately for each of the aoDqCap6 values (0 through 6).
 
 ```
-// Additional fields for the assessment.
-assessAddl: aoIncome50, aoEItb50,  trgPti10, trgPti90, ltv, aoMaxDq12, trgUpbExp, state, aoIncome90, msaLoc,
-  aoPropVal, trgPropVal, vintage
 
 // Run a by-feature assessment that is sliced by aoDqCap6 on the binary output that coalesces targetDq into two groups
 // of (0,1,2,3) and (4,5,6,7,8,9,10,11,12).  aoDqCap6 is the delinquency status at the as-of date where the
