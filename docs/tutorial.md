@@ -301,10 +301,12 @@ assessSlicerOcc: occ
 
 Note: specify "noGroups" as the slicer if you don't want to slice by anything.
 
-For a categorical target, goMortgage will produce [KS]() and [Decile]() plots, overall and for each
-level of the slicer.  Further, it will produce [Segment]() plots for each feature in the model and
+For a categorical target, goMortgage will produce [KS]({{ site.baseurl }}/plots.html#ks-plots) 
+and [Decile]({{ site.baseurl }}/plots.html#decile-plots) plots, overall and for each
+level of the slicer.  Further, it will produce [Segment]({{ site.baseurl }}/plots.html#segment-plots) 
+plots for each feature in the model and
 each field specified in "assessAddl".  For each feature in the model, goMortgage will also construct
-[marginal]() plots.
+[marginal]({{ site.baseurl }}/plots.html#marginal-plots) plots.
 
 Another form of assessment are curves. These will plot the model output and actual value averaged
 by the given field.  Below, the DQ 4+ months values are averaged over the target year/quarter (trgYrQtr

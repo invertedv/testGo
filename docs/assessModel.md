@@ -30,11 +30,11 @@ data pipeline.
 
 The assessments performed are:
 
-1. [Decile]() plots.<br> The decile plot isn't by feature but is by slice. 
-2. [KS]() plots.<br> The KS plot is only performed if the target is categorical. The KS plot isn't by
+1. [Decile]({{ site.baseurl }}/plots.html#decile-plots) plots.<br> The decile plot isn't by feature but is by slice. 
+2. [KS]({{ site.baseurl }}/plots.html#ks-plots) plots.<br> The KS plot is only performed if the target is categorical. The KS plot isn't by
    feature but is by slice.
-3. [Segment]() plots. <br> Segment plots are by feature.
-4. [Marginal]() plots. <br> Marginal plots are by feature.
+3. [Segment]({{ site.baseurl }}/plots.html#segment-plots) plots. <br> Segment plots are by feature.
+4. [Marginal]({{ site.baseurl }}/plots.html#marginal-plots) plots. <br> Marginal plots are by feature.
 
 ### Assessment by Curve
 

@@ -71,7 +71,8 @@ between a feature and the model output. There are two rows of graphs each with
 6 columns.  
 
 The six columns are based on segmenting the data based on the quantiles of 
-the model output: <.1, .1-.25, .25-.5, .5-.75, .75-.9, >.9.
+the model output: > 0.9, .75-.9, .5-.75, .25-.5, .1-.25, < .1.
+That is, left-to-right the graphs run from high-to-low model output.
 
 The bottom row is the distribution of the feature within the segments.
 If the feature has a strong main effect, you should notice differences in the
@@ -88,6 +89,9 @@ the top 10 values in the segment are used.
 the boxplots are formed based on the quartiles of the feature. If it is
 categorical, then the levels of the feature are used.
 
+In the graph below, you can see as the model output decreases, the distribution
+of FICO moves higher.  Likewise, on the top row, within each graph the 
+higher the FICO the lower the model output.
 
 <div style="text-align: left;">
   <img src="{{ site.baseurl }}/images/marginal.png"  >
