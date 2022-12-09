@@ -17,6 +17,7 @@ nav_order: 9
 
 
 ### Preparations
+{: .fw-700 }
 
 So, you want to build a mortgage model.  Where do you start?  Well, having some loan-level data
 is a necessity.  I suggest you start with the 
@@ -38,6 +39,7 @@ OK, let's suppose you have these two tables.  What next? All of goMortgage's act
 specification (*.gom) file.  Let's look through one of these.
 
 ### The .gom file
+{: .fw-700 }
 
 The .gom entries are in a key/val format.  Both the keys and values are case-sensitive.
 We'll go through
@@ -67,6 +69,7 @@ assessModel: yes
 <br>
 
 #### buildData
+{: .fw-400 }
 
 See [here]({{ site.baseurl }}/gomFile.html#builddata-keys) for details on buildData keys.
 
