@@ -7,9 +7,6 @@ nav_order: 9
 ## goMortgage Tutorial
 {: .no_toc }
 
-{: .fs-6 .fw-800 }
-
-
 ### Table of Contents
 {: .no_toc .text-delta }
 
