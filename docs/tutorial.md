@@ -68,7 +68,7 @@ assessModel: yes
 ```
 <br>
 
-{: .fw-500 }
+{: .fs-4 .fw-700 }
 #### buildData
 
 ELLO
