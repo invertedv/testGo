@@ -65,8 +65,8 @@ assessModel: yes
 ```
 <br>
 
-{: .fs-2 .fw-700 }
 #### buildData
+{: .fs-2 .fw-700 }
 
 
 See [here]({{ site.baseurl }}/gomFile.html#builddata-keys) for details on buildData keys.
@@ -143,8 +143,8 @@ outTable: tmp.DqModel
 tableKey: lnId
 ```
 <br>
-{: .fs-2 .fw-700 }
 #### buildModel
+{: .fs-2 .fw-700 }
 
 The sections below controls the model build.
 See [here]({{ site.baseurl }}/gomFile.html#buildmodel-keys) for details on buildModel keys.
@@ -229,8 +229,8 @@ validateQuery: SELECT %s FROM tmp.DqModel WHERE bucket in (10,11,12,13,14)
 
 ```
 <br>
-{: .fs-2 .fw-700 }
 #### assessModel
+{: .fs-2 .fw-700 }
 
 See [here]({{ site.baseurl }}/gomFile.html#assessmodel-keys) for details on assessModel keys.
 In the code below, the assessQuery pulls the data for the assessment.
