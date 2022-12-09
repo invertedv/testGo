@@ -6,6 +6,7 @@ nav_order: 9
 
 ## goMortgage Tutorial
 {: .no_toc }
+{: .fs-6 .fw-300 }
 
 ### Table of Contents
 {: .no_toc .text-delta }
@@ -38,9 +39,10 @@ specification (*.gom) file.  Let's look through one of these.
 
 ### The .gom file
 
+The .gom entries are in a key/val format.  Both the keys and values are case-sensitive.
 We'll go through
 the file [dq.gom](https://github.com/invertedv/testGo/blob/master/scripts/dq.gom). 
-This .gom file builds a delinquency model.  This is a hazard model, or perhaps better termed, a conditional softmax
+This .gom file builds a delinquency model.  It's a hazard model, or perhaps better termed, a conditional softmax
 model.  The model estimates the probability the loan is in one of 13 delinquency states each month
 of the forecast period. The forecast period is 180 months. The 13 delinquency states are:
 current, 1 through 11 months delinquent and 12+ months delinquent. The condition of "conditional" softmax
@@ -63,6 +65,7 @@ buildModel: yes
 assessModel: yes
 ```
 <br>
+
 #### buildData
 
 See [here]({{ site.baseurl }}/gomFile.html#builddata-keys) for details on buildData keys.
