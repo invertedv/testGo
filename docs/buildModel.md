@@ -6,7 +6,10 @@ nav_order: 4
 
 ## Modeling Approach
 
+[gom entries]({{ {{ site.baseurl }}/gomFile.html#buildmodel-keys)
+
 ### Data Usage
+{: .fw-700 }
 
 The modeling approach uses 3 sets of data:
 
@@ -15,6 +18,7 @@ The modeling approach uses 3 sets of data:
 - The assessment data which is used to construct the assessments of model quality.
 
 ### Model Conceit
+{: .fw-700 }
 
 goMortgage will fit a model to whatever data it's given.  In the examples, you'll see these types of
 models:
@@ -29,11 +33,13 @@ models:
 is 1 if an event occurs and 0 if not. The [mortgage prepay score]() model is an example.
 
 ### Model Type
+{: .fw-700 }
 
 The models fit by goMortgage are neural nets.  goMortgage uses the [seafan]() package which is built
 upon [gorgonia]().  The models are sequential.  goMortgage supports continuous, one-hot and embedded features.
 
 ### Model Specification
+{: .fw-700 }
 
 The model is specified within the .gom text file you create.  Below is an example model specification:
 
@@ -42,12 +48,14 @@ The model is specified within the .gom text file you create.  Below is an exampl
     layer3: FC(size:10, activation:relu)
     layer4: FC(size:13, activation:softmax)
 
-The model has four layers not counting the input layer.  The input layer is the union of the three types of
-input features (continuous, one-hot and embedded). The size: parameter is the number of the layer's
+The model has four layers not counting the input layer.  The input layer is built by goMortgage
+from your list of features.
+The size: parameter is the number of the layer's
 output nodes. From the output
 layer (layer4) we see that this is a categorical model that has 13 potential states.
 
 ### Model Directory
+{: .fw-700 }
 
 The model directory lies within the user-specified output directory (outDir key).  
 There are three files in the directory:
@@ -55,12 +63,11 @@ There are three files in the directory:
 - modelP.nn and modelS.nn specify the model parameters and structure, respectively.
 - fieldDefs.jsn specifies the input features -- their types, levels, means, variances. These are needed
   so that when the model is run on a new dataset the features are normalized/mapped correctly.  
-  The file is in a format
+  The file is in a json format.
 
 There will also be a directory *inputModels*.  If you have used other model outputs as features to this model,
 there will be directories under this that specify those models.  Those directories will have the three 
-files above
-plus "targets.spec". This file contains the outputs of the models to use.  
+files above plus "targets.spec". This file contains the outputs of the models to use.  
 Each output is on a separate line and has the form
 
     \<name\>  {ints}
@@ -70,7 +77,9 @@ from the model output.  For example:
 
     d120{4,5,6,7,8,9,10,11,12}
 
-would create the feature d120 as the sum of columns 4 through 12 of the model output.
+would create the feature d120 as the sum of columns 4 through 12 of the model output. Currently,
+only categorical models can serve as inputs to other models.  The value actually input to the
+model under construction is the log odds of the probability. 
 
 Note that if an input model also takes a model as an input, there will be another inputModels directory
 in the input model's directory.
@@ -86,10 +95,12 @@ One feature of the tables created by these packages is an integer field "bucket"
 which takes on values 0,..,19. It is a hash of
 the loan number. Since it is a hash of the loan number, a given loan will always be assigned to the
 same bucket.  Importantly, the hash value is uncorrelated with the other fields in the table.
-The three data sets, model/validate/assess reside in a single table.  The modelQuery, validateQuery
-and assessQuery pull disjoint sets of loans based on the loan bucket.
+Using this approach, the three data sets, model/validate/assess can reside in a single table.  
+The modelQuery, validateQuery and assessQuery pull disjoint sets of loans based on the loan bucket.
+Also, if the table is rebuilt, there won't be any crossover between the three datasets.
 
 ### Feature Processing
+{: .fw-700 }
 
 All continuous features are normalized by the sample mean and standard deviation.
 Discrete features are mapped into [0,1,2,...].  The distinct levels of the feature

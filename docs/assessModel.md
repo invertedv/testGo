@@ -6,15 +6,19 @@ nav_order: 5
 
 ## Assessment
 
+[gom entries]({{ {{ site.baseurl }}/gomFile.html#assessmodel-keys)
+
 For models whose target is categorical, the assessment is based on a binary outcome.  If the
 output has more than 2 outcomes, you specify which set of outcomes to coalesce into "1" with
-the remainder becoming "0".
+the remainder becoming "0".  The assessments take a "slicer", which generates a
+separate analysis for each level of the slicer. If you do not wish to slice the
+assessment, specify "noGroups" as the slicer.
 
 Any number of assessments may be performed varying either the slicer and/or the outcomes
 coalesced into "1".
 
 The goMortgage plots are rendered as html using Plotly. These are "live" plots in the sense that
-Plotly displays information under the cursor, they can be zoomed and saved as jpg's.
+Plotly displays information under the cursor, they can be zoomed and saved as png's.
 
 If you run the assessModel step separate from the model build,
 goMortgage saves the .gom file named as \<time stamp\>.gom.
@@ -22,6 +26,7 @@ goMortgage saves the .gom file named as \<time stamp\>.gom.
 There two assessment types: assessment by feature and assessment by curve.
 
 ### Assessment by Feature
+{: .fw-700 }
 
 Assessment by Feature focuses, generally, on the behavior of the model with respect to existing
 and potential model features.  The assessment can also be sliced by any field available in the
@@ -37,9 +42,10 @@ The assessments performed are:
 4. [Marginal]({{ site.baseurl }}/plots.html#marginal-plots) plots. <br> Marginal plots are by feature.
 
 ### Assessment by Curve
+{: .fw-700 }
 
-An assessment by curve plots the average model output and average actual.  The averages are calculated
-over the values of a slicing field.  
+An "assessment by curve" plots the average model output and average actual.  
+The averages are calculated over the values of a slicing field.  
 
 Note that if the slicing field is continuous, then it is reduced to 5 groups based on its quantiles:
 <0.1; 0.1-0.25; 0.25-0.5; 0.5-0.75; 0.75-0.9; and >0.9.

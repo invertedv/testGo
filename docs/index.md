@@ -23,14 +23,14 @@ goMortgage builds loan-level models.
 goMortgage is an app that builds mortgage forecasting models.
 
 What aspects of mortgage performance can be modeled? Really, anything you can think of.  The software
-is agnostic about the model target and features. Think of it as a flexible framework for model building.
+is agnostic about the model target and features. 
 
-goMortgage takes a text file (*.gom) you create to specify all aspects of the modeling process
+goMortgage takes a text file (*.gom) you create to direct all aspects of the modeling process
 from building datasets to model assessment.
 
 Since goMortgage is open source, goMortgage can be modified to suit your needs.
 Out of the box, it is configured to work with Freddie and Fannie data. There are
 instructions to set up your own data sources. 
 
-The topics below provide details to get up and running.  These pages describe goMortgage as it
-comes to you.  Since it's open source, you may modify it to suit your needs!
+The topics below provide details to get up and running. 
+

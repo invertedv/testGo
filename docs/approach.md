@@ -8,26 +8,29 @@ nav_order: 2
 
 
 ### It's an App
+{: .fw-700 }
 
 goMortgage is an app. You create a text file (*.gom) that instructs goMortgage what to do.  Want to 
 change the model structure? Change the source data? Change the features in the model? Change
-the sampling scheme? These are easy changes to your .gom file. There's no need to hack into your
+the sampling scheme? These are easy changes to the .gom file. There's no need to hack into your
 code, create a bunch of new tests and hope that the changes won't cause some unintended consequences.
 
 The output of a goMortgage run is placed in a 
-directory you specify.  This includes your .gom file, a log file,the model, a summary from the data build,
-the cost curves from the
+directory you specify.  The directory includes the .gom file, a log file, the model,
+a summary from the data build, the cost curves from the
 model build, and all graphical assessments of the model. Other outputs are saved to ClickHouse tables.
 
 ### One-stop Shopping
+{: .fw-700 }
 
-goMortgage handles the entire process. It will
+goMortgage handles the entire model building process. It will
 
 - build the dataset
 - build the model
 - assess the model
 
 ### Data
+{: .fw-700 }
 
 goMortgage employs three sets of data.  Ideally they are, but do not have to be, disjoint.
 The three sets are:
@@ -47,6 +50,7 @@ of models can be built.
 See the [examples]({{ site.baseurl }}/examples.html) page for some types that are possible. 
 
 ### Model
+{: .fw-700 }
 
 goMortgage fits neural net models. The target field may be
 either discrete or continuous.Two types of layers are
@@ -55,17 +59,19 @@ leaky relu, linear and softmax.  There are additional options, such as L2 regula
 and linearly decreasing learning rates. 
 
 ### Assessment
+{: .fw-700 }
 
 goMortgage produces a variety of model assessments, mostly graphical, to provide insight into the model
 performance and relationships of inputs to output.
 
-Given the approach of goMortgage to model building, one can do something that's uber cool.  It is
+Given the approach of goMortgage to model building, one can do something that's very cool.  It is
 straghtforward to build the model on data up to time *t* and assess it on data after time *t*.
 In fact, one can march through time conducting this process to gain insight into how the model
 performs out of time period in a variety of economic environments. One can even perform experiments like
 restricting the assessment to loans, say, in California.
 
 ### Extensible
+{: .fw-700 }
 
 goMortgage comes configured to work with Fannie and Freddie data but
 can be modified for other data sources.  See the
