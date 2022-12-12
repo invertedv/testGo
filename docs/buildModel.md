@@ -35,8 +35,10 @@ is 1 if an event occurs and 0 if not. The [mortgage prepay score]() model is an 
 ### Model Type
 {: .fw-700 }
 
-The models fit by goMortgage are neural nets.  goMortgage uses the [seafan]() package which is built
-upon [gorgonia]().  The models are sequential.  goMortgage supports continuous, one-hot and embedded features.
+The models fit by goMortgage are neural nets.  goMortgage uses the 
+[seafan](https://pkg.go.dev/github.com/invertedv/seafan) package which is built
+upon [gorgonia](https://pkg.go.dev/gorgonia.org/gorgonia).  The models are sequential.
+goMortgage supports continuous, one-hot and embedded features.
 
 ### Model Specification
 {: .fw-700 }
@@ -53,6 +55,9 @@ from your list of features.
 The size: parameter is the number of the layer's
 output nodes. From the output
 layer (layer4) we see that this is a categorical model that has 13 potential states.
+Note that the target field does not have to be ordered integers -- any integers or string fields
+are fine.  goMortgage generates a mapping from the target field to {0,1,2..} based on the sorted values
+of the target.
 
 ### Model Directory
 {: .fw-700 }
@@ -89,7 +94,8 @@ All the files in the model directory are text files and quite lightweight.
 ### Fannie and Freddie Data
 goMortgage comes configured to use the Fannie and Freddie data as assembled by these
 packages:
-[fannie]() and [freddie]().
+[fannie](https://pkg.go.dev/github.com/invertedv/fannie) and 
+[freddie](https://pkg.go.dev/github.com/invertedv/freddie).
 
 One feature of the tables created by these packages is an integer field "bucket", 
 which takes on values 0,..,19. It is a hash of

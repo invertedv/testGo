@@ -30,7 +30,7 @@ goal is to use goMortgage on different data, this is the easiest way to test dri
 
 There is one other table you'll need -- a table of non-loan data.  This table has fields for
 house prices, unemployment, income, labor growth rates and more. The data is monthly at a zip/zip3 level.
-The [assemble]() package will produce the table you need.
+The [assemble](https://pkg.go.dev/github.com/invertedv/assemble) package will produce the table you need.
 
 OK, let's suppose you have these two tables.  What next? All of goMortgage's activity is driven by a
 specification (*.gom) file.  Let's look through one of these.

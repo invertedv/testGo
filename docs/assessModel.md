@@ -12,7 +12,8 @@ For models whose target is categorical, the assessment is based on a binary outc
 output has more than 2 outcomes, you specify which set of outcomes to coalesce into "1" with
 the remainder becoming "0".  The assessments take a "slicer", which generates a
 separate analysis for each level of the slicer. If you do not wish to slice the
-assessment, specify "noGroups" as the slicer.
+assessment, specify "noGroups" as the slicer.  The slicer field must be a categorical field, but does not
+have to be a feature in the model.
 
 Any number of assessments may be performed varying either the slicer and/or the outcomes
 coalesced into "1".
