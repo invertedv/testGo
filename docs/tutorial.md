@@ -339,12 +339,12 @@ are also written to files.
 ### Output
 
 <div style="text-align: left;">
-  <img src="{{ site.baseurl }}/images/DQ0fico.html.png" width="500" height="500" />
-  <img src="{{ site.baseurl }}/images/DQ0Eltv.html.png" width="500" height="500" />
-  <img src="{{ site.baseurl }}/images/DQ0aoPrior60.html.png" width="500" height="500" />
+  <img src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" />
+  <img src="{{ site.baseurl }}/images/DQ0MargTrgEltv.png" width="500" height="500" />
+  <img src="{{ site.baseurl }}/images/DQ0MargAoPrior60.png" width="500" height="500" />
 </div>
 <div style="text-align: left;">
-  <img src="{{ site.baseurl }}/images/DQ2fico.html.png" width="500" height="500" />
-  <img src="{{ site.baseurl }}/images/DQ2Eltv.html.png" width="500" height="500" />
-  <img src="{{ site.baseurl }}/images/DQ2aoPrior60.html.png" width="500" height="500" />
+  <img src="{{ site.baseurl }}/images/DQ2MargFico.png" width="500" height="500" />
+  <img src="{{ site.baseurl }}/images/DQ2MargTrgEltv.png" width="500" height="500" />
+  <img src="{{ site.baseurl }}/images/DQ2MargAoPrior60.png" width="500" height="500" />
 </div>
