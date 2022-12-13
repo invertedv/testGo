@@ -339,9 +339,9 @@ are also written to files.
 ### Output
 
 <div style="text-align: left;">
-  <img src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" />
-  <img src="{{ site.baseurl }}/images/DQ0MargTrgEltv.png" width="500" height="500" />
-  <img src="{{ site.baseurl }}/images/DQ0MargAoPrior60.png" width="500" height="500" />
+  <div><img src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" /></div>
+  <div><img src="{{ site.baseurl }}/images/DQ0MargTrgEltv.png" width="500" height="500" /></div>
+  <div><img src="{{ site.baseurl }}/images/DQ0MargAoPrior60.png" width="500" height="500" /></div>
 </div>
 <div style="text-align: left;">
   <img src="{{ site.baseurl }}/images/DQ2MargFico.png" width="500" height="500" />
