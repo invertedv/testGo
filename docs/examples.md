@@ -26,7 +26,7 @@ You'll recognize this as the "targetStatus" field from the
 [buildData](https://invertedv.github.io/testGo/buildData.html#targets) page.
 
 On a monthly basis, some of these states are quite rare -- especially default. In a data set of 
-3MM loans, there may be only ~10,000 defaults. goMortage will fit a model here, though you may
+3MM loans, there may be only ~10,000 defaults. goMortage will fit a model, though you may
 need to use l2Reg. The example here, though, stratifies on the target at Pass 2. 
 
 If you've worked through the tutorial, you'll notice a strong overlap with the DQ model.
@@ -39,7 +39,7 @@ changes the graphs directory from the default "graphs" to "graphsEven".
 
 To use this model for forecasting, it needs to be de-biased.  This 
 [script](https://github.com/invertedv/goMortgage/blob/master/scripts/allInEvenStrat.gom)
-graph will do the job.  It builds a new table that is not stratified on targetStatus and uses that
+will do the job.  It builds a new table that is not stratified on targetStatus and uses that
 to re-estimate the bias coefficients of the output layer.
 Note that the line
 

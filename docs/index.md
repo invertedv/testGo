@@ -35,3 +35,6 @@ instructions to set up your own data sources.
 
 The topics below provide details to get up and running. 
 
+<div style="text-align: left;">
+  <img src="{{ site.baseurl }}/images/vee1c.png" width="75" height="75" />
+</div>
