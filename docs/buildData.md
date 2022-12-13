@@ -215,16 +215,16 @@ conforming rate (same term as current loan)
 - lbrGrowth. Growth in labor force from as-of date to target date (annualized)
 - dHpi. Change in HPI between origination date and target date.
 
-#### Static fields 
-{: .fs-2 .fw-700 }
+#### Static fields X
+{:  .fw-700 }
 
 Below are static fields calculated by goMortgage
  
 - spread. Difference between the note rate and the conforming rate (same term) at the first-pay date.
-- trgFcType*. Foreclosure type ("Judicial", "Non-Judicial")
-- trgFcDays*. Fannie Mae guideline for foreclosure, in days.
+- trgFcType(1). Foreclosure type ("Judicial", "Non-Judicial")
+- trgFcDays(1). Fannie Mae guideline for foreclosure, in days.
  
-* These are prefixed "trg" even though they are static because they come in via the non-loan table.
+(1) These are prefixed "trg" even though they are static because they come in via the non-loan table.
 ### Examples
 {: .fw-700 }
 
