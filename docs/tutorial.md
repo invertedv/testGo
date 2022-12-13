@@ -336,12 +336,20 @@ If "show" is set to "yes", then each graph will also be displayed in your browse
 a lot of graphs!  "plotHeight" and "plotWidth" specify the plot dimensions, in pixels. The graphs
 are also written to files. 
 
-### Output
+### OutputX
+<script>
 
+function enlargeImg(){
+  var theImage = document.getElementById("image1");
+  theImage.width = theImage.width * 3;
+  theImage.height = theImage.height * 3;
+};
+
+</script>
 <div style="text-align: left;">
   <table>
   <tr>
-  <td><img src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" /></td>
+  <td><img id="image1" src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" /></td>
   <td><img src="{{ site.baseurl }}/images/DQ0MargTrgEltv.png" width="500" height="500" /></td>
   <td><img src="{{ site.baseurl }}/images/DQ0MargAoPrior60.png" width="500" height="500" /></td>
 </tr>
