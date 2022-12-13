@@ -336,14 +336,16 @@ If "show" is set to "yes", then each graph will also be displayed in your browse
 a lot of graphs!  "plotHeight" and "plotWidth" specify the plot dimensions, in pixels. The graphs
 are also written to files. 
 
-### Output
+### OutputX
+  <td><img id="image1" src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" onclick="enlargeImg(1)"/>
+  <td><img id="image2" src="{{ site.baseurl }}/images/DQ0MargTrgEltv.png" width="500" height="500"   onclick="enlargeImg(2)" />
+  <td><img src="{{ site.baseurl }}/images/DQ0MargAoPrior60.png" width="500" height="500" /></td>
+  <img src="{{ site.baseurl }}/images/DQ2MargFico.png" width="500" height="500" />
+  <img src="{{ site.baseurl }}/images/DQ2MargTrgEltv.png" width="500" height="500" />
+  <img src="{{ site.baseurl }}/images/DQ2MargAoPrior60.png" width="500" height="500" />
 <script>
   var state=0;
-      // Get the img object using its Id
-      //
-      // Function to increase image size
   function enlargeImg(x) {
-      alert(x);
       text1="image".concat(String(x));
       img = document.getElementById(text1);
       if (state == 0) {
@@ -357,14 +359,4 @@ are also written to files.
         img.style.transform = "scale(1)";
         img.style.transition = "transform 0.25s ease";
       }}
-      // Function to reset image size
-      function resetImg() {
-        // Set image size to original
-      }
 </script>
-  <td><img id="image1" src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" onclick="enlargeImg(1)"/>
-  <td><img id="image2" src="{{ site.baseurl }}/images/DQ0MargTrgEltv.png" width="500" height="500"   onclick="enlargeImg(2)" />
-  <td><img src="{{ site.baseurl }}/images/DQ0MargAoPrior60.png" width="500" height="500" /></td>
-  <img src="{{ site.baseurl }}/images/DQ2MargFico.png" width="500" height="500" />
-  <img src="{{ site.baseurl }}/images/DQ2MargTrgEltv.png" width="500" height="500" />
-  <img src="{{ site.baseurl }}/images/DQ2MargAoPrior60.png" width="500" height="500" />
