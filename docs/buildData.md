@@ -16,7 +16,7 @@ nav_order: 3
 {:toc}
 ---
 
-[gom entries]({{ {{ site.baseurl }}/gomFile.html#builddata-keys)
+[gom entries]({{ site.baseurl }}/gomFile.html#builddata-keys)
 
 goMortgage will build the model/validate/assess ClickHouse table(s).  In the 
 [examples]({{ site.baseurl }}/examples.html), these

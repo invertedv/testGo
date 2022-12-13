@@ -6,7 +6,7 @@ nav_order: 4
 
 ## Modeling Approach
 
-[gom entries]({{ {{ site.baseurl }}/gomFile.html#buildmodel-keys)
+[gom entries]({{ site.baseurl }}/gomFile.html#buildmodel-keys)
 
 ### Data Usage
 {: .fw-700 }
