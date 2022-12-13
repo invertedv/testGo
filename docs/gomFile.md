@@ -107,6 +107,8 @@ These keys are optional:
   a "where" clause to restrict the selection during pass 1.
 - where2: \<clause\><br>
   a "where" clause to restrict the selection during pass 2.
+- window: \<int\><br>
+specifies a window, in months, over which to assess performance from the as-of date.
 - tableKey: \<field\><br>
 the name of the primary key for the outputTable.
 

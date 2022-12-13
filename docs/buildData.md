@@ -49,7 +49,7 @@ are used. When a
 forecast is created, a scenario for the future values is substituted used. 
 One could also nest the model within a simulation for these forward-looking features.
 
-### Sampling the Loan-level Data
+### Sampling the Loan-level Data: No Window
 {: .fw-700 }
 
 Conceptually, one can imagine the data to be sampled as the set of all pairs of the form
@@ -107,6 +107,122 @@ In short, this is the goMortgage process:
 
      Pass 3. Join the table in 2 to the non-loan data.
 
+To be clear, the performance metric in this framework is the metric for a single month -- the target date.
+
+### Sampling the Loan-level Data: With Window
+{: .fw-700 }
+
+There is a second mode of sampling, with windowing, which differs in the Pass 2 step from no-windowing.
+Sampling with window is invoked by including the "window" key in your .gom file.
+
+The "window" key specifies an observation window after the as-of date.  If this key is included,
+then the performance for a loan is measured over all the months in the window.  Suppose you are modeling
+prepays and you specify
+
+      window: 24
+
+Then the target field, "targetPp" is 1 if the loan prepays during the 24 months after the as-of date.
+Also, in this case, goMortgage will not use an as-of date that is within 24 months of the maximum date in the
+loan-level table.
+
+The target date is set to the end of the window.
+
+
+***Window vs. No-Window**
+
+Think about the difference in the datasets built:
+
+1. No Window. The performance data is a date (target date) some number of months after the as-of date. The state of
+the loan is measured that the target date.  Of course, to do this, the loan has to exist at the target date.
+2. Window. The performance data is measured over a period of months immediately following the as-of date. The performance
+of the loan is measured as the event happening any time in the window.  The loan need not exist for the entire
+window, though it is important that it could exist during the entirety of the window.
+
+In the No Window scenario, the data is set up to build a conditional softmax model.  Such a model measures the
+probability the loan will be in the states of interest month-over-month into the future.
+The condition is that it exist at the beginning of the month being forecast (performance is measured at the end
+of the month).
+
+In the window scenario, the data is set up to build a softmax score, in the vein of, say, FICO.  The target in
+this case is binary with a 1 meaning the event of interest happened somewhere in the window.
+The model will be estimating the probability that this event occurs.
+
+### Fields
+{: .fw-700 }
+
+The fields available in goMortage include most of the static fields in the loan-level data, select fields
+from the non-loan data and calculated fields.  These last two are detailed below.
+
+#### Nominclature
+{: .fs-2 .fw-700 }
+
+The following nominclature has been adopted for fields built by goMortgage:
+
+- Time-varying fields at the first-pay date are prefixed by "org"
+- Time-varying fields at the as-of date are prefixed by "ao".
+- Time-varying fields at the target date are prefixed by "trg".
+- Time-varying fields at Jan. 2020 are prefixed by "y20"
+- Fields that serve as the target of models are prefixed by "target"
+
+The last is not hard and fast, since goMortage doesn't care but is helpful when looking at fields.
+
+#### Targets
+{: .fs-2 .fw-700 }
+
+Targets are those fields designed to be the targets of models. Targets differ for Window and No-Window
+sampling:
+
+- Window
+    - targetPp.  1 if the loan prepays in the window.
+    - targetDefault. 1 if the loan defaults in the window.
+    - targetDq120. 1 if the loan hits 4+ months DQ in the window.
+    - targetMod. 1 if the loan is modified in the window.
+
+- No-window
+    - targetDq. The DQ level (capped at 12 months) at the target date.
+    - targetDeath. 1 if the loan defaults or prepays at the target date.
+    - targetStatus. At the target month:
+        - 14 if the loan defaults
+        - 13 if the loan prepays
+        - 12 if the loan is 12+ months delinquent
+        - DQ if the loan is DQ months delinquent, DQ = 1,..,12
+        - 0 if the loan is current
+    - targetMod. 1 if the loan is modified at -- or prior to -- the target date.
+    - targetNetPro. Net proceeds from sale of the house divided by the value of the home at the target date.
+
+#### Time-varying fields
+{: .fs-2 .fw-700 }
+
+These fields are populated for all time periods:
+ 
+- Hpi. FHFA zip 3 house price index. 
+- UnempRate. BLS unemployment rate (MSA)
+- LbrForce. Labor force size (MSA)
+- MortFix30. 30-year fixed rate
+- MortFix15. 15-year fixed rate
+- Treas10. 10 year treasury.
+- Income50. median income estimated from IRS data (zip)
+- Eltv. Estimated LTV (based on amorized balance and updated property value.)
+- PropVal. Estimated updated property value.
+ 
+At the target date, these are also found:
+- trgPti50. From IRS data, payment to estimated median income
+- trgRefiIncentive. Refi incentive calculated as the annual savings in payments if refi at the prevailing
+conforming rate (same term as current loan)
+- newPayment. New payment at prevailing conforming rate (same term as current loan)
+- potentialDqMax. Potential DQ if no payments were made after the as-of date
+- potentialDqMin. Potential DQ if 2 payments were made each month after the as-of date.
+
+#### Static fields 
+{: .fs-2 .fw-700 }
+ 
+- spread. Difference between the note rate and the conforming rate (same term) at the first-pay date.
+- trgFcType*. Foreclosure type ("Judicial", "Non-Judicial")
+- trgFcDays*. Fannie Mae guideline for foreclosure, in days.
+- lbrGrowth. Growth in labor force from as-of date to target date (annualized)
+- dHpi. Change in HPI between origination date and target date.
+ 
+* These are prefixed "trg" even though they are static because they come in via the non-loan table.
 ### Examples
 {: .fw-700 }
 

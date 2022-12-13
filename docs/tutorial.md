@@ -98,14 +98,14 @@ strats1: state, aoDt, aoAge, aoDqCap6
 // target # of rows in output of pass 1
 sampleSize1: 30000000
 // at the as-of date, we restrict to active loans with a max dq of 24 months and balance greater than $10k
-where1: AND aoAge >= 0 AND aoDq >= 0 AND aoDq <= 24 AND aoUpb > 10000 AND mon.zb='00'
+where1: aoAge >= 0 AND aoDq >= 0 AND aoDq <= 24 AND aoUpb > 10000 AND mon.zb='00'
 
 // fields to stratify on at pass 2
 strats2: fcstMonth, trgDt
 // target # of rows in output of pass 2
 sampleSize2: 3000000
 // at the target date, we restrict to dates after the as-of date which are active.
-where2:  AND trgZb='00' AND fcstMonth > 0
+where2:  trgZb='00' AND fcstMonth > 0
 ```
 
 These keys specify the source and type of the input data.  The "mtgFields" key specifies that this
@@ -138,7 +138,7 @@ pass1Sample: tmp.sampleDq1
 pass2Strat: tmp.stratDq2
 pass2Sample: tmp.sampleDq2
 // final table
-outTable: tmp.DqModel
+outTable: tmp.modelDq
 // key for final table
 tableKey: lnId
 ```
@@ -170,14 +170,14 @@ targetType: cat
 
 // one-hot features.  Note, it's fine for this to take up multple lines
 cat: purpose, propType, occ, amType, standard, nsDoc, nsUw, coBorr, hasSecond, aoPrior30, aoPrior60,
-  aoPrior90p, harp, aoMod, aoBap, channel, covid, fcType, pPen36
+  aoPrior90p, harp, aoMod, aoBap, channel, covid, trgFcType, potentialDqMax, potentialDqMin
 
 // Continuous features.  Note, these will automatically be normalized.
-cts: fico, aoAge, term, y20PropVal, units, dti, trgUnempRate, trgEltv, aoMonthsCur, trgPti50,
+cts: fico, aoAge, term, y20PropVal, units, dti, trgUnempRate, trgEltv,
   trgRefiIncentive, lbrGrowth, spread
 
 // Embedded features.  The embedding dimension is in the braces.
-emb:  aoDq{5}; state {4}; servMapped{4}; fcstMonth{2}; trgAge{2}
+emb:  aoDq{5}; state {4}; fcstMonth{2}; trgAge{2}
 
 // this is the model we're fitting.
 layer1: FC(size:40, activation:relu)
@@ -222,10 +222,10 @@ needed for the run.
 ```
 // This query pulls the data for fitting the coefficients.  The %s will be replaced with the fields we need.
 // The bucket field is a hash of the loan number.
-modelQuery: SELECT %s FROM tmp.DqModel WHERE bucket < 10
+modelQuery: SELECT %s FROM tmp.modelDq WHERE bucket < 10
 
 // This query pulls the data for determining early stopping.
-validateQuery: SELECT %s FROM tmp.DqModel WHERE bucket in (10,11,12,13,14)
+validateQuery: SELECT %s FROM tmp.modelDq WHERE bucket in (10,11,12,13,14)
 
 ```
 <br>
@@ -269,7 +269,7 @@ additional fields.  These are supplied in the "assessAddl" key, below. The name,
 
 ```
 // Additional fields for the assessment.
-assessAddl: aoIncome50, aoEItb50,  trgPti10, trgPti90, ltv, aoMaxDq12, trgUpbExp, state, aoIncome90, msaLoc,
+assessAddl: aoIncome50, aoEItb50,  trgPti10, trgPti90, ltv, aoMaxDq12, trgUpbExp, aoIncome90, msaLoc,
   aoPropVal, trgPropVal, vintage
 ```
 The entries below specify an assessment.
