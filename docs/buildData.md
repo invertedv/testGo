@@ -214,7 +214,7 @@ These fields are populated for all time periods:
 - Income50. median income estimated from IRS data (zip). Also Income10, Income25, Income75 and Income90.
 - PropVal. Estimated updated property value.
  
-At the target date, these are also found:
+These are also found at select time periods:
 - aoEltv. Estimated LTV at as-of date (based on amorized balance and updated property value)
 - trgEltv. Estimated LTV at target date (based on amorized balance and updated property value)
 - trgPti50. From IRS data, payment to estimated median income
