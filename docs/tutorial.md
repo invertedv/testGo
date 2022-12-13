@@ -335,7 +335,7 @@ plotWidth: 1600
 If "show" is set to "yes", then each graph will also be displayed in your browser.  This is usually
 a lot of graphs!  "plotHeight" and "plotWidth" specify the plot dimensions, in pixels. The graphs
 are also written to files. 
-
+<script src="{{ base.url  }}/assets/enlarge.js"></script>
 ### OutputX
   <td><img id="image1" src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" onclick="enlargeImg(1)"/>
   <td><img id="image2" src="{{ site.baseurl }}/images/DQ0MargTrgEltv.png" width="500" height="500"   onclick="enlargeImg(2)" />
