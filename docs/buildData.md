@@ -5,6 +5,16 @@ nav_order: 3
 ---
 
 ## Data Build
+{: .no_toc }
+
+{: .fs-6 .fw-300 }
+
+### Table of Contents
+{: .no_toc .text-delta }
+
+1. TOC
+   {:toc}
+---
 
 [gom entries]({{ {{ site.baseurl }}/gomFile.html#builddata-keys)
 
@@ -215,8 +225,8 @@ conforming rate (same term as current loan)
 - lbrGrowth. Growth in labor force from as-of date to target date (annualized)
 - dHpi. Change in HPI between origination date and target date.
 
-#### Static fields X
-{:  .fw-700 }
+#### Static fields
+{: .fs-2 .fw-700 }
 
 Below are static fields calculated by goMortgage
  
