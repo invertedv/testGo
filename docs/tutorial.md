@@ -338,25 +338,33 @@ are also written to files.
 
 ### OutputX
 <script>
-
-function enlargeImg(){
-  var theImage = document.getElementById("image1");
-  theImage.width = theImage.width * 3;
-  theImage.height = theImage.height * 3;
-};
-
+  var state=0;
+      // Get the img object using its Id
+      //
+      // Function to increase image size
+  function enlargeImg(x) {
+      alert(x);
+      text1="image".concat(String(x));
+      img = document.getElementById(text1);
+      if (state == 0) {
+	  state = 1;
+        // Set image size to 1.5 times original
+        img.style.transform = "scale(1.5)";
+        // Animation effect
+	  img.style.transition = "transform 0.25s ease"
+      } else {
+	  state = 0;
+        img.style.transform = "scale(1)";
+        img.style.transition = "transform 0.25s ease";
+      }}
+      // Function to reset image size
+      function resetImg() {
+        // Set image size to original
+      }
 </script>
-<div style="text-align: left;">
-  <table>
-  <tr>
-  <td><img id="image1" src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" /></td>
-  <td><img src="{{ site.baseurl }}/images/DQ0MargTrgEltv.png" width="500" height="500" /></td>
+  <td><img id="image1" src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" onclick="enlargeImg(1)/></td>
+  <td><img id="image2" src="{{ site.baseurl }}/images/DQ0MargTrgEltv.png" width="500" height="500"   onclick="enlargeImg(2) /></td>
   <td><img src="{{ site.baseurl }}/images/DQ0MargAoPrior60.png" width="500" height="500" /></td>
-</tr>
-</table>
-</div>
-<div style="text-align: left;">
   <img src="{{ site.baseurl }}/images/DQ2MargFico.png" width="500" height="500" />
   <img src="{{ site.baseurl }}/images/DQ2MargTrgEltv.png" width="500" height="500" />
   <img src="{{ site.baseurl }}/images/DQ2MargAoPrior60.png" width="500" height="500" />
-</div>
