@@ -128,7 +128,7 @@ loan-level table.
 The target date is set to the end of the window.
 
 
-***Window vs. No-Window**
+**Window vs. No-Window**
 
 Think about the difference in the datasets built:
 
@@ -212,15 +212,17 @@ conforming rate (same term as current loan)
 - newPayment. New payment at prevailing conforming rate (same term as current loan)
 - potentialDqMax. Potential DQ if no payments were made after the as-of date
 - potentialDqMin. Potential DQ if 2 payments were made each month after the as-of date.
+- lbrGrowth. Growth in labor force from as-of date to target date (annualized)
+- dHpi. Change in HPI between origination date and target date.
 
 #### Static fields 
 {: .fs-2 .fw-700 }
+
+Below are static fields calculated by goMortgage
  
 - spread. Difference between the note rate and the conforming rate (same term) at the first-pay date.
 - trgFcType*. Foreclosure type ("Judicial", "Non-Judicial")
 - trgFcDays*. Fannie Mae guideline for foreclosure, in days.
-- lbrGrowth. Growth in labor force from as-of date to target date (annualized)
-- dHpi. Change in HPI between origination date and target date.
  
 * These are prefixed "trg" even though they are static because they come in via the non-loan table.
 ### Examples
