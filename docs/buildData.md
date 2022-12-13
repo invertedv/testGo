@@ -13,7 +13,7 @@ nav_order: 3
 {: .no_toc .text-delta }
 
 1. TOC
-   {:toc}
+{:toc}
 ---
 
 [gom entries]({{ {{ site.baseurl }}/gomFile.html#builddata-keys)
