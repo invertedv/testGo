@@ -6,7 +6,7 @@ nav_order: 6
 
 ## Bias Correcting
 
-[gom entries]({{ {{ site.baseurl }}/gomFile.html#biascorrect-keys)
+[gom entries]({{ site.baseurl }}/gomFile.html#biascorrect-keys)
 
 If you stratify on a categorical target in Pass 2, the results will certainly be off
 when applied to unstratified data. goMortgage can adjust the bias term of the output

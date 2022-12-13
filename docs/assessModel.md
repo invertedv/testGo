@@ -6,7 +6,7 @@ nav_order: 5
 
 ## Assessment
 
-[gom entries]({{ {{ site.baseurl }}/gomFile.html#assessmodel-keys)
+[gom entries]({{ site.baseurl }}/gomFile.html#assessmodel-keys)
 
 For models whose target is categorical, the assessment is based on a binary outcome.  If the
 output has more than 2 outcomes, you specify which set of outcomes to coalesce into "1" with
