@@ -211,31 +211,31 @@ These fields are populated for all time periods:
 - MortFix30. 30-year fixed rate
 - MortFix15. 15-year fixed rate
 - Treas10. 10 year treasury.
-- Income50. median income estimated from IRS data (zip)
-- Eltv. Estimated LTV (based on amorized balance and updated property value.)
+- Income50. median income estimated from IRS data (zip). Also Income10, Income25, Income75 and Income90.
 - PropVal. Estimated updated property value.
  
 At the target date, these are also found:
+- aoEltv. Estimated LTV at as-of date (based on amorized balance and updated property value)
+- trgEltv. Estimated LTV at target date (based on amorized balance and updated property value)
 - trgPti50. From IRS data, payment to estimated median income
 - trgRefiIncentive. Refi incentive calculated as the annual savings in payments if refi at the prevailing
 conforming rate (same term as current loan)
-- newPayment. New payment at prevailing conforming rate (same term as current loan)
-- potentialDqMax. Potential DQ if no payments were made after the as-of date
-- potentialDqMin. Potential DQ if 2 payments were made each month after the as-of date.
-- lbrGrowth. Growth in labor force from as-of date to target date (annualized)
-- dHpi. Change in HPI between origination date and target date.
+- newPayment. New payment at prevailing conforming rate (same term as current loan) at target date.
+- trgDqMax. Potential DQ if no payments were made after the as-of date, capped at 12.
+- trgLbrGrowth. Percent change in labor force from first-pay date to target date (annualized)
+- trgdHpi. Percent change in HPI between origination date and target date.
+- trgFcTime. The ratio of trgDqMax to trgFCDays, capped at 1.5.
+- orgSpread. Difference between the note rate and the conforming rate (same term) at the first-pay date.
+- trgdHpi. change (as a rate) of HPI from first-pay date to target date.
+- trgUpbExp. Expected balance at target date found by amortizing balance at as-of date by fcstMonth months
 
 #### Static fields
 {: .fs-2 .fw-700 }
 
 Below are static fields calculated by goMortgage
  
-- spread. Difference between the note rate and the conforming rate (same term) at the first-pay date.
 - trgFcType(1). Foreclosure type ("Judicial", "Non-Judicial")
 - trgFcDays(1). Fannie Mae guideline for foreclosure, in days.
  
-(1) These are prefixed "trg" even though they are static because they come in via the non-loan table.
-### Examples
-{: .fw-700 }
-
-Examples may be found [here]({{ site.baseurl }}/examples.html).
+(1) These are prefixed "trg" even though they are static. Potentially trgFCDays could be made to change
+over time.
