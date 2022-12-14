@@ -369,13 +369,14 @@ are also written to files.
 
 <script>
   var state=0;
+  var my_index = 100;
   function enlargeImg(x) {
       if (state == 0) {
       state=1;
       text1="image".concat(String(x));
       img = document.getElementById(text1);
       img.style.transform = "scale(2.5)";
-      img.style.zIndex = "0";
+      img.style.zIndex = my_index++;
       } else {
       state=0;
       img.style.transform = "scale(1.0)";
