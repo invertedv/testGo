@@ -336,6 +336,8 @@ If "show" is set to "yes", then each graph will also be displayed in your browse
 a lot of graphs!  "plotHeight" and "plotWidth" specify the plot dimensions, in pixels. The graphs
 are also written to files. 
 ### Output
+
+(Click graphs to enlarge)
 <style>
 /* image containers */
 .column {

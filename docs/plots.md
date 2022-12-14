@@ -25,9 +25,10 @@ as follows:
 2. The average model and observed values are calculated for each group.
 3. These are plotted, along with a 95% confidence interval. The interval assumes
 independence of the observations.
+<script src = "{{ site.baseurl}}/assets/enlarge.js"></script>
 
 <div style="text-align: left;">
-  <img src="{{ site.baseurl }}/images/decile.png"  >
+  <img id="image1" src="{{ site.baseurl }}/images/decile.png" onclick="enlargeImg(this,0)" >
 </div>
 ### Segment Plots
 {: .fw-700 }
