@@ -45,7 +45,7 @@ the quantiles of its distribution. The groups are formed by:
 <.1, .1-.25, .25-.5, .5-.75, .75-.9, >.9
 
 <div style="text-align: left;">
-  <img src="{{ site.baseurl }}/images/segPlot.png"  >
+  <img id="image2" src="{{ site.baseurl }}/images/segPlot.png"  onclick="enlargeImg(this,0)"  >
 </div>
 
 ### KS Plots
@@ -61,7 +61,7 @@ another with the target=1.
 3. The KS is the maximum distance between the two CDFs.
 
 <div style="text-align: left;">
-  <img src="{{ site.baseurl }}/images/ks.png"  >
+  <img id="image3" src="{{ site.baseurl }}/images/ks.png"  onclick="enlargeImg(this,0)"  >
 </div>
 
 ### Marginal Plots
@@ -95,7 +95,7 @@ of FICO moves higher.  Likewise, on the top row, within each graph the
 higher the FICO the lower the model output.
 
 <div style="text-align: left;">
-  <img src="{{ site.baseurl }}/images/marginal.png"  >
+  <img id="image4" src="{{ site.baseurl }}/images/marginal.png"  onclick="enlargeImg(this,0)"  >
 </div>
 
 
