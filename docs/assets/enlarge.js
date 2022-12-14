@@ -1,7 +1,7 @@
     var state=0;
     var zInd = 0;
     function enlargeImg(img, shift) {
-        alert("here")
+        alert("here");
     if (state == 0) {
     state=1;
     img.style.transform = "scale(2.5)";
