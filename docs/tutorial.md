@@ -335,15 +335,14 @@ plotWidth: 1600
 If "show" is set to "yes", then each graph will also be displayed in your browser.  This is usually
 a lot of graphs!  "plotHeight" and "plotWidth" specify the plot dimensions, in pixels. The graphs
 are also written to files. 
-<script src="{{ site.baseurl }}/enlarge.js"></script>
-### Output
+### OutputX
 <div>
   <img id="image1" src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" onclick="enlargeImg(1)"/>
-  <img id="image2" src="{{ site.baseurl }}/images/DQ0MargTrgEltv.png" width="500" height="500"   onclick="enlargeImg(2)" />
-  <img src="{{ site.baseurl }}/images/DQ0MargAoPrior60.png" width="500" height="500" />
-  <img src="{{ site.baseurl }}/images/DQ2MargFico.png" width="500" height="500" />
-  <img src="{{ site.baseurl }}/images/DQ2MargTrgEltv.png" width="500" height="500" />
-  <img src="{{ site.baseurl }}/images/DQ2MargAoPrior60.png" width="500" height="500" />
+  <img id="image2" src="{{ site.baseurl }}/images/DQ0MargTrgEltv.png" width="500" height="500" onclick="enlargeImg(2)" />
+  <img id="image3" src="{{ site.baseurl }}/images/DQ0MargAoPrior60.png" width="500" height="500" onclick="enlargeImg(3)" />
+  <img id="image4" src="{{ site.baseurl }}/images/DQ2MargFico.png" width="500" height="500" onclick="enlargeImg(4)" />
+  <img id="image5" src="{{ site.baseurl }}/images/DQ2MargTrgEltv.png" width="500" height="500" onclick="enlargeImg(5)" />
+  <img id="image6" src="{{ site.baseurl }}/images/DQ2MargAoPrior60.png" width="500" height="500" onclick="enlargeImg(6)" />
 </div>
 <script>
   var state=0;
@@ -352,8 +351,7 @@ are also written to files.
       state=1;
       text1="image".concat(String(x));
       img = document.getElementById(text1);
-      alert(text1);
-      img.style.transform = "scale(1.5)";
+      img.style.transform = "scale(2.5)";
       } else {
       state=0;
       img.style.transform = "scale(1.0)";
