@@ -336,7 +336,7 @@ If "show" is set to "yes", then each graph will also be displayed in your browse
 a lot of graphs!  "plotHeight" and "plotWidth" specify the plot dimensions, in pixels. The graphs
 are also written to files. 
 <script src="{{ site.baseurl }}/enlarge.js"></script>
-### OutputX
+### Output
 <div>
   <img id="image1" src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" onclick="enlargeImg(1)"/>
   <img id="image2" src="{{ site.baseurl }}/images/DQ0MargTrgEltv.png" width="500" height="500"   onclick="enlargeImg(2)" />
@@ -350,5 +350,7 @@ are also written to files.
   function enlargeImg(x) {
       text1="image".concat(String(x));
       img = document.getElementById(text1);
-      alert(text1);}
+      alert(text1);
+      img.style.transform = "scale(1.5)";
+}
 </script>
