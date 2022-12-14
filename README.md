@@ -29,4 +29,4 @@ instructions to set up your own data sources.
 
 ## Documentation
 
-For more details, see the [docs]({{ site.baseurl }}).
+For more details, see the [docs](https://invertedv.github.io/testGo).
