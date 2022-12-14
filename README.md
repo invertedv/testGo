@@ -2,7 +2,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/invertedv/goMortgage)](https://goreportcard.com/report/github.com/invertedv/goMortgage)
 [![godoc](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white)](https://pkg.go.dev/mod/github.com/invertedv/goMortgage?tab=overview)
 
-![a](/scripts/images/vee1c.png)
+![a](/docs/images/vee1c.png)
 
 ## A Self-Service Program to Build Mortgage Models
 
