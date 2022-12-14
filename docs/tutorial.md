@@ -336,7 +336,8 @@ If "show" is set to "yes", then each graph will also be displayed in your browse
 a lot of graphs!  "plotHeight" and "plotWidth" specify the plot dimensions, in pixels. The graphs
 are also written to files. 
 ### Output
-<div class="container" style="width: 1000px">
+  <img id="image10" src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" onclick="enlargeImg(10)"/>
+<div style="width: 2000px">
   <table>
   <tr>
   <td>Loans Current at as-of Date</td><td>Loans 2 Months Delinquent at as-of Date</td>
