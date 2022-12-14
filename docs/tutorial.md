@@ -335,7 +335,7 @@ plotWidth: 1600
 If "show" is set to "yes", then each graph will also be displayed in your browser.  This is usually
 a lot of graphs!  "plotHeight" and "plotWidth" specify the plot dimensions, in pixels. The graphs
 are also written to files. 
-### Output
+### OutputXX
 <style>
 /* image containers */
 .column {
@@ -351,24 +351,7 @@ are also written to files.
   display: table;
 }
 </style>
-<script> 
-    var state=0;
-    var zInd = 0;
-    function enlargeImg(img, shift) {
-      if (state == 0) {
-        state=1;
-        img.style.transform = "scale(2.5)";
-        img.style.position = "relative";
-        img.style.left = shift + "px";
-        zInd++;
-         img.style.zIndex = String(zInd);
-      } else {
-        state=0;
-        img.style.transform = "scale(1.0)";
-        img.style.left = "0px";
-      }
-    }
-</script>
+<script src = "{{ site.baseurl}}/assets/enlarge.js"></script>
 <div class="row">
 <div class="column">
   <img id="image1" src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" onclick="enlargeImg(this,0)"/>
