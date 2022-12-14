@@ -7,7 +7,7 @@
     img.style.position = "relative";
     img.style.left = shift + "px";
     zInd++;
-    img.style.zIndex = zInd
+    img.style.zIndex = String(zInd)
 } else {
     state=0;
     img.style.transform = "scale(1.0)";
