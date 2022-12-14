@@ -335,14 +335,14 @@ plotWidth: 1600
 If "show" is set to "yes", then each graph will also be displayed in your browser.  This is usually
 a lot of graphs!  "plotHeight" and "plotWidth" specify the plot dimensions, in pixels. The graphs
 are also written to files. 
-### OutputX
+### Output
 <div class="container" style="width: 1000px">
   <table>
   <tr>
   <td>Loans Current at as-of Date</td><td>Loans 2 Months Delinquent at as-of Date</td>
   </tr>
   <tr>
-  <td> </td><td>FICO</td><td></td>
+   FICO
   </tr>
 <tr>
   <td><img id="image1" src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" onclick="enlargeImg(1)"/></td>
@@ -366,6 +366,8 @@ are also written to files.
       text1="image".concat(String(x));
       img = document.getElementById(text1);
       img.style.transform = "scale(2.5)";
+       R=400;
+       img.style.left=R + "px";
       } else {
       state=0;
       img.style.transform = "scale(1.0)";
