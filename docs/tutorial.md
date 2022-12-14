@@ -351,8 +351,6 @@ are also written to files.
   display: table;
 }
 </style>
-  <img id="image10" src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" onclick="enlargeImg(this,0)"/>
-
 <div class="row">
 <div class="column">
   <img id="image1" src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" onclick="enlargeImg(this,0)"/>
@@ -361,27 +359,20 @@ are also written to files.
   <img id="image4" src="{{ site.baseurl }}/images/DQ2MargFico.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 </div>
+<div class="row">
+<div class="column">
   <img id="image2" src="{{ site.baseurl }}/images/DQ0MargTrgEltv.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+</div>
+<div class="column">
   <img id="image5" src="{{ site.baseurl }}/images/DQ2MargTrgEltv.png" width="500" height="500" onclick="enlargeImg(this,0)" />
-
+</div>
+</div>
+<div class="row">
+<div class="column">
   <img id="image3" src="{{ site.baseurl }}/images/DQ0MargAoPrior60.png" width="500" height="500" onclick="enlargeImg(this,0)" />
-  <img id="image6" src="{{ site.baseurl }}/images/DQ2MargAoPrior60.png" width="500" height="500" onclick="enlargeImg(this,0)" />
-
-<script>
-  var state=0;
-  var zInd = 0;
-  function enlargeImg(img, shift) {
-      if (state == 0) {
-      state=1;
-      img.style.transform = "scale(2.5)";
-      img.style.position = "relative";
-      img.style.left = shift + "px";
-      zInd++;
-      img.style.zIndex = zInd
-      } else {
-      state=0;
-      img.style.transform = "scale(1.0)";
-      img.style.left = "0px";
-}
-}
-</script>
+</div>
+<div class="column">
+<img id="image6" src="{{ site.baseurl }}/images/DQ2MargAoPrior60.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+</div>
+</div>
+<script> src = "{{ site.baseurl }} /docs/enlarge.js" </script>
