@@ -42,6 +42,13 @@ This query is run if the "window" key is not specified in the .gom file.
 - pass2FieldsWindow.sql. The same as pass2Fields.sql but is run when the "window" key is specified in the .gom file.
 - pass3Fields.sql. Calculations run at pass 3 when the non-loan data is also available.
 
+Note that the pass1Fields.sql file has the line:
+
+      'Overall' AS noGroups,
+
+If you want to be able to be able to randomly sample, as opposed to stratified sampling, you must include this
+line.
+
 You can, alternately, prepare your data elsewhere and skip the buildData step. 
 
 ### Non-loan Data
