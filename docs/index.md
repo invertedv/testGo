@@ -4,11 +4,12 @@ title: Home
 nav_order: 1
 ---
 
-<div style="text-align: left;">
-  <img src="{{ site.baseurl }}/images/vee1c.png" width="75" height="75" />
+<div style="text-align: center;">
+  <img src="{{ site.baseurl }}/images/vee1c.png" width="150" height="150" class="center" />
+InvertedV
 </div>
 
-## goMortgage
+## goMortgage!
 
 ### Summary
 goMortgage is an app for building models to forecast mortgage performance.
