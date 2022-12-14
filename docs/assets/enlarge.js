@@ -15,4 +15,3 @@
     img.style.left = "0px";
 }
 }
-
