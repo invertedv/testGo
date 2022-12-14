@@ -335,7 +335,7 @@ plotWidth: 1600
 If "show" is set to "yes", then each graph will also be displayed in your browser.  This is usually
 a lot of graphs!  "plotHeight" and "plotWidth" specify the plot dimensions, in pixels. The graphs
 are also written to files. 
-### OutputX
+### OutputXX
 <style>
 /* Three image containers (use 25% for four, and 50% for two, etc) */
 .column {
@@ -376,7 +376,7 @@ are also written to files.
       img.style.transform = "scale(2.5)";
       img.style.position = "relative";
       img.style.left = "px";
-      zInd++
+      zInd++;
       img.style.zIndex = zInd
       } else {
       state=0;
