@@ -36,17 +36,22 @@ models:
 - hazard models. Hazard models forecast the
   conditional probability that the loan will be in a given state month-by-month into the future. The condition is
   that the loan still exists at the beginning of the month being forecast. 
-  An example is the [delinquency]() model.
+  An example is the 
+  <a href="https://github.com/invertedv/goMortgage/blob/master/scripts/dq.gom" target="_blank" rel="noopener noreferrer" >delinquency</a>
+  model.
 - regression models. A regression model is fit to a single-valued, continuous target. An example is the
-[net recovery]() model.
+  <a href="https://github.com/invertedv/goMortgage/blob/master/scripts/netPro.gom" target="_blank" rel="noopener noreferrer" >net recovery</a>
+  model.
 - scoring models. A scoring model is built on a binary target that, within a fixed time window, 
-is 1 if an event occurs and 0 if not. The [mortgage prepay score]() model is an example.
+  is 1 if an event occurs and 0 if not. The
+  <a href="https://github.com/invertedv/goMortgage/blob/master/scripts/prepayScore.gom" target="_blank" rel="noopener noreferrer" >delinquency</a>
+  model is an example.
 
 ### Model Type
 {: .fw-700 }
 
 The models fit by goMortgage are neural nets.  goMortgage uses the 
-<a href="https://pkg.go.dev/github.com/invertedv/seafan" target="_blank" rel="noopener noreferrer" >seafan.</a>
+<a href="https://pkg.go.dev/github.com/invertedv/seafan" target="_blank" rel="noopener noreferrer" >seafan</a>
 package which is built
 upon <a href="https://pkg.go.dev/gorgonia.org/gorgonia" target="_blank" rel="noopener noreferrer" >gorgonia.</a>
 The models are sequential.

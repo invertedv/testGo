@@ -21,16 +21,20 @@ nav_order: 9
 
 So, you want to build a mortgage model.  Where do you start?  Well, having some loan-level data
 is a necessity.  I suggest you start with the
-<a href="https://apps.pingone.com/4c2b23f9-52b1-4f8f-aa1f-1d477590770c/signon/?flowId=035b3c0e-38ab-4c4b-a81a-45fbde81ebe9" target="_blank" rel="noopener noreferrer" >Fannie Mae</a>
+<a href="https://capitalmarkets.fanniemae.com/tools-applications/data-dynamics" target="_blank" rel="noopener noreferrer" >Fannie Mae</a>
 data.  It's free and extensive, going back to January 2000.  There are two data sets: their "standard" dataset of
 fixed-rate loans and a dataset of exclusions that includes ARMS and loans with non-standard underwriting.
-I have an [app](https://pkg.go.dev/github.com/invertedv/fannie) to import this into 
+I have an 
+<a href="https://pkg.go.dev/github.com/invertedv/fannie" target="_blank" rel="noopener noreferrer" >app</a>
+to import this into 
 ClickHouse and good news! -- goMortgage is already set up to handle the table. Even if your ultimate 
 goal is to use goMortgage on different data, this is the easiest way to test drive it.
 
 There is one other table you'll need -- a table of non-loan data.  This table has fields for
 house prices, unemployment, income, labor growth rates and more. The data is monthly at a zip/zip3 level.
-The [assemble](https://pkg.go.dev/github.com/invertedv/assemble) package will produce the table you need.
+The 
+<a href="https://pkg.go.dev/github.com/invertedv/assemble" target="_blank" rel="noopener noreferrer" >assemble</a>
+package will produce the table you need.
 
 OK, let's suppose you have these two tables.  What next? All of goMortgage's activity is driven by a
 specification (*.gom) file.  Let's look through one of these.
@@ -40,7 +44,8 @@ specification (*.gom) file.  Let's look through one of these.
 
 The .gom entries are in a key/val format.  Both the keys and values are case-sensitive.
 We'll go through
-the file [dq.gom](https://github.com/invertedv/testGo/blob/master/scripts/dq.gom). 
+the file
+<a href="https://github.com/invertedv/goMortgage/blob/master/scripts/dq.gom" target="_blank" rel="noopener noreferrer" >dq.gom</a>
 This .gom file builds a delinquency model.  It's a hazard model, or perhaps better termed, a conditional softmax
 model.  The model estimates the probability the loan is in one of 13 delinquency states each month
 of the forecast period. The forecast period is 180 months. The 13 delinquency states are:
@@ -211,7 +216,9 @@ goMortgage consumes 3 datasets:
 
 The 'modelQuery', 'validateQuery' and 'assessQuery' entries specify the SQL to pull these.
 
-A feature of the fannie [app](https://pkg.go.dev/github.com/invertedv/fannie) is that it creates
+A feature of the fannie
+<a href="https://pkg.go.dev/github.com/invertedv/fannie" target="_blank" rel="noopener noreferrer" >app</a>
+is that it creates
 a field "bucket" that assigns each loan an integer value 0 through 19. This value is sticky --
 a loan will always get the same value. Further, it is uncorrelated with other fields. This enables
 us ensure the three datasets consist of disjoint loans.

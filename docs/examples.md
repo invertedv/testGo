@@ -37,7 +37,7 @@ of the loan. The states at the target date are:
         - 0 if the loan is current
 
 You'll recognize this as the "targetStatus" field from the 
-[buildData](https://invertedv.github.io/testGo/buildData.html#targets) page.
+[buildData]({{ site.baseurl }}/buildData.html#targets) page.
 
 On a monthly basis, some of these states are quite rare -- especially default. In a data set of 
 3MM loans, there may be only ~10,000 defaults. goMortage will fit a model, though you may
@@ -52,7 +52,7 @@ Note the line
 changes the graphs directory from the default "graphs" to "graphsEven". 
 
 To use this model for forecasting, it needs to be de-biased.  This 
-[script](https://github.com/invertedv/goMortgage/blob/master/scripts/allInEvenStrat.gom)
+[gom file](https://github.com/invertedv/goMortgage/blob/master/scripts/allInEvenStrat.gom)
 will do the job.  It builds a new table that is not stratified on targetStatus and uses that
 to re-estimate the bias coefficients of the output layer.
 Note that the line
@@ -71,7 +71,7 @@ You can see that this is a score build by the line
       window: 24
 
 The data is then structured for a score build, with the approprate 
-[targets]((https://invertedv.github.io/testGo/buildData.html#targets)) available.
+[targets]({{ site.baseurl }}/buildData.html#targets) available.
 Apart from this, the .gom file is indistinguishable from that for a conditional softmax.
 
 ### Net Proceeds Model

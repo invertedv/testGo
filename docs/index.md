@@ -44,7 +44,8 @@ goMortgage:
 - **Builds cutting-edge models**<br>
   These models are DNN models.  Helpful options such as embeddings are supported. The target can be either
   categorical or continuous.  The build algorithm is the
-  [gorgonia](https://pkg.go.dev/gorgonia.org/gorgonia@v0.9.17#section-readme) package.
+  <a href="https://pkg.go.dev/gorgonia.org/gorgonia@v0.9.17#section-readme" target="_blank" rel="noopener noreferrer" >gorgonia.</a>
+  package.
   <br><br>
 - **Produces lightweight models**<br>
   The models produced by goMortgage consist of only 3 text files.  Two of these specify the model and the third
@@ -61,14 +62,15 @@ goMortgage:
   goMortgage will build the modeling dataset from source ClickHouse tables.
   <br><br>
 - **Is written in Go**<br>
-  Go is a 21st century language.  This [post](https://yourbasic.org/golang/advantages-over-java-python/) has a nice
-  desciption of its advantages.
+  Go is a 21st century language.  This
+  <a href="https://yourbasic.org/golang/advantages-over-java-python/" target="_blank" rel="noopener noreferrer" >post</a>
+  has a nice desciption of its advantages.
   <br><br>
 - **Is open source**<br>
   There are example scripts in the [scripts](https://github.com/invertedv/goMortgage/tree/master/scripts) directory. The scripts are configured to work with the
   ClickHouse table for the Fannie Mae data produced by
-  [this package](https://pkg.go.dev/github.com/invertedv/fannie).  Since goMortgage is open source,
-  it can be customized to other data sets by you.
+  <a href="https://pkg.go.dev/github.com/invertedv/fannie" target="_blank" rel="noopener noreferrer" >this package.</a>
+  Since goMortgage is open source, it can be customized to other data sets by you.
   <br><br>
 - **and more!**
   <br><br>

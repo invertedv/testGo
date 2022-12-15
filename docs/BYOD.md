@@ -53,7 +53,9 @@ You can, alternately, prepare your data elsewhere and skip the buildData step.
 
 ### Non-loan Data
 
-The [assemble]((https://pkg.go.dev/github.com/invertedv/assemble)) package will assemble a non-loan table.
+The 
+<a href="https://pkg.go.dev/github.com/invertedv/assemble" target="_blank" rel="noopener noreferrer" >assemble</a>
+package will assemble a non-loan table.
 However, there is no need to use this table. The table must have a structure that is geo and monthly time series.
 So, for instance, monthly data by zip code.
 
