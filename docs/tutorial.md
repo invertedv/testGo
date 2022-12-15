@@ -433,7 +433,7 @@ Prior 60 Day Delinquency
 </div>
 </div>
 
-The [KS plots]({{ site.baseurl }}/plots.html#marginal-plots) are below. Loans that are current are easier to separate than loans that are 60 days down.
+The [KS plots]({{ site.baseurl }}/plots.html#ks-plots) are below. Loans that are current are easier to separate than loans that are 60 days down.
 Note, too, that a "1" in these graphs is based on being 4+ months delinquent on a *specific* month, which is a
 harder problem than being 4+ months delinquent in a time window.
 
@@ -472,7 +472,10 @@ Decile Graphs
 </div>
 
 The [segment plots]({{ site.baseurl }}/plots.html#segment-plots) for the same fetures
-are below. 
+are below. For current loans, FICO covers a slightly larger range than Eltv but for current loans
+it works the other way.  The intuition is that knowing the borrower is 2 months delinquent on this loan
+is more relevant than knowing their FICO at some point in the past. Similar intuition applies to knowing
+they've been 2 months delinquent in the past. 
 
 <div class="row">
 <div class="column" style="font-size: 18px; line-height: 300%">
