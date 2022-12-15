@@ -5,6 +5,16 @@ nav_order: 5
 ---
 
 ## Assessment
+{: .no_toc }
+
+{: .fs-6 .fw-300 }
+
+### Table of Contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+---
 
 [gom entries]({{ site.baseurl }}/gomFile.html#assessmodel-keys)
 

@@ -5,13 +5,27 @@ nav_order: 10
 ---
 
 ## Examples
+{: .no_toc }
+
+{: .fs-6 .fw-300 }
+
+### Table of Contents
+{: .no_toc .text-delta }
+
+1. TOC
+   {:toc}
+---
 
 ### DQ Model
+{: .fw-700 }
+
 The 
 [dq](https://github.com/invertedv/goMortgage/blob/master/scripts/dq.gom)
 example is used in the Tutorial. 
 
 ### All-In Model with Stratified Target
+{: .fw-700 }
+
 The [All-in](https://github.com/invertedv/goMortgage/blob/master/scripts/allInEven.gom) model 
 is a conditional softmax model. By "all-in", I mean that the target includes all possible states
 of the loan. The states at the target date are:
@@ -48,6 +62,7 @@ Note that the line
 places the output in the "graphsStrat" directory.
 
 ### Prepay Score
+{: .fw-700 }
 
 The [prepay](https://github.com/invertedv/goMortgage/blob/master/scripts/prepayScore.gom) score
 estimates the probability a loan will prepay in the 24 months following the as-of date.
@@ -60,6 +75,7 @@ The data is then structured for a score build, with the approprate
 Apart from this, the .gom file is indistinguishable from that for a conditional softmax.
 
 ### Net Proceeds Model
+{: .fw-700 }
 
 The prior examples were all softmax outputs. 
 The [net proceeds](https://github.com/invertedv/goMortgage/blob/master/scripts/netPro.gom) model
