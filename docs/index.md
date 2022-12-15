@@ -33,7 +33,7 @@ goMortgage:
     - KS and Decile plots for categorical targets.
     - Segmented plots.  These plots slice the data by the levels of specific field, plottings the model and target
       average for each slice.
-    - Marginal plots.  These plots indicate the relation between a feature and the model output.
+    - Marginal plots.  These plots indicate the relation between a feature and the model output "in the large".
       <br><br>
 - **Produces live plots**<br>
   The graphs are produced using Plotly, meaning they are *live*.  Open them in your browser and hover over anything that
