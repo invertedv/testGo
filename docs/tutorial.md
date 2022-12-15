@@ -404,10 +404,10 @@ KS Graphs
 
 <div class="row">
 <div class="column">
-  <img id="image3" src="{{ site.baseurl }}/images/dq0Ks.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+  <img id="image7" src="{{ site.baseurl }}/images/dq0Ks.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 <div class="column">
-<img id="image6" src="{{ site.baseurl }}/images/dq2Ks.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+<img id="image8" src="{{ site.baseurl }}/images/dq2Ks.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 </div>
 
@@ -420,10 +420,11 @@ Decile Graphs
 </div>
 <div class="row">
 <div class="column">
-  <img id="image3" src="{{ site.baseurl }}/images/dq0Decile.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+  <img src="{{ site.baseurl }}/images/dq0Decile.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 <div class="column">
-<img id="image6" src="{{ site.baseurl }}/images/dq2Decile.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+<img  src="{{ site.baseurl }}/images/dq2Decile.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 </div>
 
+xxx
