@@ -337,7 +337,7 @@ a lot of graphs!  "plotHeight" and "plotWidth" specify the plot dimensions, in p
 are also written to files. 
 ### Output
 
-(Click graphs to enlarge)
+(Click graphs to enlarge/reduce)
 <style>
 /* image containers */
 .column {
@@ -354,27 +354,36 @@ are also written to files.
 }
 </style>
 <script src = "{{ site.baseurl}}/assets/enlarge.js"></script>
+  <img id="image0" src="{{ site.baseurl }}/images/curveTrgYrQtr.png" width="500" height="500" onclick="enlargeImg(this,0)"/>
+
+<div class="row">
+<div class="column" style="font-size: 18px; line-height: 300%">
+Current
+</div>
+<div class="column" style="font-size: 18px; line-height: 300%">
+2 Months Delinquent
+</div>
+<div class="column">
+  <img id="image1" src="{{ site.baseurl }}/images/dq0MargFico.png" width="500" height="500" onclick="enlargeImg(this,0)"/>
+</div>
+<div class="column">
+  <img id="image4" src="{{ site.baseurl }}/images/dq2MargFico.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+</div>
+</div>
 <div class="row">
 <div class="column">
-  <img id="image1" src="{{ site.baseurl }}/images/DQ0MargFico.png" width="500" height="500" onclick="enlargeImg(this,0)"/>
+  <img id="image2" src="{{ site.baseurl }}/images/dq0MargTrgEltv.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 <div class="column">
-  <img id="image4" src="{{ site.baseurl }}/images/DQ2MargFico.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+  <img id="image5" src="{{ site.baseurl }}/images/dq2MargTrgEltv.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 </div>
 <div class="row">
 <div class="column">
-  <img id="image2" src="{{ site.baseurl }}/images/DQ0MargTrgEltv.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+  <img id="image3" src="{{ site.baseurl }}/images/dq0MargAoPrior60.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 <div class="column">
-  <img id="image5" src="{{ site.baseurl }}/images/DQ2MargTrgEltv.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+<img id="image6" src="{{ site.baseurl }}/images/dq2MargAoPrior60.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 </div>
-<div class="row">
-<div class="column">
-  <img id="image3" src="{{ site.baseurl }}/images/DQ0MargAoPrior60.png" width="500" height="500" onclick="enlargeImg(this,0)" />
-</div>
-<div class="column">
-<img id="image6" src="{{ site.baseurl }}/images/DQ2MargAoPrior60.png" width="500" height="500" onclick="enlargeImg(this,0)" />
-</div>
-</div>
+

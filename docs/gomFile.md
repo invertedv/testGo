@@ -323,7 +323,7 @@ this directory and copy over the "model" subdirectory.
 ### biasCorrect Keys
 {: .fw-700 }
 
-[Bia-Correct Background]({{ site.baseurl }}/biasCorrect.html)
+[Bias-Correct Background]({{ site.baseurl }}/biasCorrect.html)
 
 If you build a model stratified on the target field, the "bias" term of the output
 layer will (ironically) be biased.  goMortgage can de-bias this term.  You must
