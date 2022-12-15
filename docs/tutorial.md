@@ -354,7 +354,7 @@ are also written to files.
 }
 </style>
 <script src = "{{ site.baseurl}}/assets/enlarge.js"></script>
-  <img id="image0" src="{{ site.baseurl }}/images/curveTrgYrQtr.png" width="500" height="500" onclick="enlargeImg(this,0)"/>
+  <img src="{{ site.baseurl }}/images/curveTrgYrQtr.png" width="500" height="500" onclick="enlargeImg(this,0)"/>
 
 <div class="row">
 <div class="column" style="font-size: 18px; line-height: 300%">
@@ -371,26 +371,28 @@ Marginal Graphs
 </div>
 </div>
 <div class="column">
-  <img id="image1" src="{{ site.baseurl }}/images/dq0MargFico.png" width="500" height="500" onclick="enlargeImg(this,0)"/>
+  <img src="{{ site.baseurl }}/images/dq0MargFico.png" width="500" height="500" onclick="enlargeImg(this,0)"/>
 </div>
 <div class="column">
-  <img id="image4" src="{{ site.baseurl }}/images/dq2MargFico.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+  <img src="{{ site.baseurl }}/images/dq2MargFico.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 </div>
+
 <div class="row">
 <div class="column">
-  <img id="image2" src="{{ site.baseurl }}/images/dq0MargTrgEltv.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+  <img src="{{ site.baseurl }}/images/dq0MargTrgEltv.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 <div class="column">
-  <img id="image5" src="{{ site.baseurl }}/images/dq2MargTrgEltv.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+  <img src="{{ site.baseurl }}/images/dq2MargTrgEltv.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 </div>
+
 <div class="row">
 <div class="column">
-  <img id="image3" src="{{ site.baseurl }}/images/dq0MargAoPrior60.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+  <img src="{{ site.baseurl }}/images/dq0MargAoPrior60.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 <div class="column">
-<img id="image6" src="{{ site.baseurl }}/images/dq2MargAoPrior60.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+<img src="{{ site.baseurl }}/images/dq2MargAoPrior60.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 </div>
 
@@ -404,10 +406,10 @@ KS Graphs
 
 <div class="row">
 <div class="column">
-  <img id="image7" src="{{ site.baseurl }}/images/dq0Ks.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+  <img src="{{ site.baseurl }}/images/dq0Ks.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 <div class="column">
-<img id="image8" src="{{ site.baseurl }}/images/dq2Ks.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+<img src="{{ site.baseurl }}/images/dq2Ks.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 </div>
 
@@ -427,4 +429,37 @@ Decile Graphs
 </div>
 </div>
 
-xx
+<div class="row">
+<div class="column" style="font-size: 18px; line-height: 300%">
+Segment Graphs
+</div>
+<div class="column" style="font-size: 18px; line-height: 300%">
+</div>
+</div>
+
+<div class="row">
+<div class="column">
+  <img src="{{ site.baseurl }}/images/dq0SegFico.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+</div>
+<div class="column">
+<img  src="{{ site.baseurl }}/images/dq2SegFico.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+</div>
+</div>
+
+<div class="row">
+<div class="column">
+  <img src="{{ site.baseurl }}/images/dq0SegTrgEltv.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+</div>
+<div class="column">
+<img  src="{{ site.baseurl }}/images/dq2SegTrgEltv.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+</div>
+</div>
+
+<div class="row">
+<div class="column">
+  <img src="{{ site.baseurl }}/images/dq0SegY20PropVal.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+</div>
+<div class="column">
+<img  src="{{ site.baseurl }}/images/dq2SegY20PropVal.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+</div>
+</div>
