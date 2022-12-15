@@ -13,7 +13,7 @@ nav_order: 10
 {: .no_toc .text-delta }
 
 1. TOC
-   {:toc}
+{:toc}
 ---
 
 ### DQ Model
@@ -22,9 +22,6 @@ nav_order: 10
 The 
 [dq](https://github.com/invertedv/goMortgage/blob/master/scripts/dq.gom)
 example is used in the Tutorial. 
-<div style="text-indent: 10px">
-On <a href="https://linkedin.com/in/will-alexander-data-scientist" target="_blank" rel="noopener noreferrer" >LinkedIn</a>
-</div>
 
 ### All-In Model with Stratified Target
 {: .fw-700 }

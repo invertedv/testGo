@@ -104,8 +104,14 @@ All the files in the model directory are text files and quite lightweight.
 ### Fannie and Freddie Data
 goMortgage comes configured to use the Fannie and Freddie data as assembled by these
 packages:
-[fannie](https://pkg.go.dev/github.com/invertedv/fannie) and 
+<a href="https://pkg.go.dev/github.com/invertedv/fannie" target="_blank" rel="noopener noreferrer" >fannie</a>
+and
+<a href="https://pkg.go.dev/github.com/invertedv/freddie" target="_blank" rel="noopener noreferrer" >freddie.</a>
+
+old:
+[fannie](https://pkg.go.dev/github.com/invertedv/fannie) and
 [freddie](https://pkg.go.dev/github.com/invertedv/freddie).
+
 
 One feature of the tables created by these packages is an integer field "bucket", 
 which takes on values 0,..,19. It is a hash of
