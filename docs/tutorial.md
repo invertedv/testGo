@@ -336,8 +336,8 @@ If "show" is set to "yes", then each graph will also be displayed in your browse
 a lot of graphs!  "plotHeight" and "plotWidth" specify the plot dimensions, in pixels. The graphs
 are also written to files. 
 ### Output
-
 (Click graphs to enlarge/reduce)
+
 <style>
 /* image containers */
 .column {
@@ -354,7 +354,18 @@ are also written to files.
 }
 </style>
 <script src = "{{ site.baseurl}}/assets/enlarge.js"></script>
-  <img src="{{ site.baseurl }}/images/curveTrgYrQtr.png" width="500" height="500" onclick="enlargeImg(this,0)"/>
+
+#### Curve Assessments
+
+All these assessments are constructed using loans that were not part of the model build/validation early stopping.
+The graph below is the curve assessment described above. This model is very faithful to the data.
+
+<img src="{{ site.baseurl }}/images/curveTrgYrQtr.png" width="500" height="500" onclick="enlargeImg(this,0)"/>
+
+The graphs below are [marginal plots]({{ site.baseurl }}/plots.html#marginal-plots). The left column is based on loans that are current at the as-of date;
+the right columns loans that are 60 days delinquent. FICO has an effect in both sets but is larger for
+loans that are current. The estimated LTV at the target date is strong in both but having been 60 days 
+delinquent in the past matters only for current loans.
 
 <div class="row">
 <div class="column" style="font-size: 18px; line-height: 300%">
@@ -370,11 +381,29 @@ Marginal Graphs
 <div class="column" style="font-size: 18px; line-height: 300%">
 </div>
 </div>
+
+<div class="row">
+<div class="column" style="font-size: 14px; line-height: 300%">
+FICO @ Origination
+</div>
+<div class="column" style="font-size: 14px; line-height: 300%">
+</div>
+</div>
+
+
 <div class="column">
   <img src="{{ site.baseurl }}/images/dq0MargFico.png" width="500" height="500" onclick="enlargeImg(this,0)"/>
 </div>
 <div class="column">
   <img src="{{ site.baseurl }}/images/dq2MargFico.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+</div>
+</div>
+
+<div class="row">
+<div class="column" style="font-size: 14px; line-height: 300%">
+Estimated LTV @ Target Date
+</div>
+<div class="column" style="font-size: 14px; line-height: 300%">
 </div>
 </div>
 
@@ -388,6 +417,14 @@ Marginal Graphs
 </div>
 
 <div class="row">
+<div class="column" style="font-size: 14px; line-height: 300%">
+Prior 60 Day Delinquency
+</div>
+<div class="column" style="font-size: 14px; line-height: 300%">
+</div>
+</div>
+
+<div class="row">
 <div class="column">
   <img src="{{ site.baseurl }}/images/dq0MargAoPrior60.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
@@ -395,6 +432,10 @@ Marginal Graphs
 <img src="{{ site.baseurl }}/images/dq2MargAoPrior60.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 </div>
+
+The [KS plots]({{ site.baseurl }}/plots.html#marginal-plots) are below. Loans that are current are easier to separate than loans that are 60 days down.
+Note, too, that a "1" in these graphs is based on being 4+ months delinquent on a *specific* month, which is a
+harder problem than being 4+ months delinquent in a time window.
 
 <div class="row">
 <div class="column" style="font-size: 18px; line-height: 300%">
@@ -413,6 +454,7 @@ KS Graphs
 </div>
 </div>
 
+The [decile plots]({{ site.baseurl }}/plots.html#decile-plots) are below. The fit is very good.
 <div class="row">
 <div class="column" style="font-size: 18px; line-height: 300%">
 Decile Graphs
@@ -429,6 +471,9 @@ Decile Graphs
 </div>
 </div>
 
+The [segment plots]({{ site.baseurl }}/plots.html#segment-plots) for the same fetures
+are below. 
+
 <div class="row">
 <div class="column" style="font-size: 18px; line-height: 300%">
 Segment Graphs
@@ -439,7 +484,7 @@ Segment Graphs
 
 <div class="row">
 <div class="column" style="font-size: 14px; line-height: 300%">
-FICO
+FICO @ Origination
 </div>
 <div class="column" style="font-size: 14px; line-height: 300%">
 </div>
@@ -456,7 +501,7 @@ FICO
 
 <div class="row">
 <div class="column" style="font-size: 14px; line-height: 300%">
-Estimated LTV at Target Date
+Estimated LTV @ Target Date
 </div>
 <div class="column" style="font-size: 14px; line-height: 300%">
 </div>
@@ -481,9 +526,9 @@ Property Value at Jan 2020
 
 <div class="row">
 <div class="column">
-  <img src="{{ site.baseurl }}/images/dq0SegY20PropVal.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+  <img src="{{ site.baseurl }}/images/dq0SegAoPrior60.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 <div class="column">
-<img  src="{{ site.baseurl }}/images/dq2SegY20PropVal.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+<img  src="{{ site.baseurl }}/images/dq2SegAoPrior60.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 </div>

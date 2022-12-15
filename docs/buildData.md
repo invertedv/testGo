@@ -239,3 +239,12 @@ Below are static fields calculated by goMortgage
  
 (1) These are prefixed "trg" even though they are static. Potentially trgFCDays could be made to change
 over time.
+
+#### Data Types
+goMortgage supports the following data types:
+
+- Int32/Int64
+- Float32/Float64
+- string/FixedString
+- Date
+
