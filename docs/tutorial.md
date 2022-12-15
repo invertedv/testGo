@@ -438,6 +438,14 @@ Segment Graphs
 </div>
 
 <div class="row">
+<div class="column" style="font-size: 14px; line-height: 300%">
+FICO
+</div>
+<div class="column" style="font-size: 14px; line-height: 300%">
+</div>
+</div>
+
+<div class="row">
 <div class="column">
   <img src="{{ site.baseurl }}/images/dq0SegFico.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
@@ -447,11 +455,27 @@ Segment Graphs
 </div>
 
 <div class="row">
+<div class="column" style="font-size: 14px; line-height: 300%">
+Estimated LTV at Target Date
+</div>
+<div class="column" style="font-size: 14px; line-height: 300%">
+</div>
+</div>
+
+<div class="row">
 <div class="column">
   <img src="{{ site.baseurl }}/images/dq0SegTrgEltv.png" width="500" height="500" onclick="enlargeImg(this,0)" />
 </div>
 <div class="column">
 <img  src="{{ site.baseurl }}/images/dq2SegTrgEltv.png" width="500" height="500" onclick="enlargeImg(this,0)" />
+</div>
+</div>
+
+<div class="row">
+<div class="column" style="font-size: 14px; line-height: 300%">
+Property Value at Jan 2020
+</div>
+<div class="column" style="font-size: 14px; line-height: 300%">
 </div>
 </div>
 
