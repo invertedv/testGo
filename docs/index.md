@@ -12,6 +12,8 @@ InvertedV
 ## goMortgage
 
 ### Summary
+{: .fw-700 }
+
 goMortgage is an app for building models to forecast mortgage performance.
 
 goMortgage is unusual in many dimensions. It's a one-stop modeling platform that will build both the modeling
@@ -67,7 +69,9 @@ goMortgage:
   has a nice desciption of its advantages.
   <br><br>
 - **Is open source**<br>
-  There are example scripts in the [scripts](https://github.com/invertedv/goMortgage/tree/master/scripts) directory. The scripts are configured to work with the
+  There are example scripts in the
+  <a href="https://github.com/invertedv/goMortgage/tree/master/scripts" target="_blank" rel="noopener noreferrer" >scripts</a>
+  directory. The scripts are configured to work with the
   ClickHouse table for the Fannie Mae data produced by
   <a href="https://pkg.go.dev/github.com/invertedv/fannie" target="_blank" rel="noopener noreferrer" >this package.</a>
   Since goMortgage is open source, it can be customized to other data sets by you.

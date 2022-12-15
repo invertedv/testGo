@@ -40,7 +40,8 @@ The structure is:
                 - slice value 1
                 - slice value 2
             - 'slicer 2'
-
+          
+<br>
 *subsequent assessModel or biasModel runs save the .gom file names according to the run date & time.<br>
 **can be renamed using model: key<br>
 ***can be renamed using graphs: key

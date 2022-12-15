@@ -175,7 +175,7 @@ coefficients.
 Either learningRate or learingRateStart/learningRateEnd must be specified.
 - learningRate: \<float\><br>
 the learning rate for the model build.
-<br><br>
+<br>--or--<br>
 - learningRateStart: \<float\><br>
 the learning rate for epoch 1.
 - learningRateEnd: \<float\><br>
@@ -223,8 +223,9 @@ Building the model will (re)create the output directory.  Anything in the direct
 will be lost.
 
 ### assessModel Keys
+{: .fw-700 }
 
-[Assessment Background]({{ site.baseurl }}assessModel.html)
+[Assessment Background]({{ site.baseurl }}/assessModel.html)
 
 Softmax outputs are coalesced into a binary output for assessment.  The user specifies
 one or more columns of the output to group into the "1" value. 

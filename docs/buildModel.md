@@ -44,7 +44,7 @@ models:
   model.
 - scoring models. A scoring model is built on a binary target that, within a fixed time window, 
   is 1 if an event occurs and 0 if not. The
-  <a href="https://github.com/invertedv/goMortgage/blob/master/scripts/prepayScore.gom" target="_blank" rel="noopener noreferrer" >delinquency</a>
+  <a href="https://github.com/invertedv/goMortgage/blob/master/scripts/prepayScore.gom" target="_blank" rel="noopener noreferrer" >prepay Score</a>
   model is an example.
 
 ### Model Type
@@ -109,6 +109,8 @@ in the input model's directory.
 All the files in the model directory are text files and quite lightweight. 
 
 ### Fannie and Freddie Data
+{: .fw-700 }
+
 goMortgage comes configured to use the Fannie and Freddie data as assembled by these
 packages:
 <a href="https://pkg.go.dev/github.com/invertedv/fannie" target="_blank" rel="noopener noreferrer" >fannie</a>

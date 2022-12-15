@@ -10,6 +10,8 @@ Beyond modifying the code to bring your own data, you may wish to alter the calc
 For that task, you should focus on the queries listed.
 
 ### Loan-level Data
+{: .fw-700 }
+
 You can modify goMortgage to use your own data. There are some considerations.
 goMortgage is set up to use ClickHouse.The seafan and chutils packages goMortgage imports both only support ClickHouse.
 Further, goMortgage expects a single loan-level table that has one row per loan with the loan's performance
@@ -52,6 +54,7 @@ line.
 You can, alternately, prepare your data elsewhere and skip the buildData step. 
 
 ### Non-loan Data
+{: .fw-700 }
 
 The 
 <a href="https://pkg.go.dev/github.com/invertedv/assemble" target="_blank" rel="noopener noreferrer" >assemble</a>

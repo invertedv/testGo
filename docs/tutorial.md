@@ -73,7 +73,6 @@ assessModel: yes
 #### buildData
 {: .fs-2 .fw-700 }
 
-
 See [here]({{ site.baseurl }}/gomFile.html#builddata-keys) for details on buildData keys.
 
 The code below specifies the data build. The loan-level data is sampled in two passes.
@@ -343,6 +342,8 @@ If "show" is set to "yes", then each graph will also be displayed in your browse
 a lot of graphs!  "plotHeight" and "plotWidth" specify the plot dimensions, in pixels. The graphs
 are also written to files. 
 ### Output
+{: .fw-700 }
+
 (Click graphs to enlarge/reduce)
 
 <style>
@@ -363,11 +364,15 @@ are also written to files.
 <script src = "{{ site.baseurl}}/assets/enlarge.js"></script>
 
 #### Curve Assessments
+{: .fs-2 .fw-700 }
 
 All these assessments are constructed using loans that were not part of the model build/validation early stopping.
 The graph below is the curve assessment described above. This model is very faithful to the data.
 
 <img src="{{ site.baseurl }}/images/curveTrgYrQtr.png" width="500" height="500" onclick="enlargeImg(this,0)"/>
+
+#### Feature Assessments
+{: .fs-2 .fw-700 }
 
 The graphs below are [marginal plots]({{ site.baseurl }}/plots.html#marginal-plots). The left column is based on loans that are current at the as-of date;
 the right columns loans that are 60 days delinquent. FICO has an effect in both sets but is larger for
