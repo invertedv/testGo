@@ -20,8 +20,8 @@ nav_order: 9
 {: .fw-700 }
 
 So, you want to build a mortgage model.  Where do you start?  Well, having some loan-level data
-is a necessity.  I suggest you start with the 
-[Fannie Mae](https://apps.pingone.com/4c2b23f9-52b1-4f8f-aa1f-1d477590770c/signon/?flowId=035b3c0e-38ab-4c4b-a81a-45fbde81ebe9)
+is a necessity.  I suggest you start with the
+<a href="https://apps.pingone.com/4c2b23f9-52b1-4f8f-aa1f-1d477590770c/signon/?flowId=035b3c0e-38ab-4c4b-a81a-45fbde81ebe9" target="_blank" rel="noopener noreferrer" >Fannie Mae</a>
 data.  It's free and extensive, going back to January 2000.  There are two data sets: their "standard" dataset of
 fixed-rate loans and a dataset of exclusions that includes ARMS and loans with non-standard underwriting.
 I have an [app](https://pkg.go.dev/github.com/invertedv/fannie) to import this into 

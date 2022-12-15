@@ -26,7 +26,8 @@ goMortgage is designed to be flexible in building datasets. However, there *is* 
 goMortgage will pull stratified and simple random samples from the source 
 loan-level database and join the result to non-loan data.
 
-goMortgage comes set up to work with the [fannie](https://pkg.go.dev/github.com/invertedv/fannie) 
+goMortgage comes set up to work with the
+<a href="https://pkg.go.dev/github.com/invertedv/fannie" target="_blank" rel="noopener noreferrer" >fannie</a>
 and [freddie](https://pkg.go.dev/github.com/invertedv/freddie) data built by the
 apps linked to. These tables have specific characteristics leveraged by goMortgage:
 

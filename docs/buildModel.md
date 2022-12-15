@@ -46,8 +46,10 @@ is 1 if an event occurs and 0 if not. The [mortgage prepay score]() model is an 
 {: .fw-700 }
 
 The models fit by goMortgage are neural nets.  goMortgage uses the 
-[seafan](https://pkg.go.dev/github.com/invertedv/seafan) package which is built
-upon [gorgonia](https://pkg.go.dev/gorgonia.org/gorgonia).  The models are sequential.
+<a href="https://pkg.go.dev/github.com/invertedv/seafan" target="_blank" rel="noopener noreferrer" >seafan.</a>
+package which is built
+upon <a href="https://pkg.go.dev/gorgonia.org/gorgonia" target="_blank" rel="noopener noreferrer" >gorgonia.</a>
+The models are sequential.
 goMortgage supports continuous, one-hot and embedded features.
 
 ### Model Specification
@@ -107,10 +109,6 @@ packages:
 <a href="https://pkg.go.dev/github.com/invertedv/fannie" target="_blank" rel="noopener noreferrer" >fannie</a>
 and
 <a href="https://pkg.go.dev/github.com/invertedv/freddie" target="_blank" rel="noopener noreferrer" >freddie.</a>
-
-old:
-[fannie](https://pkg.go.dev/github.com/invertedv/fannie) and
-[freddie](https://pkg.go.dev/github.com/invertedv/freddie).
 
 
 One feature of the tables created by these packages is an integer field "bucket", 
