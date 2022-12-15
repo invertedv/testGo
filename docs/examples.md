@@ -19,14 +19,16 @@ nav_order: 10
 ### DQ Model
 {: .fw-700 }
 
-The 
-[dq](https://github.com/invertedv/goMortgage/blob/master/scripts/dq.gom)
-example is used in the Tutorial. 
+The
+<a href="https://github.com/invertedv/goMortgage/blob/master/scripts/dq.gom" target="_blank" rel="noopener noreferrer" >dq</a>
+model example is used in the Tutorial. 
 
 ### All-In Model with Stratified Target
 {: .fw-700 }
 
-The [All-in](https://github.com/invertedv/goMortgage/blob/master/scripts/allInEven.gom) model 
+The 
+<a href="https://github.com/invertedv/goMortgage/blob/master/scripts/allInEven.gom" target="_blank" rel="noopener noreferrer" >all-in</a>
+model 
 is a conditional softmax model. By "all-in", I mean that the target includes all possible states
 of the loan. The states at the target date are:
 
@@ -51,8 +53,8 @@ Note the line
 
 changes the graphs directory from the default "graphs" to "graphsEven". 
 
-To use this model for forecasting, it needs to be de-biased.  This 
-[gom file](https://github.com/invertedv/goMortgage/blob/master/scripts/allInEvenStrat.gom)
+To use this model for forecasting, it needs to be de-biased.  This
+<a href="https://github.com/invertedv/goMortgage/blob/master/scripts/allInEvenStrat.gom" target="_blank" rel="noopener noreferrer" >gom file</a>
 will do the job.  It builds a new table that is not stratified on targetStatus and uses that
 to re-estimate the bias coefficients of the output layer.
 Note that the line
@@ -64,7 +66,8 @@ places the output in the "graphsStrat" directory.
 ### Prepay Score
 {: .fw-700 }
 
-The [prepay](https://github.com/invertedv/goMortgage/blob/master/scripts/prepayScore.gom) score
+The
+<a href="https://github.com/invertedv/goMortgage/blob/master/scripts/prepayScore.gom" target="_blank" rel="noopener noreferrer" >prepay score</a>
 estimates the probability a loan will prepay in the 24 months following the as-of date.
 You can see that this is a score build by the line
 
@@ -78,8 +81,8 @@ Apart from this, the .gom file is indistinguishable from that for a conditional 
 {: .fw-700 }
 
 The prior examples were all softmax outputs. 
-The [net proceeds](https://github.com/invertedv/goMortgage/blob/master/scripts/netPro.gom) model
-is a regression model. 
+The <a href="https://github.com/invertedv/goMortgage/blob/master/scripts/netPro.gom" target="_blank" rel="noopener noreferrer" >net proceeds</a>
+model is a regression model. 
 The target is "targetNetPro" - the ratio of net proceeds from the sale of the house to the house
 value at the target date.  The target date is the date of default.
 
