@@ -90,4 +90,22 @@ goMortgage knows this is a regression model by the line
 
       target: cts
 
+In this case, we want loans when they default.  This is accomplished by:
+
+       where1: mon.zb IN ('03', '09')
+       where2:  fcstMonth=0
+
+The data will consist of loans when they default. It short circuits the as-of date/target date paradigm.
+
+### Out-of-Time Period Analyses
+{: .fw-700 }
+
+It is easy to conduct an out-of-time period analysis.  Suppose you want to assess a model built on data from
+before 2007 on data 2007 and after. All you need do is adjust the model/validate/assess queries.  For the DQ
+model, these would be:
+
+      modelQuery: SELECT %s FROM tmp.modelDq WHERE bucket < 10 AND year(trgDt) < 2007
+      validateQuery: SELECT %s FROM tmp.modelDq WHERE bucket in (10,11,12,13,14) AND year(trgDt) < 2007
+      assessQuery: SELECT %s FROM tmp.modelDq WHERE bucket in (15,16,17,18,19) AND year(trgDt) >= 2007
+
 

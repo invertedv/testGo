@@ -26,7 +26,26 @@ Since goMortgage is open source, goMortgage can be modified to suit your needs.
 Out of the box, it is configured to work with Freddie and Fannie data. There are
 instructions to set up your own data sources. 
 
+### Why goMortgage?
 
-## Documentation
+I wrote goMortgage for my own use. I open sourced it because I thought others might find it useful, too.
+Who?
+- People who are interested in the output of the model more than building the infrastructure -- 
+  like people on a trading desk or academics.  Especially if what they want to look at are Fannie and Freddie,
+  since I have packages ([fannie](https://pkg.go.dev/github.com/invertedv/fannie),
+  [freddie](https://pkg.go.dev/github.com/invertedv/freddie)) to build this data.
+- More technical people who could make the modifications for a new data source but don't have the bandwidth 
+  to start from scratch.
 
-For more details, see the [docs](https://invertedv.github.io/testGo).
+### Requirements
+
+You need to be able to put up an instance of [ClickHouse](https://clickhouse.com/clickhouse).
+
+Currently, goMortgage doesn't support building DNNs on a GPU, but the run speed has been fine. So, you'll want
+64GB of RAM.
+
+The raw files for Freddie and Fannie are quite large, so you'll want a few TBs of disk.
+
+### Documentation
+
+For details, see the [docs](https://invertedv.github.io/testGo).

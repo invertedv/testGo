@@ -55,7 +55,7 @@ goMortgage:
   <br><br>
 - **Produces lightweight model builds**<br>
   goMortgage is quite frugal with memory--using millions of observations is possible even in 32GB.
-  However, if memory does prove limiting, the data can be streamed to the model build.
+  However, if memory does prove limiting, the package can be modified to accomodate data streaming.
   <br><br>
 - **Consdolidates its output**<br>
   The output includes the model, diagnostics, a log file and the .gom file the run used.
