@@ -95,7 +95,7 @@ In this case, we want loans when they default.  This is accomplished by:
        where1: mon.zb IN ('03', '09')
        where2:  fcstMonth=0
 
-The data will consist of loans when they default. It short circuits the as-of date/target date paradigm.
+The data will consist of loans when they default. It short-circuits the as-of date/target date paradigm.
 
 ### Out-of-Time Period Analyses
 {: .fw-700 }

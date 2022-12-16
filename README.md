@@ -28,23 +28,25 @@ instructions to set up your own data sources.
 
 ### Why goMortgage?
 
-I wrote goMortgage for my own use. I open sourced it because I thought others might find it useful, too.
+I wrote goMortgage for my own use. I made it open source because I thought others might find it useful, too.
 Who?
-- People who are interested in the output of the model more than building the infrastructure -- 
-  like people on a trading desk or academics.  Especially if what they want to look at are Fannie and Freddie,
-  since I have packages ([fannie](https://pkg.go.dev/github.com/invertedv/fannie),
-  [freddie](https://pkg.go.dev/github.com/invertedv/freddie)) to build this data.
-- More technical people who could make the modifications for a new data source but don't have the bandwidth 
-  to start from scratch.
+- People who are more interested in the output of the model than building the infrastructure -- 
+  say people on a trading desk or academics.  Especially those who want to focus on Fannie and Freddie,
+  since I have packages ([Fannie](https://pkg.go.dev/github.com/invertedv/fannie),
+  [Freddie](https://pkg.go.dev/github.com/invertedv/freddie)) to build this data.
+- Those who don't have the bandwidth to start from scratch but enough to make the modifications for new data sources.
+
 
 ### Requirements
 
 You need to be able to put up an instance of [ClickHouse](https://clickhouse.com/clickhouse).
 
-Currently, goMortgage doesn't support building DNNs on a GPU, but the run speed has been fine. So, you'll want
-64GB of RAM.
+Currently, goMortgage doesn't support building DNNs on a GPU, but the run speed has been fine. You'll want
+64GB of RAM, though you could get by with less probably.
 
 The raw files for Freddie and Fannie are quite large, so you'll want a few TBs of disk.
+
+And, of course, you need to be able to compile Go.
 
 ### Documentation
 
